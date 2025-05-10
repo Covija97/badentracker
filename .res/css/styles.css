@@ -1,0 +1,289 @@
+/* Estilo CSS para Badentracker */
+/* Definición de variables de color */
+:root {
+    --color001: #f5ecddff; /* Beige cálido */
+    --color002: #253c4cff; /* Azul grisáceo oscuro */
+    --color003: #7d5b3eff; /* Marrón tierra */
+    --color004: #3c5a6eff; /* Azul verdoso suave */
+    --color005: #a64e2aff; /* Terracota intenso */
+    --color006: #e8b86bff; /* Dorado pastel */
+    --color006D: #ba9356ff; /* Dorado pastel oscuro */
+
+    --trans: #00000033;
+}
+
+* {box-sizing: border-box;}
+/* Estilo global */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+/* Estilo del menú de navegación */
+header {
+    align-items: center;
+    background-color: var(--color001);
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 20px;
+}
+header a {
+    align-items: center;
+    border-radius: 10px;
+    color: var(--color002);
+    display: flex;
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+    gap: 10px;     
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+}
+header a.logo {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    text-decoration: none;
+}
+header a:hover {
+    background-color: var(--trans);
+}
+header a.act {
+    background-color: var(--color006);
+}
+.hright {
+    align-items: center;
+    display: flex;
+    float: right;
+    gap: 10px;
+}
+
+.titlePage {
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--color002);
+    text-align: center;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Estilo de la página principal */
+main {
+    margin: 20px auto;
+    width: 70%;
+    padding: 20px;
+    background-color: var(--color001);
+    border-radius: 15px;
+    color: var(--color002);
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: center;
+    box-shadow: 0 10px 10px var(--trans);
+    margin-top: 75px;
+    margin-bottom: 75px;
+    min-height: 75%;
+}
+
+main img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 45%;
+    padding: 20px;
+}
+
+/* Estilo del footer */
+footer {
+    background-color: var(--color001);
+    color: var(--color002);
+    text-align: center;
+    padding: 10px 0;
+    font-weight: bold;
+}
+/* Estilo encabezado contenido */
+.mainhead {
+    font-weight: bold;
+    text-align: center;
+    justify-content: center;
+    vertical-align: middle;
+    float: left;
+    padding: 15px 0;
+    text-decoration: none;
+}
+/* Botones */
+/* Estilo de los botones */
+.but {
+    align-items: center;
+    display: inline-flex;
+    vertical-align: middle;
+    height: 40px;
+    border: 2px solid var(--color002);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--color002);
+    stroke: var(--color002);
+    padding: 5px;
+    min-width: 40px;
+    justify-content: center;
+    margin: 0 10px 0 0;
+    font-weight: bold;
+}
+
+.align-left {
+    float: left;
+    margin-left: 0;
+}
+
+.but svg {
+    height: 100%;
+    width: 100%;
+}
+
+.but:hover {
+    stroke: var(--color005);
+    color: var(--color005);
+    border: 2px solid var(--color005);
+}
+
+/* Estilo de la tabla */
+.table-main {
+    border: 2px solid var(--color004);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: left;
+    vertical-align: middle;
+}
+.table-main tr:nth-child(odd) {
+    background-color: var(--color004);
+    color: var(--color001);
+}
+
+.table-main tr:nth-child(odd) .but {
+    stroke: var(--color001);
+    border: 2px solid var(--color001);
+    color: var(--color001);
+}
+.table-main tr:nth-child(odd) .but:hover {
+    stroke: var(--color006);
+    color: var(--color006);
+    border: 2px solid var(--color006);
+}
+
+.table-main td, th{
+    padding: 10px;
+}
+
+.table-cell-limited {
+    max-width: 25%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Estilo de la tabla de resultados */
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0 200px;
+}
+
+.form-row label {
+    flex: 1;
+    font-weight: bold;
+    color: var(--color002);
+    text-align: left;
+}
+
+.form-row input[type="text"],
+.form-row input[type="time"],
+.textarea-row textarea {
+    flex: 2;
+    padding: 10px;
+    border: 2px solid var(--color004);
+    border-radius: 8px;
+    background-color: #ffffffcc;
+    color: var(--color002);
+    font-size: 18px;
+}
+
+.textarea-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.textarea-row textarea {
+    width: 100%;
+    resize: vertical;
+}
+
+.form-actions {
+    text-align: center;
+}
+
+.btn-submit {
+    background-color: var(--color005);
+    color: var(--color001);
+    padding: 10px 25px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: var(--color006D);
+}
+
+/* Estilo select multiple */
+
+.select2-container {
+    flex: 2 !important;
+}
+  
+.select2-selection {
+    height: 40px !important;
+    border: 2px solid var(--color004) !important;
+    border-radius: 8px !important;
+    background-color: #ffffffcc !important;
+    color: var(--color002) !important;
+    font-size: 18px !important;
+}
+
+.select2-dropdown {
+    padding: 10px;
+    border: 2px solid var(--color004) !important;
+    border-radius: 8px !important;
+    background-color: #ffffffcc;
+    color: var(--color002);
+    font-size: 18px;
+}
+
+input {
+    width: 50%;
+    padding: 10px;
+    border: 2px solid var(--color004);
+    border-radius: 8px;
+    background-color: #ffffffcc;
+    color: var(--color002);
+    font-size: 18px;
+}
