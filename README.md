@@ -33,22 +33,66 @@ Subject: `Trabajo fin de Grado Superior`
 
 ## 🛠️ Tecnologías utilizadas
 
-- **Backend:** Django (Python)
-- **Frontend:** HTML, CSS, JavaScript (FullCalendar para el calendario)
-- **Base de datos:** SQLite
-- **PDF Generator:** WeasyPrint / xhtml2pdf ???
+- **Backend:** PHP 8.x
+- **Frontend:** HTML, CSS, JavaScript
+- **Base de datos:** MySQL
+- **Servidor web:** Apache / Xampp
+- **Generador de PDF:** (Pendiente de instalación)
+- **Integración de calendario:** (Pediente de instalación)
 
 ## 📚 Estructura del proyecto
 
 ```
-baden_tracker/
-├── _activities/    # Gestión de actividades pedagógicas
-├── _meetings/      # Planificaciones y generación de PDFs
-├── _calendar/      # Reuniones y calendario visual
-├── templates/      # Plantillas HTML para views y PDFs
-├── static/         # Archivos estáticos (CSS, JS)
-├── db.sqlite3      # Base de datos SQLite
-└── baden_tracker/  # Configuración general de Django
+badentracker/
+├── index.php               # Página de inicio
+├── .res/                   # Recursos comunes
+│   ├── css/                # Archivos CSS
+│   ├── db/                 # Archivos de consultas y creación de tablas
+│   ├── funct/              # Funciones php generales de todas las páginas
+│   ├── icon/               # Iconos SVG
+│   ├── img/                # Imágenes
+│   ├── js/                 # Archivos JavaScript
+│   └── templates/          # Plantillas HTML
+│
+├── actividades/            # Página de actividades
+│   │
+│   ├── index.php
+│   │
+│   ├── new/                # Página de creación de actividades
+│   │   └── index.php
+│   │
+│   ├── actividad/          # Página de edición de actividad por ID
+│   │   ├── index.php
+│   │   └── delete.php
+│   │
+│   ├── categorias/         # Página de categorías de actividades
+│   │   ├── index.php
+│   │   │── categoria/      # Página de edición de categoría por ID
+│   │   │   ├── index.php
+│   │   │   └── delete.php
+│   │   └── new/            # Página de creación de categoría
+│   │       └── index.php
+│   │
+│   ├── materiales/         # Página de materiales de actividades
+│   │   ├── index.php
+│   │   │── material/       # Página de edición de material por ID
+│   │   │   ├── index.php
+│   │   │   └── delete.php
+│   │   └── new/            # Página de creación de material
+│   │       └── index.php
+│   │
+│   └── objetivos/          # Página de materiales de objetivos
+│       ├── index.php
+│       │── objetivo/       # Página de edición de objetivo por ID
+│       │   ├── index.php
+│       │   └── delete.php
+│       └── new/            # Página de creación de objetivo
+│           └── index.php
+│
+├── calendario/             # Página de calendario
+│
+└── reuniones/              # Página de reuniones
+
 ```
 
 ## 📌 Próximas mejoras
