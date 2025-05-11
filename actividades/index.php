@@ -59,13 +59,13 @@ $query = linkDB() -> query($sql);
             <th data-sortable="true">Descripción</th>
             <th data-sortable="true">Duración</th>
             <th data-sortable="true">
-                <a class="but align-left" href="objetivos" title="Objetivos"> Objetivos </a>
+                <a class="but align-left" href="objetivos" title="Ir a objetivos"> Objetivos </a>
             </th>
             <th data-sortable="true">
-                <a class="but align-left" href="categorias" title="Categorias"> Categorias </a>
+                <a class="but align-left" href="categorias" title="Ir a categorias"> Categorias </a>
             </th>
             <th data-sortable="true">
-                <a class="but align-left" href="materiales" title="Materiales"> Materiales </a>
+                <a class="but align-left" href="materiales" title="Ir a materiales"> Materiales </a>
             </th>
             <th></th>
         </tr>

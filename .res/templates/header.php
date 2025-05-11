@@ -26,7 +26,7 @@
             <?php endif; ?>
         </h1>
         <div class="hright">
-            <a href="/badentracker/actividades/" title="Actividades"
+            <a href="/badentracker/actividades/" title="Ir a actividades"
                 <?php
                 if ($page == "act")
                     echo 'class = "act"';
@@ -34,7 +34,7 @@
                     echo '';
                 ?>
             >Actividades</a>
-            <a href="/badentracker/reuniones/" title="Reuniones"
+            <a href="/badentracker/reuniones/" title="Ir a reuniones"
             <?php
                 if ($page == "reu")
                     echo 'class = "act"';
@@ -42,7 +42,7 @@
                     echo '';
                 ?>
             >Reuniones</a>
-            <a href="/badentracker/calendario/" title="Calendario"
+            <a href="/badentracker/calendario/" title="Ir a calendario"
             <?php
                 if ($page == "cald")
                     echo 'class = "act"';

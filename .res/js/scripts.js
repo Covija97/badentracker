@@ -57,3 +57,9 @@ function sortTableByColumn(columnIndex, type) {
 
     table.setAttribute("data-sort-dir", ascending ? "asc" : "desc");
 }
+
+function back() {   
+    if (document.referrer) {
+        window.location = document.referrer;
+    }
+}

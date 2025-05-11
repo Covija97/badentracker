@@ -5,7 +5,7 @@
 
 # 🗺️ Roadmap (40h) – Marzo y Mayo 2025
 
-## 🛠️ Planificación y estructura básica del proyecto (4h)<a href="1.planing.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
+## 🛠️ Planificación y estructura básica del proyecto (4h)<a href="1.plan.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
 - Crear estructura base con PHP (carpetas, conexión DB)
 
 ```mermaid
@@ -19,7 +19,7 @@ gantt
     Estructura base en PHP      :done, 01-03, 2d
 ```
 
-## 🗄️ Diseño de la base de datos (5h)<a href="2.database.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
+## 🗄️ Diseño de la base de datos (5h)<a href="2.db.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
 
 - Crear esquema SQL (ERD)
 - Crear tablas con migraciones/manual

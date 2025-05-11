@@ -66,7 +66,7 @@ $query = linkDB() -> query($sql);
                 echo "<tr>";
                 echo
                     "<td>
-                        <a class=but  href='objetivo?id=" . $row["obj_id"] . "'>" .
+                        <a class=but  href='objetivo?id=" . $row["obj_id"] . "' title='Editar " . $row["obj_name"] . "'>" .
                         
                             $row["obj_name"] .
                             "</a>

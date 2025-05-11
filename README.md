@@ -42,6 +42,12 @@ Subject: `Trabajo fin de Grado Superior`
 
 ## 📚 Estructura del proyecto
 
+La estructura del proyecto se dividirá en 3 grandes módulos:
+
+* Actividades: el cual gestionará las actividades, objetivos, categorias y materiales almacenados en la base de datos.
+* Calendario: el cual mostrará un calendario interactivo con las diferentes programaciones de cada día, pudiendo filtrar por rama para un manejo más cómodo.
+* Reuniones: 
+
 ```
 badentracker/
 ├── index.php               # Página de inicio

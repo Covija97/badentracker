@@ -146,27 +146,14 @@ INSERT INTO act_mat(act_id, mat_id) VALUES
 (4, 4),
 (5, 5);
 
-/* ----------------------------- Prueba de consultas ----------------------------- */
-
-SELECT * FROM act;
-
-SELECT 
-    act.act_name,
-    act.act_desc,
-    act.act_durat,
-    GROUP_CONCAT(DISTINCT obj.obj_name SEPARATOR '<br>') AS act_objs,
-    GROUP_CONCAT(DISTINCT cat.cat_name SEPARATOR '<br>') AS act_cats,
-    GROUP_CONCAT(DISTINCT mat.mat_name SEPARATOR '<br>') AS act_mats
-FROM act
-LEFT JOIN act_obj ON act.act_id = act_obj.act_id
-LEFT JOIN obj ON act_obj.obj_id = obj.obj_id
-
-LEFT JOIN act_cat ON act.act_id = act_cat.act_id
-LEFT JOIN cat ON act_cat.cat_id = cat.cat_id
-
-LEFT JOIN act_mat ON act.act_id = act_mat.act_id
-LEFT JOIN mat ON act_mat.mat_id = mat.mat_id
-
-GROUP BY act.act_id, act.act_name, act.act_desc, act.act_durat;
 
 
+
+/* ----------------------------- Tablas para reunión ----------------------------- */
+DROP TABLE IF EXISTS prog;
+CREATE TABLE IF NOT EXISTS prog(
+    prog_id     int         NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
+    prog_date   date        NOT NULL                           COMMENT 'Date of the meeting',
+    prog_time   time(0)     NOT NULL                           COMMENT 'Time of the meeting',
+    prog_desc   varchar(255)                                    COMMENT 'Description of the meeting'
+);
