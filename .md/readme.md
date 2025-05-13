@@ -53,7 +53,7 @@ gantt
     Listado y filtros           : 01-14, 1d
 ```
 
-## 📅 CRUD de Reuniones (4h)
+## 📅 CRUD de Reuniones (4h)<a href="4.reu.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
 - Modelo `Programacion` + `ActividadProgramada`
 - Formularios
 - Listado y filtrado
@@ -64,12 +64,12 @@ gantt
     axisFormat %j
    
     section Reuniones<br>(4h)
-    Crear tablas y scripts      : 01-15, 2d
+    Crear modelos               : 01-15, 2d
     Formularios                 : 01-17, 1d
     Listado y filtros           : 01-18, 1d
 ```
 
-## 🖨️ Generador de PDF (5h)
+## 🖨️ Generador de PDF (5h)<a href="5.pdf.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
 - Plantilla HTML para PDF
 - Integrar librería como `FPDF` o `Dompdf`
 - Botón de descarga en vista de programación
@@ -85,7 +85,7 @@ gantt
     Testeo                      : 01-23, 1d
 ```
 
-## 📆 Sistema de calendario (5h)
+## 📆 Sistema de calendario (5h)<a href="6.cld.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
 
 - Tabla `reuniones`
 - API de eventos en PHP (formato JSON)
@@ -97,12 +97,12 @@ gantt
     axisFormat %j
    
     section Calendario<br>(5h)
-    Crear tabla reuniones       : 01-24, 1d
+    Unir con reuniones       : 01-24, 1d
     API de eventos (PHP)        : 01-25, 2d
     FullCalendar integración    : 01-27, 2d
 ```
 
-## ✨ Mejoras (4h)
+## ✨ Mejoras (4h)<a href="7.imp.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
 
 - Filtros múltiples en consultas SQL
 - Mejora de diseño (CSS limpio)
@@ -119,7 +119,7 @@ gantt
     Validaciones JS/PHP         : 01-31, 1d
 ```
 
-## 🧪 Tests y ajustes finales (4h)
+## 🧪 Tests y ajustes finales (4h)<a href="8.test.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
 
 - Pruebas funcionales (manuales)
 - Correcciones menores
@@ -136,7 +136,7 @@ gantt
     Ajustes menores             : 02-03, 1d
 ```
 
-## 📚 Documentación (5h)
+## 📚 Documentación (5h)<a href="9.doc.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
 
 - README con instrucciones de instalación
 - Documentación técnica y de uso

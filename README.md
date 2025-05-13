@@ -17,7 +17,7 @@ Subject: `Trabajo fin de Grado Superior`
 
 ![alt text](.md/img/image.png)
 
-## 🗺️ Roadmap<a href="/.md/roadmap.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
+## 🗺️ Roadmap<a href="/.md/readme.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
 
 ## 🚀 Características principales
 
