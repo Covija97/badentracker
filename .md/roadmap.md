@@ -48,7 +48,7 @@ gantt
     axisFormat %j
 
     section Actividades<br>(4h)
-    Crear tablas y scripts      : 01-11, 2d
+    Crear modelos               : 01-11, 2d
     Formularios                 : 01-13, 1d
     Listado y filtros           : 01-14, 1d
 ```
