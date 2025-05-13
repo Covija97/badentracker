@@ -15,7 +15,7 @@ gantt
     axisFormat %j
 
     section Planing<br>(4h)
-    Definir entidades           :done, 01-01, 2d
+    Definir modelos SQL         :done, 01-01, 2d
     Estructura base en PHP      :done, 01-03, 2d
 ```
 
@@ -33,10 +33,10 @@ gantt
     section Base de Datos<br>(5h)
     Diseño de esquema SQL       :done, 01-06, 2d
     Crear tablas                :done, 01-08, 2d
-    Relaciones y claves         :active, 01-10, 1d
+    Configurar relaciones        :active, 01-10, 1d
 ```
 
-## 📝 CRUD de Actividades (4h)
+## 🎯 CRUD de Actividades (4h)
 
 - Crear modelos `Actividad` y `ObjetivoPedagogico`
 - Formularios
