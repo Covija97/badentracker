@@ -1,5 +1,5 @@
 -- Active: 1745596725282@@127.0.0.1@3306@badentracker
-/* ----------------------------- Tablas principales ----------------------------- */
+/* ----------------------------- Tablas CRUD Actividades ----------------------------- */
 
 /* Tabla de actividades */
 DROP TABLE IF EXISTS act;
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS mat(
 );
 
 
-/* ----------------------------- Tablas intermedias ----------------------------- */
+/* ----------------------------- Tablas intermedias y relaciones ----------------------------- */
 
 /* Tabla entre actividades y objetivos */
 DROP TABLE IF EXISTS act_obj;
@@ -74,15 +74,4 @@ CREATE TABLE IF NOT EXISTS act_mat(
     PRIMARY KEY (act_id, mat_id),
     FOREIGN KEY (act_id) REFERENCES act(act_id) ON DELETE CASCADE,
     FOREIGN KEY (mat_id) REFERENCES mat(mat_id) ON DELETE CASCADE
-);
-
-
-
-
-/* ----------------------------- Tablas para reunión ----------------------------- */
-DROP TABLE IF EXISTS prog;
-CREATE TABLE IF NOT EXISTS prog(
-    prog_id     int         NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
-    prog_date   date        NOT NULL                           COMMENT 'Date of the meeting',
-    prog_time   time(0)     NOT NULL                           COMMENT 'Time of the meeting',
 );
