@@ -38,7 +38,7 @@ gantt
 
 ## 🎯 CRUD de Actividades (4h)<a href="3.act.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
 
-- Crear modelos `Actividad` y `ObjetivoPedagogico`
+- Crear modelos `Actividad`, `Objetivos`, `Categorias` y `Materiales`
 - Formularios
 - Listado y filtrado
 
