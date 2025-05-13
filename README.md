@@ -104,6 +104,7 @@ badentracker/
 ## 📌 Próximas mejoras
 
 - Soporte multiusuario por unidades o ramas.
+- Seguimiento de progreso personal de cada niño.
 - Exportación a Google Calendar.
 - Búsqueda avanzada con múltiples filtros.
 - Modo offline (PWA).

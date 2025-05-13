@@ -11,33 +11,6 @@ CREATE TABLE IF NOT EXISTS act(
     act_durat   time(0)                                         COMMENT 'Activity Duration'
 );
 
-INSERT INTO act(act_name, act_desc, act_durat) VALUES
-('Actividad 6', 'Descripción de la actividad 6', '00:20'),
-('Actividad 7', 'Descripción de la actividad 7', '00:50'),
-('Actividad 8', 'Descripción de la actividad 8', '01:10'),
-('Actividad 9', 'Descripción de la actividad 9', '00:40'),
-('Actividad 10', 'Descripción de la actividad 10', '00:25'),
-('Actividad 11', 'Descripción de la actividad 11', '00:55'),
-('Actividad 12', 'Descripción de la actividad 12', '01:05'),
-('Actividad 13', 'Descripción de la actividad 13', '00:35'),
-('Actividad 14', 'Descripción de la actividad 14', '00:15'),
-('Actividad 15', 'Descripción de la actividad 15', '00:45'),
-('Actividad 16', 'Descripción de la actividad 16', '01:20'),
-('Actividad 17', 'Descripción de la actividad 17', '00:30'),
-('Actividad 18', 'Descripción de la actividad 18', '00:50'),
-('Actividad 19', 'Descripción de la actividad 19', '01:10'),
-('Actividad 20', 'Descripción de la actividad 20', '00:40'),
-('Actividad 21', 'Descripción de la actividad 21', '00:25'),
-('Actividad 22', 'Descripción de la actividad 22', '00:55'),
-('Actividad 23', 'Descripción de la actividad 23', '01:05'),
-('Actividad 24', 'Descripción de la actividad 24', '00:35'),
-('Actividad 25', 'Descripción de la actividad 25', '00:15'),
-('Actividad 26', 'Descripción de la actividad 26', '00:45'),
-('Actividad 27', 'Descripción de la actividad 27', '01:20'),
-('Actividad 28', 'Descripción de la actividad 28', '00:30'),
-('Actividad 29', 'Descripción de la actividad 29', '00:50'),
-('Actividad 30', 'Descripción de la actividad 30', '01:10');
-
 /* Tabla de objetivos */
 DROP TABLE IF EXISTS obj;
 
@@ -46,13 +19,6 @@ CREATE TABLE IF NOT EXISTS obj(
     obj_name    varchar(50) NOT NULL UNIQUE                     COMMENT 'Objective Name',
     obj_desc    varchar(255)                                    COMMENT 'Objective Description'
 );
-
-INSERT INTO obj(obj_name, obj_desc) VALUES
-('Objetivo 1', 'Descripción del objetivo 1'),
-('Objetivo 2', 'Descripción del objetivo 2'),
-('Objetivo 3', 'Descripción del objetivo 3'),
-('Objetivo 4', 'Descripción del objetivo 4'),
-('Objetivo 5', 'Descripción del objetivo 5');
 
 /* Tabla de categorias de actividades */
 DROP TABLE IF EXISTS cat;
@@ -63,13 +29,6 @@ CREATE TABLE IF NOT EXISTS cat(
     cat_desc    varchar(255)                                    COMMENT 'Category Description'
 );
 
-INSERT INTO cat(cat_name, cat_desc) VALUES
-('Categoría 1', 'Descripción de la categoría 1'),
-('Categoría 2', 'Descripción de la categoría 2'),
-('Categoría 3', 'Descripción de la categoría 3'),
-('Categoría 4', 'Descripción de la categoría 4'),
-('Categoría 5', 'Descripción de la categoría 5');
-
 /* Tabla de materiales */
 DROP TABLE IF EXISTS mat;
 
@@ -78,13 +37,6 @@ CREATE TABLE IF NOT EXISTS mat(
     mat_name    varchar(50) NOT NULL UNIQUE                     COMMENT 'Material Name',
     mat_desc    varchar(255)                                    COMMENT 'Material Description'
 );
-
-INSERT INTO mat(mat_name, mat_desc) VALUES
-('Material 1', 'Descripción del material 1'),
-('Material 2', 'Descripción del material 2'),
-('Material 3', 'Descripción del material 3'),
-('Material 4', 'Descripción del material 4'),
-('Material 5', 'Descripción del material 5');
 
 
 /* ----------------------------- Tablas intermedias ----------------------------- */
@@ -100,14 +52,6 @@ CREATE TABLE IF NOT EXISTS act_obj(
     FOREIGN KEY (obj_id) REFERENCES obj(obj_id) ON DELETE CASCADE
 );
 
-INSERT INTO act_obj(act_id, obj_id) VALUES
-(1, 1),
-(1, 2),
-(2, 3),
-(3, 4),
-(4, 5),
-(5, 1);
-
 /* Tabla entre actividades y categorias */
 
 DROP TABLE IF EXISTS act_cat;
@@ -119,13 +63,6 @@ CREATE TABLE IF NOT EXISTS act_cat(
     FOREIGN KEY (act_id) REFERENCES act(act_id) ON DELETE CASCADE,
     FOREIGN KEY (cat_id) REFERENCES cat(cat_id) ON DELETE CASCADE
 );
-
-INSERT INTO act_cat(act_id, cat_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
 
 /* Tabla entre actividades y materiales */
 
@@ -139,13 +76,6 @@ CREATE TABLE IF NOT EXISTS act_mat(
     FOREIGN KEY (mat_id) REFERENCES mat(mat_id) ON DELETE CASCADE
 );
 
-INSERT INTO act_mat(act_id, mat_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
-
 
 
 
@@ -155,5 +85,4 @@ CREATE TABLE IF NOT EXISTS prog(
     prog_id     int         NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
     prog_date   date        NOT NULL                           COMMENT 'Date of the meeting',
     prog_time   time(0)     NOT NULL                           COMMENT 'Time of the meeting',
-    prog_desc   varchar(255)                                    COMMENT 'Description of the meeting'
 );
