@@ -48,7 +48,7 @@ La estructura del proyecto se dividirá en 3 grandes módulos:
 
 * Actividades: el cual gestionará las actividades, objetivos, categorias y materiales almacenados en la base de datos.
 * Calendario: el cual mostrará un calendario interactivo con las diferentes programaciones de cada día, pudiendo filtrar por rama para un manejo más cómodo.
-* Reuniones: 
+* Reuniones: en el cual se pueden crear las reuniones, salidas, etc de manera sencilla pudiendo usar la base de datos de actividades o poder usar una actividad personalizada.
 
 ```
 badentracker/
