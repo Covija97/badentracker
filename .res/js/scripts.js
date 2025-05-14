@@ -15,6 +15,36 @@ function initSearch() {
             row.style.display = text.includes(input) ? "" : "none";
         });
     });
+    document.getElementById('searchInput').addEventListener('input', function () {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll('.table-main tr');
+        let visibleRowIndex = 0;
+
+        rows.forEach((row, index) => {
+            if (index === 0) return; // Saltar la fila de encabezado
+
+            const text = row.textContent.toLowerCase();
+            if (text.includes(filter)) {
+                row.style.display = ''; // Mostrar fila
+                // Aplicar colores intercalados
+                const isEven = visibleRowIndex % 2 === 0;
+                row.style.backgroundColor = isEven ? 'var(--color001)' : 'var(--color004)';
+                row.style.color = isEven ? 'var(--color002)' : 'var(--color001)';
+
+                // Aplicar estilos a los botones dentro de la fila
+                const buttons = row.querySelectorAll('.but');
+                buttons.forEach(button => {
+                    button.style.color = isEven ? 'var(--color002)' : 'var(--color001)';
+                    button.style.stroke = isEven ? 'var(--color002)' : 'var(--color001)';
+                    button.style.borderColor = isEven ? 'var(--color002)' : 'var(--color001)';
+                });
+
+                visibleRowIndex++;
+            } else {
+                row.style.display = 'none'; // Ocultar fila
+            }
+        });
+    });
 }
 
 function removeAccents(str) {

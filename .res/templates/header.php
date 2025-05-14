@@ -9,7 +9,7 @@
              - <?php echo $title; ?>
         <?php endif; ?>
     </title>
-    <link rel="stylesheet" href="/badentracker/.res/css/styles.css">
+    <link rel="stylesheet" href="/badentracker/.res/css/styles.css?v=2">
     <link rel="icon" href="/badentracker/.res/icon/bt-logo.svg" type="image/svg+xml">
     
 </head>
