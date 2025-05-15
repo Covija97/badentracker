@@ -3,19 +3,10 @@
 function linkDB ():mysqli  {
     $servername = "localhost";
     $database = "badentracker";
-    $username = "root";
-    $password = "";
+    $username = "bt";
+    $password = "BadenTracker2025*";
     
-    $conx new mysqli($servername, $username, $password, $database);
-
-    if($conx->connect_errno) {
-        printf("Connect failed: %s\n", $conx->connect_error);
-        exit();
-    } else {
-        return $conx;
-        $db = mysqli_select_db($conx, $db);
-    }
-
+    return new mysqli($servername, $username, $password, $database);
 }
 
 function getTable(): string {
