@@ -1,5 +1,12 @@
 -- Active: 1745596725282@@127.0.0.1@3306@badentracker
 /* ----------------------------- Tablas CRUD Actividades ----------------------------- */
+CREATE USER 'bt'@'localhost' IDENTIFIED by 'BadenTracker2025*';
+
+GRANT ALL PRIVILEGES ON badentracker.* TO 'bt'@'localhost';
+FLUSH PRIVILEGES;
+
+
+SELECT * FROM
 
 /* Tabla de actividades */
 DROP TABLE IF EXISTS act;

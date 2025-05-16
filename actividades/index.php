@@ -56,7 +56,9 @@ $query = linkDB() -> query($sql);
     <table class="table-main">
         <tr>
             <th data-sortable="true">Actividad</th>
-            <th data-sortable="true">Descripción</th>
+            <th data-sortable="true">
+                Descripción
+            </th>
             <th data-sortable="true">Duración</th>
             <th data-sortable="true">
                 <a class="but align-left" href="objetivos" title="Ir a objetivos"> Objetivos </a>

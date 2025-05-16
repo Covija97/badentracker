@@ -160,7 +160,6 @@ footer {
     line-height: 1.5;
     text-align: left;
     vertical-align: middle;
-    width: 100%;
 }
 .table-main tr:nth-child(odd) {
     background-color: var(--color004);
@@ -180,13 +179,6 @@ footer {
 
 .table-main td, th{
     padding: 10px;
-}
-
-.table-cell-limited {
-    max-width: 25%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 /* Estilo de la tabla de resultados */
