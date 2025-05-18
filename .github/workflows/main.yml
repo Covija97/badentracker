@@ -14,5 +14,5 @@ jobs:
 
     - name: Limpiar y copiar repositorio a /var/www/html
       run: |
-        sudo rm -rf /var/www/html/*
-        sudo cp -r . /var/www/html/
+        sudo rm -rf /var/www/html/badentracker
+        sudo cp -r . /var/www/html/badentracker
