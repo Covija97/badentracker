@@ -7,7 +7,7 @@ on:
 
 jobs:
   job_on_pr:
-    runs-on: labs-runner
+    runs-on: self-hosted
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
