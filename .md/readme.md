@@ -35,7 +35,7 @@ gantt
     section Base de Datos<br>(5h)
     Diseño de esquema SQL       :done, 01-06, 2d
     Crear tablas                :done, 01-08, 2d
-    Configurar relaciones        :active, 01-10, 1d
+    Configurar relaciones       :done, 01-10, 1d
 ```
 
 ## 🎯 CRUD de Actividades (4h)<a href="3.act.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
@@ -50,9 +50,9 @@ gantt
     axisFormat %j
 
     section Actividades<br>(4h)
-    Crear modelos               : 01-11, 2d
-    Formularios                 : 01-13, 1d
-    Listado y filtros           : 01-14, 1d
+    Crear modelos               :done, 01-11, 2d
+    Formularios                 :done, 01-13, 1d
+    Listado y filtros           :done, 01-14, 1d
 ```
 
 ## 📅 CRUD de Reuniones (4h)<a href="4.reu.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
@@ -66,7 +66,7 @@ gantt
     axisFormat %j
    
     section Reuniones<br>(4h)
-    Crear modelos               : 01-15, 2d
+    Crear modelos               :active, 01-15, 2d
     Formularios                 : 01-17, 1d
     Listado y filtros           : 01-18, 1d
 ```
