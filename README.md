@@ -114,6 +114,3 @@ badentracker/
 ## 🧑‍💻 Contribución
 
 Este proyecto está en desarrollo. Si tienes ideas, sugerencias o quieres colaborar, ¡eres más que bienvenido! Puedes abrir un issue o hacer un fork para aportar.
-
-
-putas
