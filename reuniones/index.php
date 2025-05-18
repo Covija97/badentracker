@@ -73,7 +73,7 @@ $query = linkDB() -> query($sql);
                 echo "<tr>";
                 echo
                     "<td>
-                        <a class=but  href='reunion?id=" . $row["prog_id"] . "' title='Editar'>" .
+                        <a class=but  href='reunion?id=" . $row["prog_id"] . "' title='Editar " . $row["prog_id"] ."'>" .
                             $row["pr"] . "-" . $row["prog_date"] . "
                         </a>
                     </td>";
