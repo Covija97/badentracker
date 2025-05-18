@@ -80,7 +80,7 @@ $query = linkDB() -> query($sql);
                             $row["act_name"] ."
                         </a>
                     </td>";
-                echo "<td class='table-cell-limited'>" . $row["act_desc"] . "</td>";                echo "<td>" . $row["act_durat"] . "</td>";
+                echo "<td>" . $row["act_desc"] . "</td>";                echo "<td>" . $row["act_durat"] . "</td>";
                 echo "<td>" . $row["act_objs"] . "</td>";
                 echo "<td>" . $row["act_cats"] . "</td>";
                 echo "<td>" . $row["act_mats"] . "</td>";

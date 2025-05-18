@@ -21,3 +21,20 @@ LEFT JOIN act_mat ON act.act_id = act_mat.act_id
 LEFT JOIN mat ON act_mat.mat_id = mat.mat_id
 
 GROUP BY act.act_id, act.act_name, act.act_desc, act.act_durat;
+
+SELECT
+    prog.prog_id,
+    prog.prog_date,
+    prog.prog_time,
+    prog.prog_coord,
+    prog.prog_place,
+    prog.prog_child_N,
+    prog.grp_id,
+    grps.grp_name,
+    GROUP_CONCAT(DISTINCT rama.rama_name SEPARATOR '<br>') AS prog_rama
+FROM prog
+LEFT JOIN grps ON prog.grp_id = grps.grp_id
+LEFT JOIN prog_rama ON prog.prog_id = prog_rama.prog_id
+LEFT JOIN rama ON prog_rama.rama_id = rama.rama_id
+
+GROUP BY prog.prog_id, prog.prog_date, prog.prog_time, prog.prog_coord, prog.prog_place, prog.prog_child_N, prog.grp_id, grps.grp_name

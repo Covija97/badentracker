@@ -46,3 +46,34 @@ CREATE TABLE IF NOT EXISTS prog_act(
     FOREIGN KEY (prog_id) REFERENCES prog(prog_id) ON DELETE CASCADE,
     FOREIGN KEY (act_id) REFERENCES act(act_id) ON DELETE CASCADE
 );
+
+
+INSERT INTO rama (rama_name) VALUES
+('Castores'),
+('Lobatos'),
+('Rangers'),
+('Pioneros'),
+('Rutas');
+
+
+INSERT INTO grps (grp_name, grp_logo) VALUES
+('Grupo Scout 1', 'logo1.png'),
+('Grupo Scout 2', 'logo2.png'),
+('Grupo Scout 3', 'logo3.png'),
+('Grupo Scout 4', 'logo4.png'),
+('Grupo Scout 5', 'logo5.png');
+
+
+INSERT into prog (prog_date, prog_time, prog_coord, prog_place, prog_child_N, grp_id) VALUES
+('2023-10-01', '10:00:00', 'Juan Pérez', 'Parque Central', 20, 1),
+('2023-10-08', '10:00:00', 'María López', 'Plaza de la Ciudad', 15, 2),
+('2023-10-15', '10:00:00', 'Carlos García', 'Bosque de la Montaña', 25, 1),
+('2023-10-22', '10:00:00', 'Ana Martínez', 'Río Azul', 30, 2),
+('2023-10-29', '10:00:00', 'Luis Fernández', 'Cerro Verde', 18, 1);
+
+INSERT into prog_rama (prog_id, rama_id) VALUES
+(18, 1),
+(19, 2),
+(19, 3),
+(21, 2),
+(22, 5);
