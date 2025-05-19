@@ -54,6 +54,7 @@ $query = linkDB() -> query($sql);
 
     <table class="table-main">
         <tr>
+            <th></th>
             <th data-sortable="true">
                 Fecha
             </th>
@@ -64,7 +65,7 @@ $query = linkDB() -> query($sql);
                 Ramas
             </th>
             <th data-sortable="true">
-                Grupos
+                <a class="but align-left" href="grupos" title="Ir a grupos"> Grupos </a>
             </th>
             <th></th>
         </tr>
@@ -77,6 +78,7 @@ $query = linkDB() -> query($sql);
                             $row["pr"] . "-" . $row["prog_date"] . "
                         </a>
                     </td>";
+                echo "<td>" . $row["prog_date"] . "</td>";
                 echo "<td>" . $row["prog_time"] . "</td>";
                 echo "<td>" . $row["prog_rama"] . "</td>";
                 echo "<td>" . $row["grp_name"] . "</td>";
