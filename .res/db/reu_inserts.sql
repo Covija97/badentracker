@@ -11,8 +11,7 @@ CREATE TABLE IF NOT EXISTS rama(
 DROP TABLE IF EXISTS grps;
 CREATE TABLE IF NOT EXISTS grps(
     grp_id      int         NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
-    grp_name    varchar(50) NOT NULL                           COMMENT 'Name of the group',
-    grp_logo    LONGBLOB     NOT NULL                           COMMENT 'Logo of the group'
+    grp_name    varchar(50) NOT NULL                           COMMENT 'Name of the group'
 );
 
 DROP TABLE IF EXISTS prog;
@@ -24,17 +23,9 @@ CREATE TABLE IF NOT EXISTS prog(
     prog_place  varchar(50) NOT NULL                           COMMENT 'Place of the meeting',
     prog_child_N int NOT NULL                           COMMENT 'Number of children in the meeting',
     grp_id      int NOT NULL                           COMMENT 'Foreign Key to grps',
-    FOREIGN KEY (grp_id) REFERENCES grps(grp_id)
-);
-
-
-DROP TABLE IF EXISTS prog_rama;
-CREATE TABLE IF NOT EXISTS prog_rama(
-    prog_id     int         NOT NULL                           COMMENT 'Foreign Key to prog',
-    rama_id     int         NOT NULL                           COMMENT 'Foreign Key to rama',
-    PRIMARY KEY (prog_id, rama_id),
-    FOREIGN KEY (prog_id) REFERENCES prog(prog_id) ON DELETE CASCADE,
-    FOREIGN KEY (rama_id) REFERENCES rama(rama_id) ON DELETE CASCADE
+    rama_id     int NOT NULL                            COMMENT 'Foreing Key to rama ',
+    FOREIGN KEY (grp_id) REFERENCES grps(grp_id),
+    FOREIGN KEY (rama_id) REFERENCES rama(rama_id)
 );
 
 DROP TABLE IF EXISTS prog_act;
@@ -53,27 +44,22 @@ INSERT INTO rama (rama_name) VALUES
 ('Lobatos'),
 ('Rangers'),
 ('Pioneros'),
-('Rutas');
+('Rutas'),
+('Grupo');
 
 
-INSERT INTO grps (grp_name, grp_logo) VALUES
-('Grupo Scout 1', 'logo1.png'),
-('Grupo Scout 2', 'logo2.png'),
-('Grupo Scout 3', 'logo3.png'),
-('Grupo Scout 4', 'logo4.png'),
-('Grupo Scout 5', 'logo5.png');
+INSERT INTO grps (grp_name) VALUES
+('JEYMA');
 
 
-INSERT into prog (prog_date, prog_time, prog_coord, prog_place, prog_child_N, grp_id) VALUES
-('2023-10-01', '10:00:00', 'Juan Pérez', 'Parque Central', 20, 1),
-('2023-10-08', '10:00:00', 'María López', 'Plaza de la Ciudad', 15, 2),
-('2023-10-15', '10:00:00', 'Carlos García', 'Bosque de la Montaña', 25, 1),
-('2023-10-22', '10:00:00', 'Ana Martínez', 'Río Azul', 30, 2),
-('2023-10-29', '10:00:00', 'Luis Fernández', 'Cerro Verde', 18, 1);
-
-INSERT into prog_rama (prog_id, rama_id) VALUES
-(18, 1),
-(19, 2),
-(19, 3),
-(21, 2),
-(22, 5);
+INSERT into prog (prog_date, prog_time, prog_coord, prog_place, prog_child_N, grp_id, rama_id) VALUES
+('2023-10-01', '10:00:00', 'Jorge', 'Casa de Jorge', 5, 1, 2),
+('2023-10-02', '11:00:00', 'Jorge', 'Casa de Jorge', 5, 1, 2),
+('2023-10-03', '12:00:00', 'Jorge', 'Casa de Jorge', 5, 1, 2),
+('2023-10-04', '13:00:00', 'Jorge', 'Casa de Jorge', 5, 1, 2),
+('2023-10-05', '14:00:00', 'Jorge', 'Casa de Jorge', 5, 1, 2),
+('2023-10-06', '15:00:00', 'Jorge', 'Casa de Jorge', 5, 1, 2),
+('2023-10-07', '16:00:00', 'Jorge', 'Casa de Jorge', 5, 1, 2),
+('2023-10-08', '17:00:00', 'Jorge', 'Casa de Jorge', 5, 1, 2),
+('2023-10-09', '18:00:00', 'Jorge', 'Casa de Jorge', 5, 1, 2),
+('2023-10-10', '19:00:00', 'Jorge', 'Casa de Jorge', 5, 1, 2);

@@ -1,7 +1,7 @@
 <!-- Variables, require e include -->
 <?php
-$title = "Nueva Actividad";
-$page = "act";
+$title = "Nueva Reunión";
+$page = "reu";
 
 require "../../.res/funct/funct.php";
 include "../../.res/templates/header.php";
@@ -43,7 +43,14 @@ $allActs = $allActQuery->fetch_all(MYSQLI_ASSOC);
 /* Consulta todas las ramas */
 $allRamSQL = "SELECT rama_id, rama_name FROM rama";
 $allRamQuery = linkDB()->query($allRamSQL);
-$allRam = $allRamQuery->fetch_all(MYSQLI_ASSOC);
+$allRams = $allRamQuery->fetch_all(MYSQLI_ASSOC);
+?>
+
+<?php
+/* Consulta todos los grupos */
+$allGrpSQL = "SELECT grp_id, grp_name FROM grps";
+$allGrpQuery = linkDB()->query($allGrpSQL);
+$allGrps = $allGrpQuery->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!-------------------- POST -------------------->
@@ -52,6 +59,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 }
 ?>
+
+<style>
+    :root {
+        --colorRama : #efefef;
+    }
+    .branchCell {
+        background-color: var(--colorRama);
+    }
+    table {
+        font-family: "Calibri", sans-serif;
+        overflow: hidden;
+        width: 100%;
+        font-size: 20px;
+        line-height: 1.5;
+        text-align: left;
+        vertical-align: middle;  
+        border: 2px solid var(--color004);
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 10px;
+    }
+
+    td {
+        background-color: white;
+        text-align: center;
+        height: 30px;
+        border: 0.5px solid #bebebe;
+        padding: 10px;
+    }
+    
+    .select2-container {
+        width: 100% !important;
+        font-family: "Calibri", sans-serif;
+        text-align: center;
+    }
+
+    
+    input {
+        width: 100%;
+        height: 100%;
+        padding: 0px;
+        border: 0.5px solid var(--color004);
+        border-radius: 0px ;
+        background-color: #ffffffcc;
+        color: var(--color002);
+        font-size: 18px;
+        text-align: center;
+    }
+    .logoCell {
+        width: 150px;
+        height: 150px;
+        padding: 0;
+        text-align: center;
+    }
+    .logoCell img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Esto evitará que la imagen se deforme */
+    }
+
+</style>
 
 <!-------------------- main -------------------->
 
@@ -73,92 +141,184 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             id="path3" />
         </svg>
     </a>
+    <br><br>
 
     <form method="POST" class="form-grid">
         <input type="hidden" name="act_id">
-
-        <!-- Nombre de la actividad -->
-        <div class="form-row">
-            <label for="act_name">Nombre:</label>
-            <input type="text" id="act_name" name="act_name" required>
-        </div>
-
-        <!-- Duración de la actividad -->
-        <div class="form-row">
-            <label for="act_durat">Duración:</label>
-            <input type="time" id="act_durat" name="act_durat">
-        </div>
-
-        <!-- Descripción de la actividad -->
-        <div class="form-row textarea-row">
-            <label for="act_desc">Descripción:</label>
-            <textarea id="act_desc" name="act_desc" rows="4"></textarea>
-        </div>
-
-        <!-- Objetivos de la actividad -->
-        <div class="form-row">
-            <label>
-                <a class="but" href="../objetivos" title="Ver Objetivos">
-                    Objetivos
-                </a>
-            </label>
-            <select name="objs[]" id="objs" class="select2" multiple>
-                <?php
-                foreach ($allObjs as $obj) {
-                    echo "<option value='" . $obj["obj_id"] . "' $selected>" . $obj["obj_name"] . "</option>";
-                }
-                ?>
-            </select>
-        </div>
-
-        <!-- Categorias de la actividad -->
-        <div class="form-row">
-            <label>
-                <a class="but" href="../categorias" title="Ver Categorias">
-                    Categorias
-                </a>
-            </label>
-            <select name="cat[]" id="cat" class="select2" multiple>
-                <?php
-                foreach ($allCats as $cat) {
-                    $selected = "";
-                    foreach ($catQuery as $selectedCat) {
-                        if ($selectedCat["cat_name"] === $cat["cat_name"]) {
-                            $selected = "selected";
-                            break;
+        <table>
+            <tr>
+                <td class="branchCell" width="25%">
+                    <label for="grop_id">
+                        <b>Grupo scout</b>
+                    </label>
+                </td>
+                <td width="35%">
+                    <select name="grps[]" id="grps" class="select2" onchange="cambioLogo()">
+                        <option value="" selected disabled>Selecciona el grupo</option>
+                        <?php
+                        foreach ($allGrps as $grp) {
+                            echo "<option value='" . $grp["grp_id"] . "'>" . $grp["grp_name"] . "</option>";
                         }
-                    }
-                    echo "<option value='" . $cat["cat_id"] . "' $selected>" . $cat["cat_name"] . "</option>";
-                }
-                ?>
-            </select>
-        </div>
-
-        <!-- Materiales de la actividad -->
-        <div class="form-row">
-            <label>
-                <a class="but" href="../materiales" title="Ver Materiales">
-                    Materiales
-                </a>
-            </label>
-            <select name="mat[]" id="mat" class="select2" multiple>
-                <?php
-                foreach ($allMats as $mat) {
-                    $selected = "";
-                    foreach ($matQuery as $selectedMat) {
-                        if ($selectedMat["mat_name"] === $mat["mat_name"]) {
-                            $selected = "selected";
-                            break;
+                        ?>
+                    </select>
+                </td>
+                <td class="branchCell" width="20%">
+                    Ronda Solar
+                </td>
+                <td width="20%">
+                    <span id="rondaSolar">
+                        Calculo automático...
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="branchCell">
+                    <label for="prog_place">Lugar</label>
+                </td>
+                <td>
+                    <input type="text" name="" id="">
+                </td>
+                <td class="branchCell">
+                    <label for="prog_date">Fecha</label>
+                </td>
+                <td>
+                    <input type="date" name="prog_date" id="prog_date" onchange="calculaRondaSolar()">
+                </td>
+            </tr>
+            <tr>
+                <td class="branchCell">
+                    <label for="prog_coord">Coordinador</label>
+                </td>
+                <td>
+                    <input type="text" name="prog_coord" id="prog_coord">
+                </td>
+                <td class="branchCell">
+                    <label for="prog_child_N">Nº educandos</label>
+                </td>
+                <td>
+                    <input type="number" name="prog_child_N" id="prog_child_N">
+                </td>
+            </tr>
+            <tr>
+                <td class="branchCell">
+                    <label for="rama">
+                        Rama
+                    </label>
+                </td>
+                <td class="branchCell" colspan="2">
+                    <label for="prog_child_N">
+                        Responsables asistentes
+                    </label>
+                </td>
+                <td class="branchCell">
+                    Logo del grupo
+                </td>
+            </tr>
+            <tr>
+                <td class="branchCell">
+                    <select name="rama[]" id="rama" class="select2" onchange="colorearCeldas()">
+                        <option value="" selected disabled>Selecciona la rama</option>
+                        <?php
+                        foreach ($allRams as $rama) {
+                            echo "<option value='" . $rama["rama_id"] . "'>" . $rama["rama_name"] . "</option>";
                         }
-                    }
-                    echo "<option value='" . $mat["mat_id"] . "' $selected>" . $mat["mat_name"] . "</option>";
-                }
-                ?>
-            </select>
-        </div>
+                        ?>
+                    </select>
+                </td>
+                <td colspan="2">
 
-        <div class="form-actions">
-            <button type="submit" class="btn-submit">Añadir actividad</button>
-        </div>
+                </td>
+                <td class="logoCell">
+                    <img id="logoGrupo" src="" alt="Seleccione un grupo">
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td class="branchCell" width="25%">
+                    Nombre
+                </td>
+                <td>
+
+                </td>
+            </tr>
+            <tr>
+                <td class="branchCell" colspan="2">
+                    Desarrollo
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    
+                </td>
+            </tr>
+        </table>
     </form>
 </main>
+
+<!-------------------- Scripts de select2 -------------------->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+
+    function calculaRondaSolar() {
+        const fecha = document.getElementById('prog_date').value;
+        let ronda = '';
+        if (fecha) {
+            // La ronda solar empieza en septiembre y termina en agosto
+            const mes = new Date(fecha).getMonth() + 1; // Los meses van de 0 a 11
+            const anio = new Date(fecha).getFullYear(); // Obtener el año actual
+            if (mes >= 9) {
+                ronda = anio + '/' + (anio + 1) % 100;
+            } else {
+                ronda = (anio - 1) + '/' + anio % 100;
+            }
+        }
+        document.getElementById('rondaSolar').textContent = ronda;
+    }
+    // Inicializar si ya hay valor
+    document.getElementById('prog_date').addEventListener('input', calculaRondaSolar);
+
+    function colorearCeldas() {
+        const rama = document.getElementById('rama').value;
+        console.log("Valor de rama:", rama);
+        let color = '';
+        switch (rama) {
+            case '2':
+                color = '#fce5cd';
+                break;
+            case '3':
+                color = '#fff1cc';
+                break;
+            case '4':
+                color = '#c9daf8';
+                break;
+            case '5':
+                color = '#f4cccc';
+                break;
+            case '6':
+                color = '#d9ead3';
+                break;
+            default:
+                color = '#efefef';
+        }
+        // Actualizar la variable CSS
+        document.documentElement.style.setProperty('--colorRama', color);
+    }
+
+    function cambioLogo() {
+        const grupo = document.getElementById("grps").value;
+        console.log("Grupo seleccionado:", grupo); // Para depuración
+
+        // Construye la ruta de la imagen
+        const rutaImagen = `../../.res/img/logos-grupos/${grupo}.png`;
+
+        // Cambia la imagen
+        document.getElementById("logoGrupo").src = rutaImagen;
+    }
+
+</script>

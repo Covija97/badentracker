@@ -249,28 +249,6 @@ footer {
 
 /* Estilo select multiple */
 
-.select2-container {
-    flex: 2 !important;
-}
-  
-.select2-selection {
-    height: 40px !important;
-    border: 2px solid var(--color004) !important;
-    border-radius: 8px !important;
-    background-color: #ffffffcc !important;
-    color: var(--color002) !important;
-    font-size: 18px !important;
-}
-
-.select2-dropdown {
-    padding: 10px;
-    border: 2px solid var(--color004) !important;
-    border-radius: 8px !important;
-    background-color: #ffffffcc;
-    color: var(--color002);
-    font-size: 18px;
-}
-
 input {
     width: 50%;
     padding: 10px;

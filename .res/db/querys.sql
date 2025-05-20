@@ -30,11 +30,11 @@ SELECT
     prog.prog_place,
     prog.prog_child_N,
     prog.grp_id,
+    prog.rama_id,
     grps.grp_name,
-    GROUP_CONCAT(DISTINCT rama.rama_name SEPARATOR '<br>') AS prog_rama
+    rama.rama_name
 FROM prog
 LEFT JOIN grps ON prog.grp_id = grps.grp_id
-LEFT JOIN prog_rama ON prog.prog_id = prog_rama.prog_id
-LEFT JOIN rama ON prog_rama.rama_id = rama.rama_id
+LEFT JOIN rama ON rama.rama_id = prog.rama_id
 
-GROUP BY prog.prog_id, prog.prog_date, prog.prog_time, prog.prog_coord, prog.prog_place, prog.prog_child_N, prog.grp_id, grps.grp_name
+GROUP BY prog.prog_id, prog.prog_date, prog.prog_time, prog.prog_coord, prog.prog_place, prog.prog_child_N, prog.grp_id, prog.rama_id
