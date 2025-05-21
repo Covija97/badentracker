@@ -6,14 +6,12 @@ $page = "reu";
 require "../../.res/funct/funct.php";
 include "../../.res/templates/header.php";
 ?>
-<!-- Agregar en el <head> -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <!-- Consultas -->
 
 <!-------------------- Consultas generales -------------------->
 
 <?php
-/* Consulta todas las actividades */
+/* Consulta todas las actividades categoria, materiales y objetivos de las actividades */
 $allActSQL = "
 SELECT
     act.act_id,
@@ -53,13 +51,13 @@ $allGrpQuery = linkDB()->query($allGrpSQL);
 $allGrps = $allGrpQuery->fetch_all(MYSQLI_ASSOC);
 ?>
 
-<!-------------------- POST -------------------->
+<!---------------------------------------- POST ---------------------------------------->
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 }
 ?>
-
+<!---------------------------------------- CSS ---------------------------------------->
 <style>
     :root {
         --colorRama : #efefef;
@@ -80,7 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         border-spacing: 0;
         border-radius: 10px;
     }
-
     td {
         background-color: white;
         text-align: center;
@@ -88,14 +85,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         border: 0.5px solid #bebebe;
         padding: 10px;
     }
-    
     .select2-container {
         width: 100% !important;
         font-family: "Calibri", sans-serif;
         text-align: center;
     }
-
-    
     input {
         width: 100%;
         height: 100%;
@@ -120,9 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 </style>
-
-<!-------------------- main -------------------->
-
+<!---------------------------------------- main ---------------------------------------->
 <main>
     <a class="but align-left" href="../index.php" title="Volver a Reuniones">
         <svg width="400" height="400" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -154,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </label>
                 </td>
                 <td width="35%">
-                    <select name="grps[]" id="grps" class="select2" onchange="cambioLogo()">
+                    <select name="grps[]" id="grps" class="select2" onchange="cambioLogo('grps', 'logoGrupo')">
                         <option value="" selected disabled>Selecciona el grupo</option>
                         <?php
                         foreach ($allGrps as $grp) {
@@ -183,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="prog_date">Fecha</label>
                 </td>
                 <td>
-                    <input type="date" name="prog_date" id="prog_date" onchange="calculaRondaSolar()">
+                    <input type="date" name="prog_date" id="prog_date" onchange="calculaRondaSolar('prog_date', 'rondaSolar')">
                 </td>
             </tr>
             <tr>
@@ -236,7 +228,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </table>
 
         <!-- Boton de añadir actividad -->
-        <a class="but align-left" style="width: 40px;" title="Nueva Reunión" onclick="addActivity()">
+        <a class="but align-left" style="width: 40px;" title="Añadir actividad" onclick="addActivity()">
             <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="m 2,6 h 8"
@@ -255,93 +247,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <!-- Tabla de actividades -->
         <div id="actContainer">
-
-        </div>
-    </form>
-</main>
-
-<!-------------------- Scripts de select2 -------------------->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-
-    $(document).ready(function () {
-        $('.select2').select2();
-
-        // Delegar evento para todos los selects con name="act[]"
-        $(document).on('change', 'select[name="act[]"]', function () {
-            const selected = $(this).find('option:selected');
-            const contenedor = $(this).closest('.actividad');
-            contenedor.find('.campo-categorias').text(selected.data('categorias') || '');
-            contenedor.find('.campo-objetivos').html(selected.data('objetivos') || '');
-            contenedor.find('.campo-materiales').html(selected.data('materiales') || '');
-            contenedor.find('.campo-descripcion').text(selected.data('descripcion') || '');
-        });
-    });
-    
-    function calculaRondaSolar() {
-        const fecha = document.getElementById('prog_date').value;
-        let ronda = '';
-        if (fecha) {
-            // La ronda solar empieza en septiembre y termina en agosto
-            const mes = new Date(fecha).getMonth() + 1; // Los meses van de 0 a 11
-            const anio = new Date(fecha).getFullYear(); // Obtener el año actual
-            if (mes >= 9) {
-                ronda = anio + '/' + (anio + 1) % 100;
-            } else {
-                ronda = (anio - 1) + '/' + anio % 100;
-            }
-        }
-        document.getElementById('rondaSolar').textContent = ronda;
-    }
-    // Inicializar si ya hay valor
-    document.getElementById('prog_date').addEventListener('input', calculaRondaSolar);
-
-    function colorearCeldas() {
-        const rama = document.getElementById('rama').value;
-        console.log("Valor de rama:", rama);
-        let color = '';
-        switch (rama) {
-            case '2':
-                color = '#fce5cd';
-                break;
-            case '3':
-                color = '#fff1cc';
-                break;
-            case '4':
-                color = '#c9daf8';
-                break;
-            case '5':
-                color = '#f4cccc';
-                break;
-            case '6':
-                color = '#d9ead3';
-                break;
-            default:
-                color = '#efefef';
-        }
-        // Actualizar la variable CSS
-        document.documentElement.style.setProperty('--colorRama', color);
-    }
-
-    function cambioLogo() {
-        const grupo = document.getElementById("grps").value;
-        console.log("Grupo seleccionado:", grupo); // Para depuración
-
-        // Construye la ruta de la imagen
-        const rutaImagen = `../../.res/img/logos-grupos/${grupo}.png`;
-
-        // Cambia la imagen
-        document.getElementById("logoGrupo").src = rutaImagen;
-    }
-
-    // funcion para generar tablas usando el boton +
-    let nActividades = 0;
-    function addActivity(){
-        const container = document.getElementById('actContainer');
-        const index = nActividades++;
-
-        const actividadHTML = `
             <div class="actividad" id="actividad-${index}">
                 <table>
                     <tr>
@@ -411,19 +316,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </table>
                 <br>
             </div>
-            `;
 
-        container.insertAdjacentHTML('beforeend', actividadHTML);
-        $('#actividad-' + index + ' .select2').select2();
+        </div>
+    </form>
+    
+</main>
 
-    } 
 
 
-    function removeActivity(index) {
-        const actividad = document.getElementById(`actividad-${index}`);
-        if (actividad) {
-            actividad.remove();
-        }
-    }
-
+<!---------------------------------------- Scripts de select2 ---------------------------------------->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.select2').select2();
+    });
 </script>
+<!---------------------------------------- Scripts de funciones ---------------------------------------->
+<script>   
+    function colorearCeldas() {
+        const rama = document.getElementById('rama').value;
+        console.log("Valor de rama:", rama);
+        let color = '';
+        switch (rama) {
+            case '2':
+                color = '#fce5cd';
+                break;
+            case '3':
+                color = '#fff1cc';
+                break;
+            case '4':
+                color = '#c9daf8';
+                break;
+            case '5':
+                color = '#f4cccc';
+                break;
+            case '6':
+                color = '#d9ead3';
+                break;
+            default:
+                color = '#efefef';
+        }
+        // Actualizar la variable CSS
+        document.documentElement.style.setProperty('--colorRama', color);
+    }
+</script>
+<!-------------------- Errores a solucionar -------------------->
+<!-- Si elimino la primera actividad, la hora de inicio no aparece -->
+
+<!-------------------- Footer -------------------->
+<?php
+include "../../.res/templates/footer.php";
+?>

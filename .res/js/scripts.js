@@ -1,7 +1,39 @@
 document.addEventListener("DOMContentLoaded", function () {
     initSearch();
     initSort();
+    calculaRondaSolar();
+    cambioLogo();
 });
+
+/* ---------------------------------------- Funciones para Reunión ---------------------------------------- */
+function calculaRondaSolar(date, id) {
+        const fecha = document.getElementById(date).value;
+        let ronda = '';
+        if (fecha) {
+            // La ronda solar empieza en septiembre y termina en agosto
+            const mes = new Date(fecha).getMonth() + 1; // Los meses van de 0 a 11
+            const anio = new Date(fecha).getFullYear(); // Obtener el año actual
+            if (mes >= 9) {
+                ronda = anio + '/' + (anio + 1) % 100;
+            } else {
+                ronda = (anio - 1) + '/' + anio % 100;
+            }
+        }
+        document.getElementById(id).textContent = ronda;
+    }
+
+    function cambioLogo(grps, logoGrupo) {
+        const grupo = document.getElementById(grps).value;
+        console.log("Grupo seleccionado:", grupo); // Para depuración
+
+        // Construye la ruta de la imagen
+        const rutaImagen = `../../.res/img/logos-grupos/${grupo}.png`;
+
+        // Cambia la imagen
+        document.getElementById(logoGrupo).src = rutaImagen;
+    }
+
+/* ---------------------------------------- Funciones Buscador ---------------------------------------- */
 
 function initSearch() {
     document.getElementById("searchInput").addEventListener("keyup", function () {
@@ -93,3 +125,4 @@ function back() {
         window.location = document.referrer;
     }
 }
+
