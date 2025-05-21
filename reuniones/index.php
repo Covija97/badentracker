@@ -38,7 +38,7 @@ $query = linkDB() -> query($sql);
 ?>
 <main>
 
-    <a class="but align-left" href="new" with="50px" aling="left" title="Nueva Reunión">
+    <a class="but align-left" href="new" aling="left" title="Nueva Reunión">
         <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
         <path
             d="m 2,6 h 8"

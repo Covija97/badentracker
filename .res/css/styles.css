@@ -16,8 +16,10 @@
 /* Estilo global */
 html, body {
     height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 /* Estilo del menú de navegación */
 header {
@@ -135,6 +137,13 @@ footer {
     float: left;
     margin-left: 0;
     height: 40px;
+}
+
+.align-right {
+    float: right;
+    margin-left: 0;
+    height: 40px;
+    width: 40px;
 }
 
 .but svg {
