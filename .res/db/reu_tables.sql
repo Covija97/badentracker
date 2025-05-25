@@ -24,17 +24,9 @@ CREATE TABLE IF NOT EXISTS prog(
     prog_place  varchar(50) NOT NULL                           COMMENT 'Place of the meeting',
     prog_child_N int NOT NULL                           COMMENT 'Number of children in the meeting',
     grp_id      int NOT NULL                           COMMENT 'Foreign Key to grps',
-    FOREIGN KEY (grp_id) REFERENCES grps(grp_id)
-);
-
-
-DROP TABLE IF EXISTS prog_rama;
-CREATE TABLE IF NOT EXISTS prog_rama(
-    prog_id     int         NOT NULL                           COMMENT 'Foreign Key to prog',
-    rama_id     int         NOT NULL                           COMMENT 'Foreign Key to rama',
-    PRIMARY KEY (prog_id, rama_id),
-    FOREIGN KEY (prog_id) REFERENCES prog(prog_id) ON DELETE CASCADE,
-    FOREIGN KEY (rama_id) REFERENCES rama(rama_id) ON DELETE CASCADE
+    rama_id     int NOT NULL                           COMMENT 'Foreign Key to rama',
+    FOREIGN KEY (grp_id) REFERENCES grps(grp_id),
+    FOREIGN KEY (rama_id) REFERENCES rama(rama_id)
 );
 
 DROP TABLE IF EXISTS prog_act;
@@ -42,6 +34,8 @@ CREATE TABLE IF NOT EXISTS prog_act(
     prog_id     int         NOT NULL                           COMMENT 'Foreign Key to prog',
     act_id      int         NOT NULL                           COMMENT 'Foreign Key to act',
     act_order   int         NOT NULL                           COMMENT 'Order of the act',
+    act_respon VARCHAR(50) NOT NULL                           COMMENT 'Responsible for the act',
+    act_comment LONGBLOB NOT NULL                           COMMENT 'Comment for the act',
     PRIMARY KEY (prog_id, act_id),
     FOREIGN KEY (prog_id) REFERENCES prog(prog_id) ON DELETE CASCADE,
     FOREIGN KEY (act_id) REFERENCES act(act_id) ON DELETE CASCADE
