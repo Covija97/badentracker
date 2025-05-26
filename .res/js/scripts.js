@@ -4,32 +4,61 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /* ---------------------------------------- Funciones para Reunión ---------------------------------------- */
-function calculaRondaSolar(date, id) {
-        const fecha = document.getElementById(date).value;
-        let ronda = '';
-        if (fecha) {
-            // La ronda solar empieza en septiembre y termina en agosto
-            const mes = new Date(fecha).getMonth() + 1; // Los meses van de 0 a 11
-            const anio = new Date(fecha).getFullYear(); // Obtener el año actual
-            if (mes >= 9) {
-                ronda = anio + '/' + (anio + 1) % 100;
-            } else {
-                ronda = (anio - 1) + '/' + anio % 100;
-            }
+
+function calculateSolarRound(intElementID, outElementID) {
+    const fecha = document.getElementById(intElementID).value;
+    console.log("Fecha seleccionada:", fecha);
+    let ronda = '';
+    if (fecha) {
+        // La ronda solar empieza en septiembre y termina en agosto
+        const mes = new Date(fecha).getMonth() + 1; // Los meses van de 0 a 11
+        const anio = new Date(fecha).getFullYear(); // Obtener el año actual
+        if (mes >= 9) {
+            ronda = anio + '/' + (anio + 1) % 100;
+        } else {
+            ronda = (anio - 1) + '/' + anio % 100;
         }
-        document.getElementById(id).textContent = ronda;
     }
+    document.getElementById(outElementID).textContent = ronda;
+}
 
-    function cambioLogo(grps, logoGrupo) {
-        const grupo = document.getElementById(grps).value;
-        console.log("Grupo seleccionado:", grupo); // Para depuración
+function changeLogo(intElementID, outElementID) {
+    const grupo = document.getElementById(intElementID).value;
+    console.log("Grupo seleccionado:", grupo);
 
-        // Construye la ruta de la imagen
-        const rutaImagen = `../../.res/img/logos-grupos/${grupo}.png`;
+    // Construye la ruta de la imagen
+    const rutaImagen = `../../.res/img/logos-grupos/${grupo}.png`;
 
-        // Cambia la imagen
-        document.getElementById(logoGrupo).src = rutaImagen;
+    // Cambia la imagen
+    document.getElementById(outElementID).src = rutaImagen;
+}
+
+function colorCells(elementID) {
+    const rama = document.getElementById(elementID).value;
+    console.log("Valor de rama:", rama);
+    let color = '';
+    switch (rama) {
+        case '2':
+            color = '#fce5cd';
+            break;
+        case '3':
+            color = '#fff1cc';
+            break;
+        case '4':
+            color = '#c9daf8';
+            break;
+        case '5':
+            color = '#f4cccc';
+            break;
+        case '6':
+            color = '#d9ead3';
+            break;
+        default:
+            color = '#efefef';
     }
+    // Actualizar la variable CSS
+    document.documentElement.style.setProperty('--colorRama', color);
+}
 
 /* ---------------------------------------- Funciones Buscador ---------------------------------------- */
 
@@ -118,7 +147,7 @@ function sortTableByColumn(columnIndex, type) {
     table.setAttribute("data-sort-dir", ascending ? "asc" : "desc");
 }
 
-function back() {   
+function back() {
     if (document.referrer) {
         window.location = document.referrer;
     }
