@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     initSearch();
     initSort();
-    calculaRondaSolar();
-    cambioLogo();
 });
 
 /* ---------------------------------------- Funciones para Reunión ---------------------------------------- */
