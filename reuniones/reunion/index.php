@@ -1,6 +1,6 @@
 <!-------------------- Variables, require e include -------------------->
 <?php
-$title = "Nueva Reunión";
+$title = "Reunión";
 $page = "reu";
 
 require "../../.res/funct/funct.php";
@@ -49,6 +49,32 @@ $allGrpQuery = linkDB()->query($allGrpSQL);
 $allGrps = $allGrpQuery->fetch_all(MYSQLI_ASSOC);
 ?>
 
+<?php
+$editMode = false;
+$progData = [];
+$progActs = [];
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $editMode = true;
+    $edit_id = intval($_GET['id']);
+    $db = linkDB();
+    // Obtener datos de la programación
+    $stmt = $db->prepare("SELECT * FROM prog WHERE prog_id = ?");
+    $stmt->bind_param('i', $edit_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $progData = $result->fetch_assoc();
+    $stmt->close();
+    // Obtener actividades asociadas
+    $stmt2 = $db->prepare("SELECT * FROM prog_act WHERE prog_id = ? ORDER BY act_order ASC");
+    $stmt2->bind_param('i', $edit_id);
+    $stmt2->execute();
+    $result2 = $stmt2->get_result();
+    while ($row = $result2->fetch_assoc()) {
+        $progActs[] = $row;
+    }
+    $stmt2->close();
+}
+?>
 <!---------------------------------------- POST ---------------------------------------->
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -61,35 +87,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $responsables = trim($_POST['responsables'] ?? '');
     $prog_time = trim($_POST['prog_time'] ?? '');
     $actividades = $_POST['actividades'] ?? [];
-
     $db = linkDB();
-    // Insertar reunión principal
-    $stmt = $db->prepare("INSERT INTO prog (grp_id, rama_id, prog_place, prog_date, prog_coord, prog_child_N, responsibles, prog_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $grp_id = $grps[0] ?? null;
-    $rama_id = $rama[0] ?? null;
-    $stmt->bind_param('iisssiss', $grp_id, $rama_id, $prog_place, $prog_date, $prog_coord, $prog_child_N, $responsables, $prog_time);
-    $stmt->execute();
-    $reunion_id = $db->insert_id;
-    $stmt->close();
-
-    // Insertar actividades asociadas en prog_act
-    if ($reunion_id && !empty($actividades)) {
-        $order = 1;
-        foreach ($actividades as $act) {
-            $act_id = $act['act_id'] ?? null;
-            $encargado = $act['encargado'] ?? '';
-            $comentarios = $act['comentarios'] ?? '';
-            if ($act_id) {
-                $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment) VALUES (?, ?, ?, ?, ?)");
-                $stmt2->bind_param('iiiss', $reunion_id, $act_id, $order, $encargado, $comentarios);
-                $stmt2->execute();
-                $stmt2->close();
-                $order++;
+    if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+        // Modo edición: actualizar prog y prog_act
+        $edit_id = intval($_GET['id']);
+        $grp_id = $grps[0] ?? null;
+        $rama_id = $rama[0] ?? null;
+        $stmt = $db->prepare("UPDATE prog SET prog_date=?, prog_time=?, prog_coord=?, prog_place=?, prog_child_N=?, grp_id=?, rama_id=?, responsibles=? WHERE prog_id=?");
+        $stmt->bind_param('ssssiiisi', $prog_date, $prog_time, $prog_coord, $prog_place, $prog_child_N, $grp_id, $rama_id, $responsables, $edit_id);
+        $stmt->execute();
+        $stmt->close();
+        // Eliminar actividades anteriores
+        $db->query("DELETE FROM prog_act WHERE prog_id = $edit_id");
+        // Insertar nuevas actividades
+        if (!empty($actividades)) {
+            $order = 1;
+            foreach ($actividades as $act) {
+                $act_id = $act['act_id'] ?? null;
+                $encargado = $act['encargado'] ?? '';
+                $comentarios = $act['comentarios'] ?? '';
+                if ($act_id) {
+                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment) VALUES (?, ?, ?, ?, ?)");
+                    $stmt2->bind_param('iiiss', $edit_id, $act_id, $order, $encargado, $comentarios);
+                    $stmt2->execute();
+                    $stmt2->close();
+                    $order++;
+                }
             }
         }
+        header("Location: ../index.php");
+        exit;
+    } else {
+        // Insertar reunión principal en prog
+        $stmt = $db->prepare("INSERT INTO prog (prog_date, prog_time, prog_coord, prog_place, prog_child_N, grp_id, rama_id, responsibles) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $grp_id = $grps[0] ?? null;
+        $rama_id = $rama[0] ?? null;
+        $stmt->bind_param('ssssiiis', $prog_date, $prog_time, $prog_coord, $prog_place, $prog_child_N, $grp_id, $rama_id, $responsables);
+        $stmt->execute();
+        $prog_id = $db->insert_id;
+        $stmt->close();
+
+        // Insertar actividades asociadas en prog_act
+        if ($prog_id && !empty($actividades)) {
+            $order = 1;
+            foreach ($actividades as $act) {
+                $act_id = $act['act_id'] ?? null;
+                $encargado = $act['encargado'] ?? '';
+                $comentarios = $act['comentarios'] ?? '';
+                if ($act_id) {
+                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment) VALUES (?, ?, ?, ?, ?)");
+                    $stmt2->bind_param('iiiss', $prog_id, $act_id, $order, $encargado, $comentarios);
+                    $stmt2->execute();
+                    $stmt2->close();
+                    $order++;
+                }
+            }
+        }
+        header("Location: ../index.php");
+        exit;
     }
-    header("Location: ../index.php");
-    exit;
 }
 ?>
 <!---------------------------------------- CSS ---------------------------------------->
@@ -109,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form method="POST" class="form-grid">
         <button type="submit" class="btn-submit" style="width: 25%;">
-            Guardar reunión
+            <?php echo $editMode ? 'Actualizar reunión' : 'Guardar reunión'; ?>
         </button>
         <input type="hidden" name="act_id">
         <!-- Tabla de información general -->
@@ -122,10 +178,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </td>
                 <td width="35%">
                     <select name="grps[]" id="grps" class="select2" onchange="changeLogo('grps', 'logoGrupo')" required>
-                        <option value="" selected disabled>Selecciona el grupo</option>
+                        <option value="" disabled <?php if (!$editMode) echo 'selected'; ?>>Selecciona el grupo</option>
                         <?php
                         foreach ($allGrps as $grp) {
-                            echo "<option value='" . $grp["grp_id"] . "'>" . $grp["grp_name"] . "</option>";
+                            $selected = ($editMode && isset($progData['grp_id']) && $progData['grp_id'] == $grp["grp_id"]) ? 'selected' : '';
+                            echo "<option value='" . $grp["grp_id"] . "' $selected>" . $grp["grp_name"] . "</option>";
                         }
                         ?>
                     </select>
@@ -144,14 +201,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="prog_place">Lugar</label>
                 </td>
                 <td>
-                    <input type="text" name="prog_place" id="prog_place">
+                    <input type="text" name="prog_place" id="prog_place" value="<?php echo $editMode ? htmlspecialchars($progData['prog_place'] ?? '') : ''; ?>">
                 </td>
                 <td class="branchCell">
                     <label for="prog_date">Fecha</label>
                 </td>
                 <td>
                     <input type="date" name="prog_date" id="prog_date"
-                        onchange="calculateSolarRound('prog_date', 'rondaSolar')" required>
+                        onchange="calculateSolarRound('prog_date', 'rondaSolar')" required
+                        value="<?php echo $editMode ? htmlspecialchars($progData['prog_date'] ?? '') : ''; ?>">
                 </td>
             </tr>
             <tr>
@@ -159,13 +217,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="prog_coord">Coordinador</label>
                 </td>
                 <td>
-                    <input type="text" name="prog_coord" id="prog_coord">
+                    <input type="text" name="prog_coord" id="prog_coord" value="<?php echo $editMode ? htmlspecialchars($progData['prog_coord'] ?? '') : ''; ?>">
                 </td>
                 <td class="branchCell">
                     <label for="prog_child_N">Nº educandos</label>
                 </td>
                 <td>
-                    <input type="number" name="prog_child_N" id="prog_child_N">
+                    <input type="number" name="prog_child_N" id="prog_child_N" value="<?php echo $editMode ? intval($progData['prog_child_N'] ?? 0) : ''; ?>">
                 </td>
             </tr>
             <tr>
@@ -186,16 +244,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <tr>
                 <td class="branchCell">
                     <select name="rama[]" id="rama" class="select2" onchange="colorCells('rama')" required>
-                        <option value="" selected disabled></option>
+                        <option value="" disabled <?php if (!$editMode) echo 'selected'; ?>></option>
                         <?php
                         foreach ($allRams as $rama) {
-                            echo "<option value='" . $rama["rama_id"] . "'>" . $rama["rama_name"] . "</option>";
+                            $selected = ($editMode && isset($progData['rama_id']) && $progData['rama_id'] == $rama["rama_id"]) ? 'selected' : '';
+                            echo "<option value='" . $rama["rama_id"] . "' $selected>" . $rama["rama_name"] . "</option>";
                         }
                         ?>
                     </select>
                 </td>
                 <td colspan="2">
-                    <textarea id="responsables" name="responsables" rows="2" placeholder="Añada el nombre de un responsable por cada línea..." style="text-align: left;padding: 10px;" required></textarea>
+                    <textarea id="responsables" name="responsables" rows="2" placeholder="Añada el nombre de un responsable por cada línea..." style="text-align: left;padding: 10px;" required><?php echo $editMode ? htmlspecialchars($progData['responsibles'] ?? '') : ''; ?></textarea>
                 </td>
                 <td class="logoCell" style="color:#888;">
                     <img id="logoGrupo" src="" alt="Seleccione un grupo">
@@ -234,6 +293,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tr>
         </table>
     </form>
+    <script>
+    <?php if ($editMode): ?>
+    // Prellenar actividades si estamos en modo edición
+    document.addEventListener('DOMContentLoaded', function() {
+        const actividades = <?php echo json_encode($progActs); ?>;
+        addAct(actividades.length || 1);
+        for (let i = 0; i < actividades.length; i++) {
+            // Seleccionar actividad
+            const select = document.querySelector(`[name='actividades[${i}][act_id]']`);
+            if (select) {
+                select.value = actividades[i].act_id;
+                $(select).trigger('change');
+            }
+            // Encargado
+            const encargadoSelect = document.querySelector(`[name='actividades[${i}][encargado]']`);
+            if (encargadoSelect) {
+                setTimeout(() => {
+                    encargadoSelect.value = actividades[i].act_respon || '';
+                    $(encargadoSelect).trigger('change');
+                }, 0);
+            }
+            // Comentarios
+            const comentarios = document.querySelector(`[name='actividades[${i}][comentarios]']`);
+            if (comentarios) comentarios.value = actividades[i].act_comment || '';
+        }
+        // Hora de inicio
+        if (actividades.length > 0 && document.getElementById('prog_time')) {
+            document.getElementById('prog_time').value = '<?php echo $editMode ? htmlspecialchars($progData['prog_time'] ?? '') : ''; ?>';
+        }
+    });
+    <?php endif; ?>
+    </script>
 </main>
 
 <!---------------------------------------- Scripts de select2 ---------------------------------------->
@@ -242,7 +333,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script>
     $(document).ready(function () {
         $('.select2').select2();
+        // Si estamos en modo edición, mostrar todas las actividades guardadas
+        <?php if ($editMode): ?>
+        const actividades = <?php echo json_encode($progActs); ?>;
+        addAct(actividades.length || 1);
+        for (let i = 0; i < actividades.length; i++) {
+            // Seleccionar actividad
+            const select = document.querySelector(`[name='actividades[${i}][act_id]']`);
+            if (select) {
+                select.value = actividades[i].act_id;
+                $(select).trigger('change');
+            }
+            // Encargado
+            const encargadoSelect = document.querySelector(`[name='actividades[${i}][encargado]']`);
+            if (encargadoSelect) {
+                setTimeout(() => {
+                    encargadoSelect.value = actividades[i].act_respon || '';
+                    $(encargadoSelect).trigger('change');
+                }, 0);
+            }
+            // Comentarios
+            const comentarios = document.querySelector(`[name='actividades[${i}][comentarios]']`);
+            if (comentarios) comentarios.value = actividades[i].act_comment || '';
+        }
+        // Hora de inicio
+        if (actividades.length > 0 && document.getElementById('prog_time')) {
+            document.getElementById('prog_time').value = '<?php echo $editMode ? htmlspecialchars($progData['prog_time'] ?? '') : ''; ?>';
+        }
+        <?php else: ?>
         addAct(1);
+        <?php endif; ?>
     });
 </script>
 <!---------------------------------------- Scripts de funciones ---------------------------------------->

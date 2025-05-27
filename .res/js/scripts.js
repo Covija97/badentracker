@@ -5,6 +5,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /* ---------------------------------------- Funciones para Reunión ---------------------------------------- */
 
+function actNumber(valueElementID, n) {
+        var actNum = document.getElementById('numAct').value;
+        console.log("sum",n);
+        if (n < 0 && actNum > 1) {
+            actNum = parseInt(actNum) + n;
+        } else if (n > 0) {
+            actNum = parseInt(actNum) + n;
+        }
+        document.getElementById('numAct').value = actNum;
+        addAct(actNum);
+    }
+
 function calculateSolarRound(intElementID, outElementID) {
     const fecha = document.getElementById(intElementID).value;
     console.log("Fecha seleccionada:", fecha);

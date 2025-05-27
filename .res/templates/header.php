@@ -10,7 +10,7 @@
         <?php endif; ?>
     </title>
     <link rel="stylesheet" href="/badentracker/.res/css/styles.css?v=2">
-    <link rel="icon" href="/badentracker/.res/icon/bt-logo.svg" type="image/svg+xml">
+    <link rel="icon" href="/badentracker/.res/icon/bt-icon.svg">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     
 </head>

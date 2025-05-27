@@ -11,7 +11,8 @@ INSERT INTO rama (rama_name) VALUES
 
 
 INSERT INTO grps (grp_name) VALUES
-('JEYMA');
+('JEYMA'),
+('ESURY');
 
 
 INSERT into prog (prog_date, prog_time, prog_coord, prog_place, prog_child_N, grp_id, rama_id) VALUES
