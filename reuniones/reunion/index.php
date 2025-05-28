@@ -161,6 +161,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 stroke-linejoin="round" id="path3" />
         </svg>
     </a>
+    <?php if ($editMode && isset($progData['prog_id'])): ?>
+        <a class="but align-left" href="delete.php?id=<?= $progData['prog_id'] ?>"
+            title="Borrar reunión del <?= htmlspecialchars($progData['prog_date'] ?? '') ?>"
+            aria-label="Borrar actividad del <?= htmlspecialchars($progData['prog_date'] ?? '') ?>"
+            onclick="return confirm('¿Estás seguro de que deseas borrar esta actividad?');">
+            <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M21 5.97998C17.67 5.64998 14.32 5.47998 10.98 5.47998C9 5.47998 7.02 5.57998 5.04 5.77998L3 5.97998"
+                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97"
+                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                    d="M18.85 9.14001L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79002C6.00002 22 5.91002 20.78 5.80002 19.21L5.15002 9.14001"
+                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M10.33 16.5H13.66" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M9.5 12.5H14.5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </a>
+    <?php endif; ?>
+    <a class="but align-right"
+        href="pdfExport.php<?php if ($editMode && isset($progData['prog_id']))
+            echo '?id=' . $progData['prog_id']; ?>"
+        title="Descargar en pdf" style="border: none; padding: 0;">
+        <svg width="400" height="400" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 4.4093021,5.4697672 V 8.6511626 L 5.4697672,7.5906975" stroke-width="0.795349"
+                stroke-linecap="round" stroke-linejoin="round" id="path1" />
+            <path d="M 4.4093021,8.6511626 3.348837,7.5906975" stroke-width="0.795349" stroke-linecap="round"
+                stroke-linejoin="round" id="path2" />
+            <path
+                d="m 11.302326,4.9395347 v 2.6511628 c 0,2.6511625 -1.060466,3.7116285 -3.7116285,3.7116285 H 4.4093021 c -2.6511628,0 -3.7116279,-1.060466 -3.7116279,-3.7116285 V 4.4093021 c 0,-2.6511628 1.0604651,-3.7116279 3.7116279,-3.7116279 h 2.6511628"
+                stroke-width="0.795349" stroke-linecap="round" stroke-linejoin="round" id="path3" />
+            <path
+                d="M 11.302326,4.9395347 H 9.1813948 c -1.5906973,0 -2.1209299,-0.5302326 -2.1209299,-2.1209302 V 0.6976742 Z"
+                stroke-width="0.795349" stroke-linecap="round" stroke-linejoin="round" id="path4" />
+        </svg>
+    </a>
     <br>
 
     <form method="POST" class="form-grid">
@@ -178,7 +214,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </td>
                 <td width="35%">
                     <select name="grps[]" id="grps" class="select2" onchange="changeLogo('grps', 'logoGrupo')" required>
-                        <option value="" disabled <?php if (!$editMode) echo 'selected'; ?>>Selecciona el grupo</option>
+                        <option value="" disabled <?php if (!$editMode)
+                            echo 'selected'; ?>>Selecciona el grupo</option>
                         <?php
                         foreach ($allGrps as $grp) {
                             $selected = ($editMode && isset($progData['grp_id']) && $progData['grp_id'] == $grp["grp_id"]) ? 'selected' : '';
@@ -201,7 +238,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="prog_place">Lugar</label>
                 </td>
                 <td>
-                    <input type="text" name="prog_place" id="prog_place" value="<?php echo $editMode ? htmlspecialchars($progData['prog_place'] ?? '') : ''; ?>">
+                    <input type="text" name="prog_place" id="prog_place"
+                        value="<?php echo $editMode ? htmlspecialchars($progData['prog_place'] ?? '') : ''; ?>">
                 </td>
                 <td class="branchCell">
                     <label for="prog_date">Fecha</label>
@@ -217,13 +255,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="prog_coord">Coordinador</label>
                 </td>
                 <td>
-                    <input type="text" name="prog_coord" id="prog_coord" value="<?php echo $editMode ? htmlspecialchars($progData['prog_coord'] ?? '') : ''; ?>">
+                    <input type="text" name="prog_coord" id="prog_coord"
+                        value="<?php echo $editMode ? htmlspecialchars($progData['prog_coord'] ?? '') : ''; ?>">
                 </td>
                 <td class="branchCell">
                     <label for="prog_child_N">Nº educandos</label>
                 </td>
                 <td>
-                    <input type="number" name="prog_child_N" id="prog_child_N" value="<?php echo $editMode ? intval($progData['prog_child_N'] ?? 0) : ''; ?>">
+                    <input type="number" name="prog_child_N" id="prog_child_N"
+                        value="<?php echo $editMode ? intval($progData['prog_child_N'] ?? 0) : ''; ?>">
                 </td>
             </tr>
             <tr>
@@ -244,7 +284,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <tr>
                 <td class="branchCell">
                     <select name="rama[]" id="rama" class="select2" onchange="colorCells('rama')" required>
-                        <option value="" disabled <?php if (!$editMode) echo 'selected'; ?>></option>
+                        <option value="" disabled <?php if (!$editMode)
+                            echo 'selected'; ?>></option>
                         <?php
                         foreach ($allRams as $rama) {
                             $selected = ($editMode && isset($progData['rama_id']) && $progData['rama_id'] == $rama["rama_id"]) ? 'selected' : '';
@@ -254,7 +295,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </select>
                 </td>
                 <td colspan="2">
-                    <textarea id="responsables" name="responsables" rows="2" placeholder="Añada el nombre de un responsable por cada línea..." style="text-align: left;padding: 10px;" required><?php echo $editMode ? htmlspecialchars($progData['responsibles'] ?? '') : ''; ?></textarea>
+                    <textarea id="responsables" name="responsables" rows="2"
+                        placeholder="Añada el nombre de un responsable por cada línea..."
+                        style="text-align: left;padding: 10px;"
+                        required><?php echo $editMode ? htmlspecialchars($progData['responsibles'] ?? '') : ''; ?></textarea>
                 </td>
                 <td class="logoCell" style="color:#888;">
                     <img id="logoGrupo" src="" alt="Seleccione un grupo">
@@ -272,18 +316,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </th>
                 <th width='50%'>
                     Actividad
-                    <input hidden type="number" min="1" value="1" id="numAct" style="width: 50px; margin-left: 10px;" onchange="addAct(this.value)" />
+                    <input hidden type="number" min="1" value="1" id="numAct" style="width: 50px; margin-left: 10px;"
+                        onchange="addAct(this.value)" />
                 </th>
                 <th width='10%'>
                     <a class="but align-left" onclick="actNumber('numAct', -1)" title="Añadir una actividad">
                         <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" id="path1" />
+                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                id="path1" />
                         </svg>
                     </a>
                     <a class="but align-right" onclick="actNumber('numAct',1)" title="Eliminar una actividad">
                         <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" id="path1" />
-                            <path d="M 6,10 V 2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" id="path2" />
+                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                id="path1" />
+                            <path d="M 6,10 V 2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                id="path2" />
                         </svg>
                     </a>
                 </th>
@@ -294,36 +342,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </table>
     </form>
     <script>
-    <?php if ($editMode): ?>
-    // Prellenar actividades si estamos en modo edición
-    document.addEventListener('DOMContentLoaded', function() {
-        const actividades = <?php echo json_encode($progActs); ?>;
-        addAct(actividades.length || 1);
-        for (let i = 0; i < actividades.length; i++) {
-            // Seleccionar actividad
-            const select = document.querySelector(`[name='actividades[${i}][act_id]']`);
-            if (select) {
-                select.value = actividades[i].act_id;
-                $(select).trigger('change');
-            }
-            // Encargado
-            const encargadoSelect = document.querySelector(`[name='actividades[${i}][encargado]']`);
-            if (encargadoSelect) {
-                setTimeout(() => {
-                    encargadoSelect.value = actividades[i].act_respon || '';
-                    $(encargadoSelect).trigger('change');
-                }, 0);
-            }
-            // Comentarios
-            const comentarios = document.querySelector(`[name='actividades[${i}][comentarios]']`);
-            if (comentarios) comentarios.value = actividades[i].act_comment || '';
-        }
-        // Hora de inicio
-        if (actividades.length > 0 && document.getElementById('prog_time')) {
-            document.getElementById('prog_time').value = '<?php echo $editMode ? htmlspecialchars($progData['prog_time'] ?? '') : ''; ?>';
-        }
-    });
-    <?php endif; ?>
+        <?php if ($editMode): ?>
+            // Prellenar actividades si estamos en modo edición
+            document.addEventListener('DOMContentLoaded', function () {
+                const actividades = <?php echo json_encode($progActs); ?>;
+                addAct(actividades.length || 1);
+                for (let i = 0; i < actividades.length; i++) {
+                    // Seleccionar actividad
+                    const select = document.querySelector(`[name='actividades[${i}][act_id]']`);
+                    if (select) {
+                        select.value = actividades[i].act_id;
+                        $(select).trigger('change');
+                    }
+                    // Encargado
+                    const encargadoSelect = document.querySelector(`[name='actividades[${i}][encargado]']`);
+                    if (encargadoSelect) {
+                        setTimeout(() => {
+                            encargadoSelect.value = actividades[i].act_respon || '';
+                            $(encargadoSelect).trigger('change');
+                        }, 0);
+                    }
+                    // Comentarios
+                    const comentarios = document.querySelector(`[name='actividades[${i}][comentarios]']`);
+                    if (comentarios) comentarios.value = actividades[i].act_comment || '';
+                }
+                // Hora de inicio
+                if (actividades.length > 0 && document.getElementById('prog_time')) {
+                    document.getElementById('prog_time').value = '<?php echo $editMode ? htmlspecialchars($progData['prog_time'] ?? '') : ''; ?>';
+                }
+            });
+        <?php endif; ?>
     </script>
 </main>
 
@@ -333,35 +381,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script>
     $(document).ready(function () {
         $('.select2').select2();
+        // Cargar imagen del logo del grupo
+        changeLogo('grps', 'logoGrupo');
+        // Calcular ronda solar al cargar la página
+        calculateSolarRound('prog_date', 'rondaSolar');
+        // Cambiar color de celdas según rama seleccionada
+        colorCells('rama');
+        // Actualizar numero de actividades al cargar la página
+        const numActInput = document.getElementById('numAct');
+        if (numActInput) {
+            const numActividades = <?php echo $editMode ? count($progActs) : 1; ?>;
+            numActInput.value = numActividades;
+            addAct(numActividades);
+        }
+
         // Si estamos en modo edición, mostrar todas las actividades guardadas
         <?php if ($editMode): ?>
-        const actividades = <?php echo json_encode($progActs); ?>;
-        addAct(actividades.length || 1);
-        for (let i = 0; i < actividades.length; i++) {
-            // Seleccionar actividad
-            const select = document.querySelector(`[name='actividades[${i}][act_id]']`);
-            if (select) {
-                select.value = actividades[i].act_id;
-                $(select).trigger('change');
+            const actividades = <?php echo json_encode($progActs); ?>;
+            addAct(actividades.length || 1);
+            for (let i = 0; i < actividades.length; i++) {
+                // Seleccionar actividad
+                const select = document.querySelector(`[name='actividades[${i}][act_id]']`);
+                if (select) {
+                    select.value = actividades[i].act_id;
+                    $(select).trigger('change');
+                }
+                // Encargado
+                const encargadoSelect = document.querySelector(`[name='actividades[${i}][encargado]']`);
+                if (encargadoSelect) {
+                    setTimeout(() => {
+                        encargadoSelect.value = actividades[i].act_respon || '';
+                        $(encargadoSelect).trigger('change');
+                    }, 0);
+                }
+                // Comentarios
+                const comentarios = document.querySelector(`[name='actividades[${i}][comentarios]']`);
+                if (comentarios) comentarios.value = actividades[i].act_comment || '';
             }
-            // Encargado
-            const encargadoSelect = document.querySelector(`[name='actividades[${i}][encargado]']`);
-            if (encargadoSelect) {
-                setTimeout(() => {
-                    encargadoSelect.value = actividades[i].act_respon || '';
-                    $(encargadoSelect).trigger('change');
-                }, 0);
+            // Hora de inicio
+            if (actividades.length > 0 && document.getElementById('prog_time')) {
+                document.getElementById('prog_time').value = '<?php echo $editMode ? htmlspecialchars($progData['prog_time'] ?? '') : ''; ?>';
             }
-            // Comentarios
-            const comentarios = document.querySelector(`[name='actividades[${i}][comentarios]']`);
-            if (comentarios) comentarios.value = actividades[i].act_comment || '';
-        }
-        // Hora de inicio
-        if (actividades.length > 0 && document.getElementById('prog_time')) {
-            document.getElementById('prog_time').value = '<?php echo $editMode ? htmlspecialchars($progData['prog_time'] ?? '') : ''; ?>';
-        }
         <?php else: ?>
-        addAct(1);
+            addAct(1);
         <?php endif; ?>
     });
 </script>

@@ -225,7 +225,7 @@ function SetCompression($compress)
 		$this->compress = false;
 }
 
-function SetTitle($title, $isUTF8=false)
+function SetTitle($title, $isUTF8=true)
 {
 	// Title of document
 	$this->metadata['Title'] = $isUTF8 ? $title : $this->_UTF8encode($title);
