@@ -1,14 +1,18 @@
 -- Active: 1745596725282@@127.0.0.1@3306@badentracker
 /* ----------------------------- Tablas CRUD Reunión ----------------------------- */
 
-
+DROP TABLE IF EXISTS prog_act;
+DROP TABLE IF EXISTS prog;
+DROP TABLE IF EXISTS grps;
 DROP TABLE IF EXISTS rama;
+
+
+
 CREATE TABLE IF NOT EXISTS rama(
     rama_id     int         NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
     rama_name   varchar(50) NOT NULL                           COMMENT 'Name of the branch'
 );
 
-DROP TABLE IF EXISTS grps;
 CREATE TABLE IF NOT EXISTS grps(
     grp_id      int         NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
     grp_name    varchar(50) NOT NULL                           COMMENT 'Name of the group',
@@ -16,7 +20,6 @@ CREATE TABLE IF NOT EXISTS grps(
     grp_info    LONGBLOB NOT NULL COMMENT 'Information about the group'
 );
 
-DROP TABLE IF EXISTS prog;
 CREATE TABLE IF NOT EXISTS prog(
     prog_id     int         NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
     prog_date   date        NOT NULL                            COMMENT 'Date of the meeting',
@@ -31,7 +34,6 @@ CREATE TABLE IF NOT EXISTS prog(
     FOREIGN KEY (rama_id) REFERENCES rama(rama_id)
 );
 
-DROP TABLE IF EXISTS prog_act;
 CREATE TABLE IF NOT EXISTS prog_act(
     prog_id     int         NOT NULL                           COMMENT 'Foreign Key to prog',
     act_id      int         NOT NULL                           COMMENT 'Foreign Key to act',
