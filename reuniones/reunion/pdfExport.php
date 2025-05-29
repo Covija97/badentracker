@@ -28,34 +28,21 @@ LEFT JOIN mat ON act_mat.mat_id = mat.mat_id
 GROUP BY act.act_id, act.act_name, act.act_desc, act.act_durat;
 ";
 $allActQuery = linkDB()->query(query: $allActSQL);
-$allActs = $allActQuery->fetch_all(MYSQLI_ASSOC);
+$allActs = $allActQuery->fetch_all(mode: MYSQLI_ASSOC);
 ?>
 
-<?php
-/* Consulta todas las ramas */
-$allRamSQL = "SELECT rama_id, rama_name FROM rama";
-$allRamQuery = linkDB()->query(query: $allRamSQL);
-$allRams = $allRamQuery->fetch_all(mode: MYSQLI_ASSOC);
-?>
-
-<?php
-/* Consulta todos los grupos */
-$allGrpSQL = "SELECT grp_id, grp_name FROM grps";
-$allGrpQuery = linkDB()->query(query: $allGrpSQL);
-$allGrps = $allGrpQuery->fetch_all(mode: MYSQLI_ASSOC);
-?>
 
 <?php
 /* Consulta los datos de la programación y las actividades asociadas */
 $editMode = false;
 $progData = [];
 $progActs = [];
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+if (isset($_GET['id']) && is_numeric(value: $_GET['id'])) {
     $editMode = true;
     $edit_id = intval(value: $_GET['id']);
     $db = linkDB();
     // Obtener datos de la programación
-    $stmt = $db->prepare("SELECT * FROM prog WHERE prog_id = ?");
+    $stmt = $db->prepare(query: "SELECT * FROM prog WHERE prog_id = ?");
     $stmt->bind_param('i', $edit_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -72,6 +59,27 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $stmt2->close();
 }
 ?>
+
+<?php
+$ramaData = [];
+if (isset($progData['rama_id']) && is_numeric($progData['rama_id'])) {
+    $rama_id = intval(value: $progData['rama_id']);
+    $db = linkDB();
+    // Obtener datos de la rama
+    $stmt = $db-> prepare(query: "SELECT * FROM rama WHERE rama_id = ?");
+    $stmt-> bind_param('i', $rama_id);
+    $stmt-> execute();
+    $result = $stmt-> get_result();
+    $ramaData = $result-> fetch_assoc();
+    $stmt-> close();
+}
+?>
+
+<?php
+
+
+?>
+
 
 <?php
 /* -- Funciones --------------------------------------------------------- */
@@ -108,7 +116,7 @@ class PDF extends FPDF
 {
 
     // Cabecera de página
-    function Header()
+    function Header(): void
     {
         // Logo
         $this->Image(file: '../../.res/fpdf/img/header.png', w: 170);
@@ -119,14 +127,14 @@ class PDF extends FPDF
 
 
     // Pie de página
-    function Footer()
+    function Footer(): void
     {
         // Posición: a 1,5 cm del final
-        $this->SetY(-15);
+        $this->SetY(y: -15);
         // Arial italic 8
-        $this->SetFont('Arial', '', 10);
+        $this->SetFont(family: 'Arial', style: '', size: 10);
         // Número de página
-        $this->Cell(0, 10, utf8_decode('Página ' . $this->PageNo() . '/{nb}'), border: 0, ln: 0, align: 'R');
+        $this->Cell(w: 0, h: 10, txt: utf8_decode(string: 'Página ' . $this->PageNo() . '/{nb}'), border: 0, ln: 0, align: 'R');
     }
 
     // Tabla de contenido pedagógico
@@ -136,57 +144,81 @@ class PDF extends FPDF
         $this->SetFillColor(r: $colorRama[0], g: $colorRama[1], b: $colorRama[2]);
 
         // Selecionamos la fuente
-        $this->SetFont(family: 'Arial', style: 'B', size: 10);
+        $this->SetFont(family: 'Arial', style: '', size: 10);
 
         // 
         $this->SetDrawColor(r: 190, g: 190, b: 190);
         $this->SetLineWidth(width: .01);
 
-        // Altura celdas
+        // Tamaño celdas
         $cell_h = 7;
+        $cell_w = [40, 40, 40, 50]; // 170
 
         // Encabezados
-        $this->Cell(w: 42, h: $cell_h, txt: utf8_decode(string: 'Ámbito'), border: 1, ln: 0, align: 'C', fill: false);
-        $this->Cell(w: 42, h: $cell_h, txt: utf8_decode(string: 'Área'), border: 1, ln: 0, align: 'C', fill: false);
-        $this->Cell(w: 42, h: $cell_h, txt: utf8_decode(string: 'Línea pedagógica'), border: 1, ln: 0, align: 'C', fill: false);
-        $this->Cell(w: 44, h: $cell_h, txt: utf8_decode(string: 'Contenidos'), border: 1, ln: 1, align: 'C', fill: false);
+        $this->Cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Ámbito'), border: 1, ln: 0, align: 'C', fill: false);
+        $this->Cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Área'), border: 1, ln: 0, align: 'C', fill: false);
+        $this->Cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Línea pedagógica'), border: 1, ln: 0, align: 'C', fill: false);
+        $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Contenidos'), border: 1, ln: 1, align: 'C', fill: false);
 
-        // Filas
-        $this->SetFont(family: 'Arial', style: '', size: 10);
-
-        // Grupo de datos por ámbito
         // RESPONSABILIDAD
-        $this->Cell(w: 42, h: $cell_h * 2, txt: utf8_decode(string: 'Responsabilidad'), border: 1, ln: 0, align: 'L', fill: true);
-        $this->Cell(w: 42, h: $cell_h, txt: utf8_decode(string: 'Personalidad'), border: 1);
-        $this->Cell(w: 42, h: $cell_h, txt: utf8_decode(string: 'Autonomía'), border: 1);
-        $this->Cell(w: 44, h: $cell_h, txt: utf8_decode(string: 'Progreso personal'), border: 1, ln: 1);
+        $this->Cell(w: $cell_w[0], h: $cell_h * 2, txt: utf8_decode(string: 'Responsabilidad'), border: 1, ln: 0, align: 'L', fill: true);
+        $this->Cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Personalidad'), border: 1, fill: true);
+        $this->Cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Autonomía'), border: 1, fill: true);
+        $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Progreso personal'), border: 1, ln: 1, fill: true);
 
-        $this->Cell(w: 42, h: $cell_h, txt: '', border: 0, ln: 0); // celda vacía para el ámbito
-        $this->Cell(w: 42, h: $cell_h, txt: 'Social', border: 1);
-        $this->Cell(42, $cell_h, utf8_decode('Habilidades sociales'), 1);
-        $this->Cell(44, $cell_h, 'Confianza', 1, 1);
+        $this->Cell(w: $cell_w[0], h: $cell_h, txt: '', border: 0, ln: 0); // celda vacía
+        $this->Cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Social'), border: 1);
+        $this->Cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Habilidades sociales'), border: 1);
+        $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Confianza'), border: 1, ln: 1);
 
         // PAÍS
-        $this->Cell(42, $cell_h * 3, utf8_decode('País'), 1, 0, 'L', true);
-        $this->Cell(42, $cell_h, 'Personalidad', 1);
-        $this->Cell(42, $cell_h, 'Compromiso', 1);
-        $this->Cell(44, $cell_h, utf8_decode('Participación social'), 1, 1);
+        $this->Cell(w: $cell_w[0], h: $cell_h * 3, txt: utf8_decode(string: 'País'), border: 1, ln: 0, align: 'L', fill: true);
+        $this->Cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Personalidad'), border: 1, fill: true);
+        $this->Cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Compromiso'), border: 1, fill: true);
+        $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Participación social'), border: 1, ln: 1, fill: true);
 
-        $this->Cell(42, $cell_h * 2, '', 0, 0);
-        $this->Cell(42, $cell_h * 2, 'Emocional', 1);
-        $this->Cell(42, $cell_h * 2, 'Comunidad', 1);
-        $this->MultiCell(44, $cell_h, utf8_decode('Relación con la rama y el grupo scouts'), 1, 1);
+        $this->Cell(w: $cell_w[0], h: $cell_h * 2, txt: '', border: 0, ln: 0);
+        $this->Cell(w: $cell_w[1], h: $cell_h * 2, txt: utf8_decode(string: 'Emocional'), border: 1);
+        $this->Cell(w: $cell_w[2], h: $cell_h * 2, txt: utf8_decode(string: 'Comunidad'), border: 1);
+        $this->MultiCell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Relación con la rama y el grupo scouts'), border: 1, align: 1);
 
         // FE
-        $this->Cell(42, $cell_h * 2, 'Fe', 1, 0, 'L', true);
-        $this->Cell(42, $cell_h, 'Espiritual', 1);
-        $this->Cell(42, $cell_h, utf8_decode('Oración'), 1);
-        $this->Cell(44, $cell_h, utf8_decode('Oración y reflexión'), 1, 1);
+        $this->Cell(w: $cell_w[0], h: $cell_h * 2, txt: utf8_decode(string: 'Fe'), border: 1, ln: 0, align: 'L', fill: true);
+        $this->Cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Espiritual'), border: 1, fill: true);
+        $this->Cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Oración'), border: 1, fill: true);
+        $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Oración y reflexión'), border: 1, ln: 1, fill: true);
 
-        $this->Cell(42, $cell_h, '', 0, 0);
-        $this->Cell(42, $cell_h, 'Físico', 1);
-        $this->Cell(42, $cell_h, 'Corporeidad', 1);
-        $this->Cell(44, $cell_h, utf8_decode('Protección de la naturaleza'), 1, 1);
+        $this->Cell(w: $cell_w[0], h: $cell_h, txt: '', border: 0, ln: 0);
+        $this->Cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Físico'), border: 1);
+        $this->Cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Corporeidad'), border: 1);
+        $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Protección de la naturaleza'), border: 1, ln: 1);
+
+        // Espaciado
+        $this->Ln(h: 10); 
+    }
+
+    // Tabla información del grupo
+
+    function TableGroup($progData, $ramaData, $grpData): void
+    {
+        // Selecionamos el color de la rama
+        $colorRama = getRamaColor($progData['rama_id']);
+        $this->SetFillColor(r: $colorRama[0], g: $colorRama[1], b: $colorRama[2]);
+
+        // Selecionamos la fuente
+        $this->SetFont(family: 'Arial', style: '', size: 10);
+
+        // 
+        $this->SetDrawColor(r: 190, g: 190, b: 190);
+        $this->SetLineWidth(width: .01);
+
+        // Tamaño celdas
+        $cell_h = 7;
+        $cell_w = [40, 40, 40, 50]; // 170
+
+        //
+        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string : 'Grupo Scout'), border: 1, ln: 0, align: 'L', fill: true);
+        
     }
 
 }
@@ -198,6 +230,10 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont(family: 'Times', style: '', size: 12);
 // Llamar a la función para agregar la tabla al PDF
-$pdf->TablePedag(colorRama: getRamaColor(ramaId: $progData['rama_id']));
+$pdf->TablePedag(colorRama: getRamaColor(ramaId: $rama_id));
+$pdf->TableGroup(progData: $progData, ramaData: $ramaData, grpData: $GrpQuery);
+$pdf->Cell(40,10,$progData['rama_id']);
+
 $pdf->Output();
+
 ?>
