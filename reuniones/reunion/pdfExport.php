@@ -66,18 +66,28 @@ if (isset($progData['rama_id']) && is_numeric($progData['rama_id'])) {
     $rama_id = intval(value: $progData['rama_id']);
     $db = linkDB();
     // Obtener datos de la rama
-    $stmt = $db-> prepare(query: "SELECT * FROM rama WHERE rama_id = ?");
-    $stmt-> bind_param('i', $rama_id);
-    $stmt-> execute();
-    $result = $stmt-> get_result();
-    $ramaData = $result-> fetch_assoc();
-    $stmt-> close();
+    $stmt = $db->prepare(query: "SELECT * FROM rama WHERE rama_id = ?");
+    $stmt->bind_param('i', $rama_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $ramaData = $result->fetch_assoc();
+    $stmt->close();
 }
 ?>
 
 <?php
-
-
+$grpData = [];
+if (isset($progData['grp_id']) && is_numeric($progData['grp_id'])) {
+    $grp_id = intval(value: $progData['grp_id']);
+    $db = linkDB();
+    // Obtener datos de la rama
+    $stmt = $db->prepare(query: "SELECT * FROM grps WHERE grp_id = ?");
+    $stmt->bind_param('i', $grp_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $grpData = $result->fetch_assoc();
+    $stmt->close();
+}
 ?>
 
 
@@ -101,14 +111,25 @@ function getRamaColor($ramaId): array
             return [255, 255, 255]; // Default color
     }
 }
+
+/* Calcular ronda solar */
+function getRondaSolar($progDate): string
+{
+    $date = new DateTime($progDate);
+    $mes = (int) $date->format('n'); // Número del mes (1–12)
+    $anio = (int) $date->format('Y'); // Año con 4 dígitos
+
+    if ($mes >= 9) {
+        // De septiembre a diciembre
+        $ronda = $anio . '/' . sprintf('%02d', ($anio + 1) % 100);
+    } else {
+        // De enero a agosto
+        $ronda = ($anio - 1) . '/' . sprintf('%02d', $anio % 100);
+    }
+    return $ronda;
+}
 ?>
 
-<?php
-/* -- Variables de entorno ---------------------------------------------- */
-// Obtener el color de la rama
-$colorRama = getRamaColor(ramaId: 2);
-
-?>
 <?php
 /* -- PDF --------------------------------------------------------------- */
 
@@ -138,15 +159,16 @@ class PDF extends FPDF
     }
 
     // Tabla de contenido pedagógico
-    function TablePedag($colorRama): void
+    function TablePedag($progData): void
     {
         // Selecionamos el color de la rama
+        $colorRama = getRamaColor($progData['rama_id']);
         $this->SetFillColor(r: $colorRama[0], g: $colorRama[1], b: $colorRama[2]);
 
         // Selecionamos la fuente
         $this->SetFont(family: 'Arial', style: '', size: 10);
 
-        // 
+        // Formato del borde de la tabla
         $this->SetDrawColor(r: 190, g: 190, b: 190);
         $this->SetLineWidth(width: .01);
 
@@ -194,31 +216,75 @@ class PDF extends FPDF
         $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Protección de la naturaleza'), border: 1, ln: 1);
 
         // Espaciado
-        $this->Ln(h: 10); 
+        $this->Ln(h: 10);
     }
 
     // Tabla información del grupo
 
-    function TableGroup($progData, $ramaData, $grpData): void
+    function TableGroup($progData, $grpData, $ramaData): void
     {
         // Selecionamos el color de la rama
-        $colorRama = getRamaColor($progData['rama_id']);
+        $colorRama = getRamaColor(ramaId: $progData['rama_id']);
         $this->SetFillColor(r: $colorRama[0], g: $colorRama[1], b: $colorRama[2]);
 
         // Selecionamos la fuente
         $this->SetFont(family: 'Arial', style: '', size: 10);
 
-        // 
+        // Formato del borde de la tabla
         $this->SetDrawColor(r: 190, g: 190, b: 190);
         $this->SetLineWidth(width: .01);
 
         // Tamaño celdas
         $cell_h = 7;
-        $cell_w = [40, 40, 40, 50]; // 170
+        $cell_w = [40, 60, 35, 35]; // 170
+
+        // Formato de fecha d-m-y
+        $dateFormat = date(format: 'd-m-Y', timestamp: strtotime(datetime: $progData['prog_date']));
+
+        // Contar numero de responsables
+        $nRespRaw = count(value: array_filter(array: explode(separator: "\n", string: str_replace(search: ["\r\n", "\r"], replace: "\n", subject: $progData['responsibles'])), callback: fn($l): bool => trim(string: $l) !== ''));
+        $nResp = max(5, $nRespRaw);
+
 
         //
-        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string : 'Grupo Scout'), border: 1, ln: 0, align: 'L', fill: true);
-        
+        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Grupo Scout'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[1], h: $cell_h, txt: $grpData['grp_name'], border: 1, ln: 0, align: 'C', fill: false);
+        $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Ronda Solar'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[3], h: $cell_h, txt: getRondaSolar(progDate: $progData['prog_date']), border: 1, ln: 1, align: 'C', fill: false);
+
+        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Lugar'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[1], h: $cell_h, txt: $progData['prog_place'], border: 1, ln: 0, align: 'C', fill: false);
+        $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Fecha'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[3], h: $cell_h, txt: $dateFormat, border: 1, ln: 1, align: 'C', fill: false);
+
+        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Coordinador'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[1], h: $cell_h, txt: $progData['prog_coord'], border: 1, ln: 0, align: 'C', fill: false);
+        $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Nº educandos'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[3], h: $cell_h, txt: $progData['prog_child_N'], border: 1, ln: 1, align: 'C', fill: false);
+
+        $this->cell(w: $cell_w[0] + $cell_w[1] + $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Responsables asistentes'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Logo del grupo'), border: 1, ln: 1, align: 'C', fill: true);
+
+        $x = $this->GetX();
+        $y = $this->GetY();
+
+        $this->cell(w: $cell_w[0], h: $cell_h * $nResp, txt: $ramaData['rama_name'], border: 1, ln: 0, align: 'C', fill: true);
+        $this->MultiCell(w: $cell_w[1] + $cell_w[2], h: $cell_h, txt: $progData['responsibles'], border: 1, align: 'L', fill: false);
+
+        // Ponemos la imagen en la última celda
+        $this->SetXY($x + $cell_w[0] + $cell_w[1] + $cell_w[2], $y);
+        $this->cell(w: $cell_w[3], h: $cell_h * $nResp, txt: '', border: 1, ln: 0, align: 'C', fill: false);
+
+        // Ajusta posición y tamaño de la imagen dentro de la celda
+        $imageX = $x + $cell_w[0] + $cell_w[1] + $cell_w[2] + 2; // 2 mm de margen desde el borde izquierdo de la celda
+        $imageY = $y + 2; // 2 mm desde arriba
+        $imageW = $cell_w[3] - 4; // ancho menos margen
+        $imageH = ($cell_h * $nResp) - 4; // alto menos margen
+
+        // Inserta la imagen (ajusta la ruta a la correcta)
+        $this->Image(file: '../../.res/img/logos-grupos/' . $progData['grp_id'] . '.png', x: $imageX, y: $imageY, w: 0, h: $imageH);
+
+        $this->Ln(); // Salto de línea para continuar después
     }
 
 }
@@ -230,10 +296,8 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont(family: 'Times', style: '', size: 12);
 // Llamar a la función para agregar la tabla al PDF
-$pdf->TablePedag(colorRama: getRamaColor(ramaId: $rama_id));
-$pdf->TableGroup(progData: $progData, ramaData: $ramaData, grpData: $GrpQuery);
-$pdf->Cell(40,10,$progData['rama_id']);
-
+$pdf->TablePedag(progData: $progData);
+$pdf->TableGroup(progData: $progData, grpData: $grpData, ramaData: $ramaData);
 $pdf->Output();
 
 ?>

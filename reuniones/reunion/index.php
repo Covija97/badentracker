@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-        header("Location: ../index.php");
+        header(header: "Location: " . $_SERVER['REQUEST_URI']);
         exit;
     } else {
         // Insertar reunión principal en prog
@@ -143,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-        header("Location: ../index.php");
+        header(header: "Location: " . $_SERVER['REQUEST_URI']);
         exit;
     }
 }
@@ -180,10 +180,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </svg>
         </a>
     <?php endif; ?>
-    <a class="but align-right"
-        href="pdfExport.php<?php if ($editMode && isset($progData['prog_id']))
-            echo '?id=' . $progData['prog_id']; ?>"
-        title="Descargar en pdf" style="border: none; padding: 0;">
+    <a class="but align-right" href="pdfExport.php<?php if ($editMode && isset($progData['prog_id']))
+        echo '?id=' . $progData['prog_id']; ?>" title="Descargar en pdf" style="border: none; padding: 0;">
         <svg width="400" height="400" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M 4.4093021,5.4697672 V 8.6511626 L 5.4697672,7.5906975" stroke-width="0.795349"
                 stroke-linecap="round" stroke-linejoin="round" id="path1" />
