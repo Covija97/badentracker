@@ -61,13 +61,13 @@ $query = linkDB() -> query($sql);
             </th>
             <th data-sortable="true">Duración</th>
             <th data-sortable="true">
-                <a class="but align-left" href="objetivos" title="Ir a objetivos"> Objetivos </a>
+                <a class="but2 align-left" href="objetivos" title="Ir a objetivos"> Objetivos </a>
             </th>
             <th data-sortable="true">
-                <a class="but align-left" href="categorias" title="Ir a categorias"> Categorias </a>
+                <a class="but2 align-left" href="categorias" title="Ir a categorias"> Categorias </a>
             </th>
             <th data-sortable="true">
-                <a class="but align-left" href="materiales" title="Ir a materiales"> Materiales </a>
+                <a class="but2 align-left" href="materiales" title="Ir a materiales"> Materiales </a>
             </th>
             <th></th>
         </tr>
@@ -76,7 +76,7 @@ $query = linkDB() -> query($sql);
                 echo "<tr>";
                 echo
                     "<td>
-                        <a class=but  href='actividad?id=" . $row["act_id"] . "' title='Editar " . $row["act_name"] . "'>" .
+                        <a class=but2  href='actividad?id=" . $row["act_id"] . "' title='Editar " . $row["act_name"] . "'>" .
                             $row["act_name"] ."
                         </a>
                     </td>";

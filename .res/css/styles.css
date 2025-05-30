@@ -1,26 +1,38 @@
 /* Estilo CSS para Badentracker */
 /* Definición de variables de color */
 :root {
-    --color001: #f5ecddff; /* Beige cálido */
-    --color002: #253c4cff; /* Azul grisáceo oscuro */
-    --color003: #7d5b3eff; /* Marrón tierra */
-    --color004: #3c5a6eff; /* Azul verdoso suave */
-    --color005: #a64e2aff; /* Terracota intenso */
-    --color006: #e8b86bff; /* Dorado pastel */
-    --color006D: #ba9356ff; /* Dorado pastel oscuro */
+    --color001: #f5ecddff;
+    /* Beige cálido */
+    --color002: #253c4cff;
+    /* Azul grisáceo oscuro */
+    --color003: #7d5b3eff;
+    /* Marrón tierra */
+    --color004: #3c5a6eff;
+    /* Azul verdoso suave */
+    --color005: #a64e2aff;
+    /* Terracota intenso */
+    --color006: #e8b86bff;
+    /* Dorado pastel */
+    --color006D: #ba9356ff;
+    /* Dorado pastel oscuro */
 
     --trans: #00000033;
 }
 
-* {box-sizing: border-box;}
+* {
+    box-sizing: border-box;
+}
+
 /* Estilo global */
-html, body {
+html,
+body {
     height: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
 }
+
 /* Estilo del menú de navegación */
 header {
     align-items: center;
@@ -30,6 +42,7 @@ header {
     overflow: hidden;
     padding: 20px;
 }
+
 header a {
     align-items: center;
     border-radius: 10px;
@@ -38,23 +51,27 @@ header a {
     float: left;
     font-size: 20px;
     font-weight: bold;
-    gap: 10px;     
+    gap: 10px;
     padding: 10px;
     text-align: center;
     text-decoration: none;
 }
+
 header a.logo {
     align-items: center;
     display: flex;
     gap: 10px;
     text-decoration: none;
 }
+
 header a:hover {
     background-color: var(--trans);
 }
+
 header a.act {
     background-color: var(--color006);
 }
+
 .hright {
     align-items: center;
     display: flex;
@@ -105,6 +122,7 @@ footer {
     padding: 10px 0;
     font-weight: bold;
 }
+
 /* Estilo encabezado contenido */
 .mainhead {
     font-weight: bold;
@@ -115,6 +133,7 @@ footer {
     padding: 15px 0;
     text-decoration: none;
 }
+
 /* Botones */
 /* Estilo de los botones */
 .but {
@@ -127,7 +146,25 @@ footer {
     color: var(--color002);
     stroke: var(--color002);
     padding: 5px;
-    min-width: 40px;
+    min-width: 30px;
+    justify-content: center;
+    margin: 0 10px 0 0;
+    font-weight: bold;
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.but2 {
+    align-items: center;
+    display: inline-flex;
+    vertical-align: middle;
+    border: 2px solid var(--color002);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--color002);
+    stroke: var(--color002);
+    padding: 5px;
+    min-width: 30px;
     justify-content: center;
     margin: 0 10px 0 0;
     font-weight: bold;
@@ -136,14 +173,11 @@ footer {
 .align-left {
     float: left;
     margin-left: 0;
-    height: 40px;
 }
 
 .align-right {
     float: right;
     margin-left: 0;
-    height: 40px;
-    width: 40px;
 }
 
 .but svg {
@@ -152,6 +186,12 @@ footer {
 }
 
 .but:hover {
+    stroke: var(--color005);
+    color: var(--color005);
+    border: 2px solid var(--color005);
+}
+
+.but2:hover {
     stroke: var(--color005);
     color: var(--color005);
     border: 2px solid var(--color005);
@@ -170,6 +210,7 @@ footer {
     text-align: left;
     vertical-align: middle;
 }
+
 .table-main tr:nth-child(odd) {
     background-color: var(--color004);
     color: var(--color001);
@@ -180,13 +221,27 @@ footer {
     border: 2px solid var(--color001);
     color: var(--color001);
 }
+
+.table-main tr:nth-child(odd) .but2 {
+    stroke: var(--color001);
+    border: 2px solid var(--color001);
+    color: var(--color001);
+}
+
 .table-main tr:nth-child(odd) .but:hover {
     stroke: var(--color006);
     color: var(--color006);
     border: 2px solid var(--color006);
 }
 
-.table-main td, th{
+.table-main tr:nth-child(odd) .but2:hover {
+    stroke: var(--color006);
+    color: var(--color006);
+    border: 2px solid var(--color006);
+}
+
+.table-main td,
+th {
     padding: 10px;
 }
 

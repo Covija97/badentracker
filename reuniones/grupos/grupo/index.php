@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['grp_id'])) {
         </div>
         <div class="form-row textarea-row">
             <label for="grp_info">Información adicional:</label>
-            <textarea class="but" id="grp_info" name="grp_info"
+            <textarea class="but2" id="grp_info" name="grp_info"
                 rows="4"><?php echo htmlspecialchars($grp["grp_info"] ?? ""); ?></textarea>
         </div>
         <div class="form-row">

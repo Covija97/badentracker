@@ -42,7 +42,7 @@ $query = linkDB()->query($sql);
         <tr>
             <th width="25%">Nombre</th>
             <th data-sortable="true">
-                <a class="but align-left" href="grupos" title="Ir a grupos"> Grupos </a>
+                <a class="but2 align-left" href="grupos" title="Ir a grupos"> Grupos </a>
             </th>
             <th data-sortable="true">Fecha</th>
             <th data-sortable="true">Hora</th>
@@ -53,7 +53,7 @@ $query = linkDB()->query($sql);
             <?php while ($row = $query->fetch_assoc()): ?>
                 <tr>
                     <td>
-                        <a class="but" href="reunion?id=<?= htmlspecialchars($row['prog_id']) ?>"
+                        <a class="but2" href="reunion?id=<?= htmlspecialchars($row['prog_id']) ?>"
                             title="Editar <?= htmlspecialchars($row['prog_id']) ?>">
                             <?= htmlspecialchars($row['rama_name']) . "-" . htmlspecialchars($row['prog_date']) ?>
                         </a>

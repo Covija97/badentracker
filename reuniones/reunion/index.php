@@ -180,8 +180,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </svg>
         </a>
     <?php endif; ?>
-    <a class="but align-right" href="pdfExport.php<?php if ($editMode && isset($progData['prog_id']))
-        echo '?id=' . $progData['prog_id']; ?>" title="Descargar en pdf" style="border: none; padding: 0;">
+    <a class="but align-right" href="pdfExport.php<?php if ($editMode && isset($progData['prog_id'])) 
+        echo '?id=' . $progData['prog_id']; ?>" title="Descargar en pdf" style="border: none; padding: 0;" target="_blank">
         <svg width="400" height="400" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M 4.4093021,5.4697672 V 8.6511626 L 5.4697672,7.5906975" stroke-width="0.795349"
                 stroke-linecap="round" stroke-linejoin="round" id="path1" />
@@ -318,13 +318,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         onchange="addAct(this.value)" />
                 </th>
                 <th width='10%'>
-                    <a class="but align-left" onclick="actNumber('numAct', -1)" title="Añadir una actividad">
+                    <a class="but align-left" onclick="actNumber('numAct', -1)" title="Añadir una actividad" style="width: 10px;">
                         <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
                             <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                                 id="path1" />
                         </svg>
                     </a>
-                    <a class="but align-right" onclick="actNumber('numAct',1)" title="Eliminar una actividad">
+                    <a class="but align-right" onclick="actNumber('numAct',1)" title="Eliminar una actividad" style="width: 10px;">
                         <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
                             <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                                 id="path1" />

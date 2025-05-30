@@ -57,7 +57,7 @@ $query = linkDB() -> query($sql);
             <?php while ($row = $query->fetch_assoc()): ?>
                 <tr>
                     <td>
-                        <a class="but" href="categoria?id=<?= htmlspecialchars($row['cat_id']) ?>">
+                        <a class="but2" href="categoria?id=<?= htmlspecialchars($row['cat_id']) ?>">
                             <?= htmlspecialchars($row['cat_name']) ?>
                         </a>
                     </td>

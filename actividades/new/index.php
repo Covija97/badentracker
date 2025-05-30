@@ -146,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Objetivos de la actividad -->
         <div class="form-row">
             <label>
-                <a class="but" href="../objetivos" title="Ver Objetivos">
+                <a class="but2" href="../objetivos" title="Ver Objetivos">
                     Objetivos
                 </a>
             </label>
@@ -162,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Categorias de la actividad -->
         <div class="form-row">
             <label>
-                <a class="but" href="../categorias" title="Ver Categorias">
+                <a class="but2" href="../categorias" title="Ver Categorias">
                     Categorias
                 </a>
             </label>
@@ -185,7 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Materiales de la actividad -->
         <div class="form-row">
             <label>
-                <a class="but" href="../materiales" title="Ver Materiales">
+                <a class="but2" href="../materiales" title="Ver Materiales">
                     Materiales
                 </a>
             </label>

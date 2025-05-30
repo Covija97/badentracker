@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="form-row textarea-row">
             <label for="grp_info">Información adicional:</label>
-            <textarea class="but" id="grp_info" name="grp_info" rows="4"></textarea>
+            <textarea class="but2" id="grp_info" name="grp_info" rows="4"></textarea>
         </div>
         <div class="form-row">
             <button type="submit" class="btn-submit">Crear Grupo</button>
