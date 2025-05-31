@@ -6,7 +6,7 @@ GRANT ALL PRIVILEGES ON badentracker.* TO 'bt'@'localhost';
 FLUSH PRIVILEGES;
 
 
-SELECT * FROM
+SELECT * FROM act;
 
 /* Tabla de actividades */
 DROP TABLE IF EXISTS act;

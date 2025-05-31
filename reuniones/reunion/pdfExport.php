@@ -3,40 +3,12 @@
 require('../../.res/fpdf/fpdf.php');
 require "../../.res/funct/funct.php";
 ?>
-<?php
-/* -- Consultas generales ----------------------------------------------- */
-/* Consulta actividades, categoria, materiales y objetivos */
-$allActSQL = "
-SELECT
-    act.act_id,
-    act.act_name,
-    act.act_desc,
-    act.act_durat,
-    GROUP_CONCAT(DISTINCT obj.obj_name SEPARATOR '<br>') AS act_objs,
-    GROUP_CONCAT(DISTINCT cat.cat_name SEPARATOR '<br>') AS act_cats,
-    GROUP_CONCAT(DISTINCT mat.mat_name SEPARATOR '<br>') AS act_mats
-FROM act
-LEFT JOIN act_obj ON act.act_id = act_obj.act_id
-LEFT JOIN obj ON act_obj.obj_id = obj.obj_id
-
-LEFT JOIN act_cat ON act.act_id = act_cat.act_id
-LEFT JOIN cat ON act_cat.cat_id = cat.cat_id
-
-LEFT JOIN act_mat ON act.act_id = act_mat.act_id
-LEFT JOIN mat ON act_mat.mat_id = mat.mat_id
-
-GROUP BY act.act_id, act.act_name, act.act_desc, act.act_durat;
-";
-$allActQuery = linkDB()->query(query: $allActSQL);
-$allActs = $allActQuery->fetch_all(mode: MYSQLI_ASSOC);
-?>
-
 
 <?php
 /* Consulta los datos de la programación y las actividades asociadas */
 $editMode = false;
 $progData = [];
-$progActs = [];
+$progactData = [];
 if (isset($_GET['id']) && is_numeric(value: $_GET['id'])) {
     $editMode = true;
     $edit_id = intval(value: $_GET['id']);
@@ -55,14 +27,35 @@ if (isset($_GET['id']) && is_numeric(value: $_GET['id'])) {
     $progData = $result->fetch_assoc();
     $stmt->close();
     // Obtener actividades asociadas
-    $stmt2 = $db->prepare("SELECT * FROM prog_act WHERE prog_id = ? ORDER BY act_order ASC");
+    $stmt2 = $db->prepare("
+    SELECT *
+    FROM prog_act
+    JOIN act ON prog_act.act_id = act.act_id
+    JOIN act_cat ON act.act_id = act_cat.act_id
+    JOIN cat ON act_cat.cat_id = cat.cat_id
+    WHERE prog_act.prog_id = ?
+    ORDER BY prog_act.act_order ASC;");
     $stmt2->bind_param('i', $edit_id);
     $stmt2->execute();
     $result2 = $stmt2->get_result();
     while ($row = $result2->fetch_assoc()) {
-        $progActs[] = $row;
+        $progactData[] = $row;
     }
     $stmt2->close();
+    // Obtenemos todos los materiales de todas las actividades agrupados
+    $stmt3 = $db->prepare("
+    SELECT DISTINCT m.mat_name
+    FROM prog_act pa
+    JOIN act_mat am ON pa.act_id = am.act_id
+    JOIN mat m ON am.mat_id = m.mat_id
+    WHERE pa.prog_id = ?;");
+    $stmt3->bind_param('i', $edit_id);
+    $stmt3->execute();
+    $result3 = $stmt3->get_result();
+    while ($row = $result3->fetch_assoc()) {
+        $matsData[] = $row;
+    }
+    $stmt3->close();
 }
 ?>
 
@@ -104,6 +97,7 @@ function getRondaSolar($progDate): string
     }
     return $ronda;
 }
+
 ?>
 
 <?php
@@ -119,9 +113,8 @@ class PDF extends FPDF
         $this->Image(file: '../../.res/fpdf/img/header.png', w: 170);
         // Arial bold 15
         $this->SetFont(family: 'Arial', style: 'B', size: 15);
-        $this->Ln(h: 5);
+        $this->Ln(h: 7);
     }
-
 
     // Pie de página
     function Footer(): void
@@ -192,11 +185,10 @@ class PDF extends FPDF
         $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Protección de la naturaleza'), border: 1, ln: 1);
 
         // Espaciado
-        $this->Ln(h: 10);
+        $this->Ln(h: 5);
     }
 
     // Tabla información del grupo
-
     function TableGroup($progData): void
     {
         // Selecionamos el color de la rama
@@ -204,39 +196,40 @@ class PDF extends FPDF
         $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
 
         // Fuente y formato
-        $this->SetFont('Arial', '', 10);
-        $this->SetDrawColor(190, 190, 190);
-        $this->SetLineWidth(.01);
+        $this->SetFont(family: 'Arial', style: '', size: 10);
+        $this->SetDrawColor(r: 190, g: 190, b: 190);
+        $this->SetLineWidth(width: .01);
 
+        // Tamaño de las celdas
         $cell_h = 7;
         $cell_w = [40, 60, 35, 35];
 
-        $dateFormat = date('d-m-Y', strtotime($progData['prog_date']));
+        $dateFormat = date(format: 'd-m-Y', timestamp: strtotime(datetime: $progData['prog_date']));
 
         // Contar número de responsables
-        $rawText = is_resource($progData['responsibles']) ? stream_get_contents($progData['responsibles']) : $progData['responsibles'];
-        $nombres = array_filter(explode("\n", str_replace(["\r\n", "\r"], "\n", $rawText)), fn($n) => trim($n) !== '');
-        $count = count($nombres);
+        $rawText = is_resource(value: $progData['responsibles']) ? stream_get_contents(stream: $progData['responsibles']) : $progData['responsibles'];
+        $nombres = array_filter(array: explode(separator: "\n", string: str_replace(search: ["\r\n", "\r"], replace: "\n", subject: $rawText)), callback: fn($n): bool => trim(string: $n) !== '');
+        $count = count(value: $nombres);
         $nResp = max(5, $count); // mínimo de 5 filas
 
         // Encabezado de tabla
-        $this->cell($cell_w[0], $cell_h, utf8_decode('Grupo Scout'), 1, 0, 'C', true);
-        $this->cell($cell_w[1], $cell_h, $progData['grp_name'], 1, 0, 'C');
-        $this->cell($cell_w[2], $cell_h, utf8_decode('Ronda Solar'), 1, 0, 'C', true);
-        $this->cell($cell_w[3], $cell_h, getRondaSolar($progData['prog_date']), 1, 1, 'C');
+        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Grupo Scout'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[1], h: $cell_h, txt: $progData['grp_name'], border: 1, ln: 0, align: 'C');
+        $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Ronda Solar'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[3], h: $cell_h, txt: getRondaSolar(progDate: $progData['prog_date']), border: 1, ln: 1, align: 'C');
 
-        $this->cell($cell_w[0], $cell_h, utf8_decode('Lugar'), 1, 0, 'C', true);
-        $this->cell($cell_w[1], $cell_h, $progData['prog_place'], 1, 0, 'C');
-        $this->cell($cell_w[2], $cell_h, utf8_decode('Fecha'), 1, 0, 'C', true);
-        $this->cell($cell_w[3], $cell_h, $dateFormat, 1, 1, 'C');
+        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Lugar'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[1], h: $cell_h, txt: $progData['prog_place'], border: 1, ln: 0, align: 'C');
+        $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Fecha'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[3], h: $cell_h, txt: $dateFormat, border: 1, ln: 1, align: 'C');
 
-        $this->cell($cell_w[0], $cell_h, utf8_decode('Coordinador'), 1, 0, 'C', true);
-        $this->cell($cell_w[1], $cell_h, $progData['prog_coord'], 1, 0, 'C');
-        $this->cell($cell_w[2], $cell_h, utf8_decode('Nº educandos'), 1, 0, 'C', true);
-        $this->cell($cell_w[3], $cell_h, $progData['prog_child_N'], 1, 1, 'C');
+        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Coordinador'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[1], h: $cell_h, txt: $progData['prog_coord'], border: 1, ln: 0, align: 'C');
+        $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Nº educandos'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[3], h: $cell_h, txt: $progData['prog_child_N'], border: 1, ln: 1, align: 'C');
 
-        $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2], $cell_h, utf8_decode('Responsables asistentes'), 1, 0, 'C', true);
-        $this->cell($cell_w[3], $cell_h, utf8_decode('Logo del grupo'), 1, 1, 'C', true);
+        $this->cell(w: $cell_w[0] + $cell_w[1] + $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Responsables asistentes'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Logo del grupo'), border: 1, ln: 1, align: 'C', fill: true);
 
         $x = $this->GetX();
         $y = $this->GetY();
@@ -249,7 +242,7 @@ class PDF extends FPDF
         $lineas = $responsablesLimpios;
 
         // Añadir líneas vacías si hay menos de 5
-        while (count($lineas) < 5) {
+        while (count(value: $lineas) < 5) {
             $lineas[] = ' ';
         }
 
@@ -260,12 +253,12 @@ class PDF extends FPDF
 
         // Volvemos a la posición para dibujar la celda de la imagen
         $this->SetXY($x + $cell_w[0] + $cell_w[1] + $cell_w[2], $y);
-        $this->cell($cell_w[3], $cell_h * $nResp, '', 1, 0, 'C');
+        $this->cell(w: $cell_w[3], h: $cell_h * $nResp, txt: '', border: 1, ln: 1, align: 'C');
 
         // Insertar imagen centrada
         $imagePath = '../../.res/img/logos-grupos/' . $progData['grp_id'] . '.png';
 
-        if (file_exists($imagePath)) {
+        if (file_exists(filename: $imagePath)) {
             // Obtener dimensiones reales de la imagen
             [$imgWidth, $imgHeight] = getimagesize($imagePath);
 
@@ -285,12 +278,237 @@ class PDF extends FPDF
             $imageY = $y + (($cell_h * $nResp) - $finalH) / 2;
 
             // Insertar imagen
-            $this->Image($imagePath, $imageX, $imageY, $finalW, $finalH);
+            $this->Image(file: $imagePath, x: $imageX, y: $imageY, w: $finalW, h: $finalH);
+        }
+        // Espaciado
+        $this->Ln(h: 5);
+
+    }
+
+    // Tabla de objetivos
+    function TableObjetives($progData)
+    {
+        // Selecionamos el color de la rama
+        $colorRama = getRamaColor(ramaId: $progData['rama_id']);
+        $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
+
+        // Fuente y formato
+        $this->SetFont(family: 'Arial', style: '', size: 10);
+        $this->SetDrawColor(r: 190, g: 190, b: 190);
+        $this->SetLineWidth(width: .01);
+
+        // Tamaño de las celdas
+        $cell_h = 7;
+        $cell_w = [40, 60, 35, 35];
+
+        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'LEMA'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[1] + $cell_w[2] + $cell_w[3], h: $cell_h, txt: utf8_decode(string: ' En la manada, todos somos parte del mismo camino'), border: 1, ln: 1, align: 'L', fill: false);
+
+        $this->cell(w: $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'OBJETIVOS GENERALES Y CONTENIDOS PEDAGÓGICOS'), border: 1, ln: 1, align: 'C', fill: true);
+
+        $this->MultiCell(
+            w: $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3],
+            h: $cell_h,
+            txt: utf8_decode(string:
+                ' RESPONSABILIDAD:
+    - Fomentar la autonomía y el desarrollo personal a través de los territorios.
+    - Desarrollar la confianza de los nuevos educandos conforme al desarrollo positivo de sus habilidades sociales
+
+ PAÍS:
+    - Reforzar la participación social con el compromiso de la manada conforme al entorno que le rodea.
+    Trabajar en comunidad para así mejorar la cohesión y unión de la manada.
+
+ FE:
+    - Promover el aprendizaje de la oración del lobato y la reflexión sobre la misma.'),
+            border: 1,
+            align: 'L',
+            fill: false
+        );
+    }
+
+    // Tabla de materiales
+    function TableMats($progData, $matsData)
+    {
+        // Selecionamos el color de la rama
+        $colorRama = getRamaColor(ramaId: $progData['rama_id']);
+        $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
+
+        // Fuente y formato
+        $this->SetFont(family: 'Arial', style: '', size: 10);
+        $this->SetDrawColor(r: 190, g: 190, b: 190);
+        $this->SetLineWidth(width: .01);
+
+        // Tamaño de las celdas
+        $cell_h = 7;
+        $cell_w = 170; //170
+
+        // Realizamos un salto de página
+        $this->AddPage();
+
+        $this->cell(w: $cell_w, h: $cell_h, txt: utf8_decode(string: 'Materiales para la realización de actividades'), border: 1, ln: 1, align: 'C', fill: true);
+        
+        // Listar los materiales
+        $materiales = "";
+        foreach ($matsData as $mat) {
+            // Añadir cada material a la cadena
+            $materiales .= utf8_decode(string: $mat['mat_name']) . "\n";
+        }
+        $this->MultiCell(w: $cell_w, h: $cell_h, txt: $materiales, border: 1, align: 'L', fill: false);
+
+    }
+
+    //Tabla de actividades general
+    function TableActs($progData, $progactData)
+    {
+        // Selecionamos el color de la rama
+        $colorRama = getRamaColor(ramaId: $progData['rama_id']);
+        $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
+
+        // Fuente y formato
+        $this->SetFont(family: 'Arial', style: '', size: 10);
+        $this->SetDrawColor(r: 190, g: 190, b: 190);
+        $this->SetLineWidth(width: .01);
+
+        // Tamaño de las celdas
+        $cell_h = 7;
+        $cell_w = [20, 120, 30]; //170
+
+        // Realizamos un salto de página
+        $this->AddPage();
+
+        // Encabezado
+        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Hora'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Actividad'), border: 1, ln: 0, align: 'C', fill: true);
+        $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Encargado'), border: 1, ln: 1, align: 'C', fill: true);
+
+        // Contendido
+        $horaActual = DateTime::createFromFormat(format: 'H:i:s', datetime: $progData['prog_time']); // ej. '09:00:00'
+
+        $fill = false; // 🔧 Alternancia de color
+
+        foreach ($progactData as $act) {
+            // Hora formateada
+            $horaFormateada = $horaActual->format(format: 'H:i');
+            $duraciónFormateada = (DateTime::createFromFormat(format: 'H:i:s', datetime: $act['act_durat']))->format(format: 'H:i');
+
+            // Convertir duración hh:mm:ss a DateInterval y sumar
+            $interval = new DateInterval(
+                'PT' .
+                intval(substr($act['act_durat'], 0, 2)) . 'H' .
+                intval(substr($act['act_durat'], 3, 2)) . 'M' .
+                intval(substr($act['act_durat'], 6, 2)) . 'S'
+            );
+
+            // Celdas con alternancia de fondo
+            $this->cell(w: $cell_w[0], h: $cell_h * 2, txt: $horaFormateada, border: 1, ln: 0, align: 'C', fill: $fill);
+            $this->cell(w: $cell_w[1], h: $cell_h * 2, txt: utf8_decode($act['act_name']), border: 1, ln: 0, align: 'L', fill: $fill);
+            $this->cell(w: $cell_w[2], h: $cell_h * 2, txt: $duraciónFormateada, border: 1, ln: 1, align: 'C', fill: $fill);
+
+            $horaActual->add(interval: $interval);
+
+            $fill = !$fill;
         }
 
-
-        $this->Ln(); // Salto de línea
     }
+
+    // Tabla de actividades específica (estandar)
+    function tableActFormat0($progData, $progactData)
+    {
+        // Añadimos un salto de página y actividad por actividad 
+        $this->AddPage();
+
+        // Tamaño de las celdas
+        $cell_h = 7;
+        $cell_w = [30, 140]; //170
+
+        foreach ($progactData as $act) {
+            // Convertir duración hh:mm:ss a DateInterval y sumar
+            $interval = new DateInterval(
+                'PT' .
+                intval(value: substr(string: $act['act_durat'], offset: 0, length: 2)) . 'H' .
+                intval(value: substr(string: $act['act_durat'], offset: 3, length: 2)) . 'M' .
+                intval(value: substr(string: $act['act_durat'], offset: 6, length: 2)) . 'S'
+            );
+
+            // Celdas con alternancia de fondo
+            $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Nombre'), border: 1, ln: 0, align: 'C', fill: true);
+            $this->cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: $act['act_name']), border: 1, ln: 1, align: 'L', fill: false);
+
+            $this->MultiCell(w: $cell_w[0] + $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Desarrollo'), border: 1, align: 'C', fill: true);
+            $this->MultiCell(w: $cell_w[0] + $cell_w[1], h: $cell_h, txt: utf8_decode(string: $act['act_desc']), border: 1, align: 'L', fill: false);
+
+            $this->Ln(h: 5);
+
+        }
+    }
+
+    // Tabla de actividades específica (formato badentracker)
+    function tableActFormat1($progData, $progactData)
+    {
+        // Añadimos un salto de página y actividad por actividad 
+        $this->AddPage();
+
+        // Tamaño de las celdas
+        $cell_h = 7;
+        $cell_w = [30, 90, 30, 20]; //170
+
+        $horaActual = DateTime::createFromFormat(format: 'H:i:s', datetime: $progData['prog_time']); // ej. '09:00:00'
+
+        foreach ($progactData as $act) {
+            // Hora formateada
+            $horaFormateada = $horaActual->format(format: 'H:i');
+
+            // Convertir duración hh:mm:ss a DateInterval y sumar
+            $interval = new DateInterval(
+                'PT' .
+                intval(value: substr(string: $act['act_durat'], offset: 0, length: 2)) . 'H' .
+                intval(value: substr(string: $act['act_durat'], offset: 3, length: 2)) . 'M' .
+                intval(value: substr(string: $act['act_durat'], offset: 6, length: 2)) . 'S'
+            );
+
+            // Consulta actividades a la db
+            $db = linkDB();
+
+            $stmt = $db->prepare("
+            SELECT GROUP_CONCAT(mat.mat_name SEPARATOR ', ') AS materiales 
+            FROM act_mat
+            JOIN mat ON act_mat.mat_id = mat.mat_id
+            WHERE act_mat.act_id = ?");
+            $stmt->bind_param('i', $act['act_id']);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $row = $resultado->fetch_assoc();
+            $materiales = $row['materiales'] ?? 'Sin materiales';
+
+
+            // Celdas con alternancia de fondo
+            $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Nombre'), border: 1, ln: 0, align: 'C', fill: true);
+            $this->cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: $act['act_name']), border: 1, ln: 0, align: 'L', fill: false);
+            $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: $act['act_respon']), border: 1, ln: 0, align: 'C', fill: false);
+            $this->cell(w: $cell_w[3], h: $cell_h, txt: $horaFormateada, border: 1, ln: 1, align: 'C', fill: false);
+
+            $this->cell(w: $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Desarrollo'), border: 1, ln: 1, align: 'C', fill: true);
+            $this->MultiCell(
+                w: $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3],
+                h: $cell_h,
+                txt: utf8_decode(string:
+                    $act['act_desc'] . "\n" .
+                    $act['act_comment'] . "\n" .
+                    ' - Materiales' . "\n" .
+                    $materiales),
+                border: 1,
+                align: 'L',
+                fill: false
+            );
+
+            $this->Ln(h: 5);
+
+            $horaActual->add(interval: $interval);
+        }
+        $stmt->close();
+
+    }
+
 
 
 }
@@ -304,6 +522,20 @@ $pdf->SetFont(family: 'Times', style: '', size: 12);
 // Llamar a la función para agregar la tabla al PDF
 $pdf->TablePedag(progData: $progData);
 $pdf->TableGroup(progData: $progData);
-$pdf->Output();
+$pdf->TableObjetives(progData: $progData);
+
+$pdf->TableMats(progData: $progData, matsData: $matsData);
+
+$pdf->TableActs(progData: $progData, progactData: $progactData);
+
+if (isset($_GET['format']) && $_GET['format'] == 1) {
+    $pdf->tableActFormat1(progData: $progData, progactData: $progactData);
+} else {
+    $pdf->tableActFormat0(progData: $progData, progactData: $progactData);
+}
+
+// Formación del nombre del pdf
+$pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
+$pdf->Output(name: $pdfName);
 
 ?>

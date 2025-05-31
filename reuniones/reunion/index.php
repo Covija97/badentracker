@@ -180,8 +180,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </svg>
         </a>
     <?php endif; ?>
-    <a class="but align-right" href="pdfExport.php<?php if ($editMode && isset($progData['prog_id'])) 
-        echo '?id=' . $progData['prog_id']; ?>" title="Descargar en pdf" style="border: none; padding: 0;" target="_blank">
+    <a class="but align-right" onclick="openPdfOptions()" title="Descargar en pdf" style="border: none; padding: 0;">
+
         <svg width="400" height="400" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M 4.4093021,5.4697672 V 8.6511626 L 5.4697672,7.5906975" stroke-width="0.795349"
                 stroke-linecap="round" stroke-linejoin="round" id="path1" />
@@ -195,6 +195,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 stroke-width="0.795349" stroke-linecap="round" stroke-linejoin="round" id="path4" />
         </svg>
     </a>
+
+    <!-- Modal con las opciones de formato de pdf -->
+    <div id="pdfModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p>Elige el formato de exportación:</p>
+            <button onclick="exportPdf('0')">Formato Normal</button>
+            <button onclick="exportPdf('1')">Formato BadenTracker</button>
+            <button onclick="closePdfOptions()">Cancelar</button>
+        </div>
+    </div>
+
     <br>
 
     <form method="POST" class="form-grid">
@@ -318,13 +329,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         onchange="addAct(this.value)" />
                 </th>
                 <th width='10%'>
-                    <a class="but align-left" onclick="actNumber('numAct', -1)" title="Añadir una actividad" style="width: 10px;">
+                    <a class="but align-left" onclick="actNumber('numAct', -1)" title="Añadir una actividad"
+                        style="width: 10px;">
                         <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
                             <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                                 id="path1" />
                         </svg>
                     </a>
-                    <a class="but align-right" onclick="actNumber('numAct',1)" title="Eliminar una actividad" style="width: 10px;">
+                    <a class="but align-right" onclick="actNumber('numAct',1)" title="Eliminar una actividad"
+                        style="width: 10px;">
                         <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
                             <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                                 id="path1" />
@@ -617,6 +630,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         responsablesTextarea.addEventListener('input', actualizarEncargados);
     }
     actualizarEncargados();
+
+    function openPdfOptions() {
+        document.getElementById('pdfModal').style.display = 'flex';
+    }
+
+    function closePdfOptions() {
+        document.getElementById('pdfModal').style.display = 'none';
+    }
+
+    function exportPdf(format) {
+        const id = <?= $editMode && isset($progData['prog_id']) ? json_encode($progData['prog_id']) : 'null' ?>;
+        if (!id) {
+            alert('No hay ID de reunión para exportar');
+            return;
+        }
+        const url = `pdfExport.php?id=${id}&format=${format}`;
+        window.open(url, '_blank');
+        closePdfOptions();
+    }
+
 </script>
-<!-------------------- Errores a solucionar -------------------->
 <?php include "../../.res/templates/footer.php"; ?>

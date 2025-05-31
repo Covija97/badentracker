@@ -322,3 +322,48 @@ input {
     color: var(--color002);
     font-size: 18px;
 }
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: var(--color001);
+    border: 2px solid var(--color002);
+    border-radius: 10px;
+}
+
+.modal-content button {
+    align-items: center;
+    display: inline-flex;
+    vertical-align: middle;
+    border: 2px solid var(--color002);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--color002);
+    stroke: var(--color002);
+    padding: 10px;
+    min-width: 30px;
+    justify-content: center;
+    margin: 0 10px 0 0;
+    font-weight: bold;
+}
+
+.modal-content button:hover {
+    stroke: var(--color005);
+    color: var(--color005);
+    border: 2px solid var(--color005);
+}
