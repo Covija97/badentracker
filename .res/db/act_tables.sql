@@ -1,16 +1,21 @@
 -- Active: 1745596725282@@127.0.0.1@3306@badentracker
 /* ----------------------------- Tablas CRUD Actividades ----------------------------- */
-CREATE USER 'bt'@'localhost' IDENTIFIED by 'BadenTracker2025*';
 
+/* Crear usuario y asignar permisos */
+CREATE USER 'bt'@'localhost' IDENTIFIED by 'BadenTracker2025*';
 GRANT ALL PRIVILEGES ON badentracker.* TO 'bt'@'localhost';
 FLUSH PRIVILEGES;
 
-
-SELECT * FROM act;
-
-/* Tabla de actividades */
+/* Eliminar tablas */
+DROP TABLE IF EXISTS act_mat;
+DROP TABLE IF EXISTS act_cat;
+DROP TABLE IF EXISTS act_obj;
+DROP TABLE IF EXISTS mat;
+DROP TABLE IF EXISTS cat;
+DROP TABLE IF EXISTS obj;
 DROP TABLE IF EXISTS act;
 
+/* Tabla de actividades */
 CREATE TABLE IF NOT EXISTS act(  
     act_id      int         NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
     act_name    varchar(50) NOT NULL UNIQUE                     COMMENT 'Activity Name',
@@ -19,8 +24,6 @@ CREATE TABLE IF NOT EXISTS act(
 );
 
 /* Tabla de objetivos */
-DROP TABLE IF EXISTS obj;
-
 CREATE TABLE IF NOT EXISTS obj(  
     obj_id      int         NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
     obj_name    varchar(50) NOT NULL UNIQUE                     COMMENT 'Objective Name',
@@ -28,8 +31,6 @@ CREATE TABLE IF NOT EXISTS obj(
 );
 
 /* Tabla de categorias de actividades */
-DROP TABLE IF EXISTS cat;
-
 CREATE TABLE IF NOT EXISTS cat(  
     cat_id      int         NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
     cat_name    varchar(50) NOT NULL UNIQUE                     COMMENT 'Category Name',
@@ -37,8 +38,6 @@ CREATE TABLE IF NOT EXISTS cat(
 );
 
 /* Tabla de materiales */
-DROP TABLE IF EXISTS mat;
-
 CREATE TABLE IF NOT EXISTS mat(  
     mat_id      int         NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
     mat_name    varchar(50) NOT NULL UNIQUE                     COMMENT 'Material Name',
@@ -49,8 +48,6 @@ CREATE TABLE IF NOT EXISTS mat(
 /* ----------------------------- Tablas intermedias y relaciones ----------------------------- */
 
 /* Tabla entre actividades y objetivos */
-DROP TABLE IF EXISTS act_obj;
-
 CREATE TABLE IF NOT EXISTS act_obj(
     act_id      int         NOT NULL COMMENT 'Foreign Key',
     obj_id      int         NOT NULL COMMENT 'Foreign Key',
@@ -60,9 +57,6 @@ CREATE TABLE IF NOT EXISTS act_obj(
 );
 
 /* Tabla entre actividades y categorias */
-
-DROP TABLE IF EXISTS act_cat;
-
 CREATE TABLE IF NOT EXISTS act_cat(
     act_id      int         NOT NULL COMMENT 'Foreign Key',
     cat_id      int         NOT NULL COMMENT 'Foreign Key',
@@ -72,9 +66,6 @@ CREATE TABLE IF NOT EXISTS act_cat(
 );
 
 /* Tabla entre actividades y materiales */
-
-DROP TABLE IF EXISTS act_mat;
-
 CREATE TABLE IF NOT EXISTS act_mat(
     act_id      int         NOT NULL COMMENT 'Foreign Key',
     mat_id      int         NOT NULL COMMENT 'Foreign Key',
