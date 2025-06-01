@@ -145,8 +145,3 @@ gantt
     README completo             :done, 02-04, 3d
     Guía técnica/uso            :done, 02-07, 2d
 ```
-
-–––––––––––––––––––––––––––––––––––––––––––
-*He actualizado el contenido para que refleje el estado "done" de las tareas ya culminadas, manteniendo la estructura y estilo original. Debes replicar un formato similar en los demás archivos .md (1.plan.md, 2.db.md, etc.) para una constancia total en la documentación.*
-
-Si necesitas ajustar algún detalle adicional o modificar tareas pendientes, dímelo y podemos afinarlo.

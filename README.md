@@ -23,7 +23,7 @@ Subject: `Trabajo fin de Grado Superior`
 
 - 📄 **Creación y descarga de programaciones en PDF**  
   Genera planificaciones de reuniones con un formato predefinido que incluye encabezado, actividades ordenadas, objetivos pedagógicos y tiempos estimados.
-
+  
 - 🗂️ **Base de datos de actividades**  
   Almacena, clasifica y filtra actividades según criterios como tipo (juego, dinámica, reflexión...) y objetivos pedagógicos (trabajo en equipo, liderazgo, etc.).
 
@@ -35,28 +35,28 @@ Subject: `Trabajo fin de Grado Superior`
 
 ## 🛠️ Tecnologías utilizadas
 
-- **Backend:** PHP 8.x
-- **Frontend:** HTML, CSS, JavaScript
-- **Base de datos:** MySQL
-- **Servidor web:** Apache / Xampp
-- **Generador de PDF:** (Pendiente de instalación)
-- **Integración de calendario:** (Pediente de instalación)
+- **Backend:** PHP 8.x  
+- **Frontend:** HTML, CSS, JavaScript  
+- **Base de datos:** MySQL  
+- **Servidor web:** Apache / Xampp  
+- **Generador de PDF:** Integrado con FPDF  
+- **Integración de calendario:** FullCalendar integrado
 
 ## 📚 Estructura del proyecto
 
-La estructura del proyecto se dividirá en 3 grandes módulos:
+La estructura del proyecto se divide en 3 grandes módulos:
 
-* Actividades: el cual gestionará las actividades, objetivos, categorias y materiales almacenados en la base de datos.
-* Calendario: el cual mostrará un calendario interactivo con las diferentes programaciones de cada día, pudiendo filtrar por rama para un manejo más cómodo.
-* Reuniones: en el cual se pueden crear las reuniones, salidas, etc de manera sencilla pudiendo usar la base de datos de actividades o poder usar una actividad personalizada.
+* Actividades: Gestiona las actividades, objetivos, categorías y materiales almacenados en la base de datos.
+* Calendario: Muestra un calendario interactivo con las distintas programaciones diarias, pudiendo filtrar por rama para una gestión más cómoda.
+* Reuniones: Permite crear reuniones, salidas, etc., pudiendo usar la base de datos de actividades o actividades personalizadas.
 
 ```
 badentracker/
 ├── index.php               # Página de inicio
 ├── .res/                   # Recursos comunes
 │   ├── css/                # Archivos CSS
-│   ├── db/                 # Archivos de consultas y creación de tablas
-│   ├── funct/              # Funciones php generales de todas las páginas
+│   ├── db/                 # Consultas y creación de tablas
+│   ├── funct/              # Funciones PHP generales
 │   ├── icon/               # Iconos SVG
 │   ├── img/                # Imágenes
 │   ├── js/                 # Archivos JavaScript
@@ -66,41 +66,54 @@ badentracker/
 │   │
 │   ├── index.php
 │   │
-│   ├── new/                # Página de creación de actividades
+│   ├── new/                # Creación de actividades
 │   │   └── index.php
 │   │
-│   ├── actividad/          # Página de edición de actividad por ID
+│   ├── actividad/          # Edición de actividad por ID
 │   │   ├── index.php
 │   │   └── delete.php
 │   │
 │   ├── categorias/         # Página de categorías de actividades
 │   │   ├── index.php
-│   │   │── categoria/      # Página de edición de categoría por ID
+│   │   │── categoria/      # Edición de categoría por ID
 │   │   │   ├── index.php
 │   │   │   └── delete.php
-│   │   └── new/            # Página de creación de categoría
+│   │   └── new/            # Creación de categoría
 │   │       └── index.php
 │   │
 │   ├── materiales/         # Página de materiales de actividades
 │   │   ├── index.php
-│   │   │── material/       # Página de edición de material por ID
+│   │   │── material/       # Edición de material por ID
 │   │   │   ├── index.php
 │   │   │   └── delete.php
-│   │   └── new/            # Página de creación de material
+│   │   └── new/            # Creación de material
 │   │       └── index.php
 │   │
-│   └── objetivos/          # Página de materiales de objetivos
+│   └── objetivos/          # Página de objetivos
 │       ├── index.php
-│       │── objetivo/       # Página de edición de objetivo por ID
+│       │── objetivo/       # Edición de objetivo por ID
 │       │   ├── index.php
 │       │   └── delete.php
-│       └── new/            # Página de creación de objetivo
+│       └── new/            # Creación de objetivo
 │           └── index.php
 │
 ├── calendario/             # Página de calendario
 │
 └── reuniones/              # Página de reuniones
-
+    ├── index.php           # Listado de reuniones
+    ├── new/               # Creación de reunión
+    │     └── index.php
+    ├── grupos/             # Gestión de grupos de reuniones
+    │     ├── index.php     # Listado de grupos
+    │     ├── new/          # Creación de grupo
+    │     │     └── index.php
+    │     └── grupo/        # Detalle y edición de grupo por ID
+    │            ├── index.php
+    │            └── delete.php
+    └── reunion/            # Detalle, edición y exportación de reunión por ID
+          ├── index.php
+          ├── delete.php
+          └── pdfExport.php   # Exportador a PDF
 ```
 
 ## 📌 Próximas mejoras
