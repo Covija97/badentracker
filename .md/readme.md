@@ -6,6 +6,7 @@
 # 🗺️ Roadmap (40h) – Marzo y Mayo 2025
 
 ## 🖥 Creación y configuración del servidor<a href="0.srv.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
+*(Configurado e implementado en AWS y Ubuntu con Apache, PHP y MySQL)*
 
 ## 🛠️ Planificación y estructura básica del proyecto (4h)<a href="1.plan.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
 - Crear estructura base con PHP (carpetas, conexión DB)
@@ -22,9 +23,8 @@ gantt
 ```
 
 ## 🗄️ Diseño de la base de datos (5h)<a href="2.db.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
-
-- Crear esquema SQL (ERD)
-- Crear tablas con migraciones/manual
+- Crear esquema SQL (ERD) actualizado  
+- Crear tablas mediante migraciones/manual  
 - Configurar relaciones (FKs, índices)
 
 ```mermaid
@@ -39,10 +39,9 @@ gantt
 ```
 
 ## 🎯 CRUD de Actividades (4h)<a href="3.act.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
-
-- Crear modelos `Actividad`, `Objetivos`, `Categorias` y `Materiales`
-- Formularios
-- Listado y filtrado
+- Modelos actualizados para `Actividad`, `Objetivos`, `Categorias` y `Materiales`  
+- Formularios implementados y testeados  
+- Listado y filtrado operativos
 
 ```mermaid
 gantt
@@ -56,9 +55,8 @@ gantt
 ```
 
 ## 📅 CRUD de Reuniones (4h)<a href="4.reu.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
-- Modelo `Programacion` + `ActividadProgramada`
-- Formularios
-- Listado y filtrado
+- Modelo `Programacion` y `ActividadProgramada` implementado  
+- Formularios y listados en funcionamiento
 
 ```mermaid
 gantt
@@ -72,8 +70,8 @@ gantt
 ```
 
 ## 🖨️ Generador de PDF (5h)<a href="5.pdf.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
-- Plantilla HTML para PDF
-- Integrar librería como `FPDF` o `Dompdf`
+- Plantilla HTML para PDF  
+- Integración de librería (`FPDF` o `Dompdf`)  
 - Botón de descarga en vista de programación
 
 ```mermaid
@@ -82,16 +80,15 @@ gantt
     axisFormat %j
 
     section PDF<br>(5h)
-    Plantilla HTML              : 01-19, 2d
-    Integrar FPDF               : 01-21, 2d
-    Testeo                      : 01-23, 1d
+    Plantilla HTML              :done, 01-19, 2d
+    Integrar FPDF               :done, 01-21, 2d
+    Testeo                      :done, 01-23, 1d
 ```
 
 ## 📆 Sistema de calendario (5h)<a href="6.cld.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
-
-- Tabla `reuniones`
-- API de eventos en PHP (formato JSON)
-- Integrar `FullCalendar` en frontend
+- Tabla `reuniones` actualizada  
+- API de eventos en PHP (formato JSON)  
+- Integración de `FullCalendar` en el frontend
 
 ```mermaid
 gantt
@@ -99,16 +96,15 @@ gantt
     axisFormat %j
    
     section Calendario<br>(5h)
-    Unir con reuniones       : 01-24, 1d
-    API de eventos (PHP)        : 01-25, 2d
-    FullCalendar integración    : 01-27, 2d
+    Unir con reuniones       :done, 01-24, 1d
+    API de eventos (PHP)        :done, 01-25, 2d
+    FullCalendar integración    :done, 01-27, 2d
 ```
 
 ## ✨ Mejoras (4h)<a href="7.imp.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
-
-- Filtros múltiples en consultas SQL
-- Mejora de diseño (CSS limpio)
-- Validaciones con JS y PHP
+- Implementar filtros múltiples en consultas SQL  
+- Refinar diseño (CSS limpio)  
+- Validaciones adicionales en JS y PHP
 
 ```mermaid
 gantt
@@ -116,16 +112,15 @@ gantt
     axisFormat %j
 
     section Mejoras<br>(4h)
-    Filtros avanzados           : 01-29, 1d
-    Interfaz limpia             : 01-30, 1d
-    Validaciones JS/PHP         : 01-31, 1d
+    Filtros avanzados           :done, 01-29, 1d
+    Interfaz limpia             :done, 01-30, 1d
+    Validaciones JS/PHP         :done, 01-31, 1d
 ```
 
 ## 🧪 Tests y ajustes finales (4h)<a href="8.test.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
-
-- Pruebas funcionales (manuales)
-- Correcciones menores
-- Ajustes en interfaz y lógica
+- Pruebas funcionales realizadas  
+- Correcciones menores aplicadas  
+- Ajustes en interfaz y lógica finalizados
 
 ```mermaid
 gantt
@@ -133,21 +128,25 @@ gantt
     axisFormat %j
 
     section Testeo<br>(4h)
-    Pruebas funcionales         : 02-01, 1d
-    Corrección de errores       : 02-02, 1d
-    Ajustes menores             : 02-03, 1d
+    Pruebas funcionales         :done, 02-01, 1d
+    Corrección de errores       :done, 02-02, 1d
+    Ajustes menores             :done, 02-03, 1d
 ```
 
 ## 📚 Documentación (5h)<a href="9.doc.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
-
-- README con instrucciones de instalación
-- Documentación técnica y de uso
+- README con instrucciones de instalación actualizadas  
+- Documentación técnica y de uso completada
 
 ```mermaid
 gantt
     dateFormat  DDD
     axisFormat %j
     section Documentación<br>(5h)
-    README completo             : 02-04, 3d
-    Guía técnica/uso            : 02-07, 2d
+    README completo             :done, 02-04, 3d
+    Guía técnica/uso            :done, 02-07, 2d
 ```
+
+–––––––––––––––––––––––––––––––––––––––––––
+*He actualizado el contenido para que refleje el estado "done" de las tareas ya culminadas, manteniendo la estructura y estilo original. Debes replicar un formato similar en los demás archivos .md (1.plan.md, 2.db.md, etc.) para una constancia total en la documentación.*
+
+Si necesitas ajustar algún detalle adicional o modificar tareas pendientes, dímelo y podemos afinarlo.
