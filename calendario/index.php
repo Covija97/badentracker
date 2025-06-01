@@ -69,16 +69,18 @@ if ($grpres) {
             <path d="M 6,10 V 2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" id="path2" />
         </svg>
     </a>
-    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <br><br>
+    <div id="calendar"></div>
+    <!-- El select se mueve fuera del flujo normal y se posiciona sobre el header del calendario -->
+    <div id="grupoFiltroContainer" style="position: absolute; z-index: 10; right: 30px; top: 110px;">
         <label for="grupoFiltro" style="margin-right:10px;">Grupo:</label>
-        <select id="grupoFiltro" class="select2" style="width: 250px;">
+        <select id="grupoFiltro" class="select2 but" style="width: 200px;">
             <option value="">Todos</option>
             <?php foreach ($grupos as $g): ?>
                 <option value="<?php echo $g['grp_name']; ?>"><?php echo $g['grp_name']; ?></option>
             <?php endforeach; ?>
         </select>
     </div>
-    <div id="calendar"></div>
 </main>
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
@@ -97,15 +99,30 @@ if ($grpres) {
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'dayGridMonth'
+                right: '' // Sin botón de mes
             },
             buttonText: {
-                today: 'Hoy',
-                month: 'Mes'
+                today: 'Hoy'
             },
             events: eventos
         });
         calendar.render();
+
+        // Reposicionar el filtro justo al lado derecho del header del calendario
+        function posicionarFiltro() {
+            var header = document.querySelector('.fc-header-toolbar .fc-toolbar-chunk:last-child');
+            var filtro = document.getElementById('grupoFiltroContainer');
+            if (header && filtro) {
+                header.appendChild(filtro);
+                filtro.style.position = 'static';
+                filtro.style.marginLeft = '20px';
+                filtro.style.top = '';
+                filtro.style.right = '';
+            }
+        }
+        setTimeout(posicionarFiltro, 300);
+        // Por si FullCalendar vuelve a renderizar el header
+        calendar.on('datesSet', posicionarFiltro);
 
         $('#grupoFiltro').on('change', function () {
             var grupo = $(this).val();
@@ -121,7 +138,6 @@ if ($grpres) {
     .fc-toolbar-title {
         text-transform: lowercase;
     }
-
     .fc-toolbar-title::first-letter {
         text-transform: uppercase;
     }
