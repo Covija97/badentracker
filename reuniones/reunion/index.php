@@ -200,7 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div id="pdfModal" class="modal" style="display: none;">
         <div class="modal-content">
             <p>Elige el formato de exportación:</p>
-            <button onclick="exportPdf('0')">Formato Normal</button>
+            <button onclick="exportPdf('0')">Formato Estandar</button>
             <button onclick="exportPdf('1')">Formato BadenTracker</button>
             <button onclick="closePdfOptions()">Cancelar</button>
         </div>
