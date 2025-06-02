@@ -87,6 +87,66 @@ class PDF extends FPDF
         // Número de página
         $this->Cell(0, 10, utf8_decode('Página ' . $this->PageNo() . '/{nb}'), 0, 0, 'R');
     }
+
+    function TablePedag($progData): void
+    {
+        // Selecionamos el color de la rama
+        $colorRama = getRamaColor($progData['rama_id']);
+        $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
+
+        // Selecionamos la fuente
+        $this->SetFont('Arial', '', 10);
+
+        // Formato del borde de la tabla
+        $this->SetDrawColor(190, 190, 190);
+        $this->SetLineWidth(.01);
+
+        // Tamaño celdas
+        $cell_h = 7;
+        $cell_w = [40, 40, 40, 50]; // 170
+
+        // Encabezados
+        $this->Cell($cell_w[0], $cell_h, utf8_decode('Ámbito'), 1, 0, 'C', false);
+        $this->Cell($cell_w[1], $cell_h, utf8_decode('Área'), 1, 0, 'C', false);
+        $this->Cell($cell_w[2], $cell_h, utf8_decode('Línea pedagógica'), 1, 0, 'C', false);
+        $this->Cell($cell_w[3], $cell_h, utf8_decode('Contenidos'), 1, 1, 'C', false);
+
+        // RESPONSABILIDAD
+        $this->Cell($cell_w[0], $cell_h * 2, utf8_decode('Responsabilidad'), 1, 0, 'L', true);
+        $this->Cell($cell_w[1], $cell_h, utf8_decode('Personalidad'), 1, 0, 'L', true);
+        $this->Cell($cell_w[2], $cell_h, utf8_decode('Autonomía'), 1, 0, 'L', true);
+        $this->Cell($cell_w[3], $cell_h, utf8_decode('Progreso personal'), 1, 1, 'L', true);
+
+        $this->Cell($cell_w[0], $cell_h, '', 0, 0);
+        $this->Cell($cell_w[1], $cell_h, utf8_decode('Social'), 1);
+        $this->Cell($cell_w[2], $cell_h, utf8_decode('Habilidades sociales'), 1);
+        $this->Cell($cell_w[3], $cell_h, utf8_decode('Confianza'), 1, 1);
+
+        // PAÍS
+        $this->Cell($cell_w[0], $cell_h * 3, utf8_decode('País'), 1, 0, 'L', true);
+        $this->Cell($cell_w[1], $cell_h, utf8_decode('Personalidad'), 1, 0, 'L', true);
+        $this->Cell($cell_w[2], $cell_h, utf8_decode('Compromiso'), 1, 0, 'L', true);
+        $this->Cell($cell_w[3], $cell_h, utf8_decode('Participación social'), 1, 1, 'L', true);
+
+        $this->Cell($cell_w[0], $cell_h * 2, '', 0, 0);
+        $this->Cell($cell_w[1], $cell_h * 2, utf8_decode('Emocional'), 1);
+        $this->Cell($cell_w[2], $cell_h * 2, utf8_decode('Comunidad'), 1);
+        $this->MultiCell($cell_w[3], $cell_h, utf8_decode('Relación con la rama y el grupo scouts'), 1, 1);
+
+        // FE
+        $this->Cell($cell_w[0], $cell_h * 2, utf8_decode('Fe'), 1, 0, 'L', true);
+        $this->Cell($cell_w[1], $cell_h, utf8_decode('Espiritual'), 1, 0, 'L', true);
+        $this->Cell($cell_w[2], $cell_h, utf8_decode('Oración'), 1, 0, 'L', true);
+        $this->Cell($cell_w[3], $cell_h, utf8_decode('Oración y reflexión'), 1, 1, 'L', true);
+
+        $this->Cell($cell_w[0], $cell_h, '', 0, 0);
+        $this->Cell($cell_w[1], $cell_h, utf8_decode('Físico'), 1);
+        $this->Cell($cell_w[2], $cell_h, utf8_decode('Corporeidad'), 1);
+        $this->Cell($cell_w[3], $cell_h, utf8_decode('Protección de la naturaleza'), 1, 1);
+
+        // Espaciado
+        $this->Ln(5);
+    }
 }
 ?>
 
@@ -96,6 +156,9 @@ $pdf->SetMargins(20, 15, 20);
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Times', '', 12);
+
+// Llamar a la función para agregar la tabla al PDF
+$pdf->TablePedag($progData);
 
 $pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
 $pdf->Output('I', $pdfName);
