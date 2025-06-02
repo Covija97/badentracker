@@ -79,7 +79,7 @@ $query = linkDB()->query($sql);
       while ($row = $query->fetch_assoc()) {
         $logoPath = "../../.res/img/logos-grupos/" . $row["grp_id"] . ".png";
         echo "<div class='grupo-card' style='width:180px; background:$bg; border-radius:12px; display:flex; flex-direction:column; align-items:center; padding:1.2rem 1rem 1.5rem 1rem; position:relative;'>";
-        echo "<a href='grupo?id=" . $row["grp_id"] . "' title='Grupo Scout " . $row["grp_name"] . "' style='display:block; width:100%; text-align:center; color:$fg; text-decoration:none;'>";
+        echo "<a href='grupo?id=" . $row["grp_id"] . "' title='Grupo Scout " . $row["grp_name"] . "' style='display:block; width:100%; height:100%; text-align:center; color:$fg; text-decoration:none;'>";
         echo "<img src='" . $logoPath . "' alt='Logo' style='width:100%; border-radius:8px; display:block; margin:0 auto;' onerror=\"this.style.display='none'; this.nextElementSibling.style.display='block';\">";
         echo "<div class='falta-logo' style='display:none; color:#b00; font-size:0.95em; margin-bottom:0.5rem;'>falta logo</div>";
         echo "<div style='font-weight:bold; color:$fg; text-align:center;'>" . htmlspecialchars($row["grp_name"]) . "</div>";
