@@ -535,6 +535,6 @@ if (isset($_GET['format']) && $_GET['format'] == 1) {
 } */
 
 $pdfName = mb_convert_encoding($progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf', 'ISO-8859-1', 'UTF-8');
-$pdf->Output('I', $pdfName);
+$pdf->Output();
 
 ?>
