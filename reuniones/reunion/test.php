@@ -341,13 +341,13 @@ FE:
         // Realizamos un salto de página
         $this->AddPage();
 
-        $this->cell($cell_w, $cell_h, mb_convert_encoding('Materiales para la realización de actividades', 'ISO-8859-1', 'UTF-8'), 1, 1, 'C', true);
+        $this->cell($cell_w, $cell_h, utf8_decode('Materiales para la realización de actividades'), 1, 1, 'C', true);
 
         // Listar los materiales
         $materiales = "";
         foreach ($matsData as $mat) {
             // Añadir cada material a la cadena
-            $materiales .= mb_convert_encoding($mat['mat_name'], 'ISO-8859-1', 'UTF-8') . "\n";
+            $materiales .= utf8_decode($mat['mat_name']) . "\n";
         }
         $this->MultiCell($cell_w, $cell_h, $materiales, 1, 'L', false);
 
