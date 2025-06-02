@@ -213,29 +213,29 @@ class PDF extends FPDF
         $nResp = max(5, $count); // mínimo de 5 filas
 
         // Encabezado de tabla
-        $this->cell($cell_w[0], $cell_h, mb_convert_encoding('Grupo Scout', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
-        $this->cell($cell_w[1], $cell_h, mb_convert_encoding($progData['grp_name'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C');
-        $this->cell($cell_w[2], $cell_h, mb_convert_encoding('Ronda Solar', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
-        $this->cell($cell_w[3], $cell_h, mb_convert_encoding(getRondaSolar($progData['prog_date']), 'ISO-8859-1', 'UTF-8'), 1, 1, 'C');
+        $this->cell($cell_w[0], $cell_h, utf8_decode('Grupo Scout'), 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, utf8_decode($progData['grp_name']), 1, 0, 'C');
+        $this->cell($cell_w[2], $cell_h, utf8_decode('Ronda Solar'), 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, utf8_decode(getRondaSolar($progData['prog_date'])), 1, 1, 'C');
 
-        $this->cell($cell_w[0], $cell_h, 'Lugar', 1, 0, 'C', true);
-        $this->cell($cell_w[1], $cell_h, mb_convert_encoding($progData['prog_place'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C');
-        $this->cell($cell_w[2], $cell_h, 'Fecha', 1, 0, 'C', true);
+        $this->cell($cell_w[0], $cell_h, utf8_decode('Lugar'), 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, utf8_decode($progData['prog_place']), 1, 0, 'C');
+        $this->cell($cell_w[2], $cell_h, utf8_decode('Fecha'), 1, 0, 'C', true);
         $this->cell($cell_w[3], $cell_h, $dateFormat, 1, 1, 'C');
 
-        $this->cell($cell_w[0], $cell_h, 'Coordinador', 1, 0, 'C', true);
-        $this->cell($cell_w[1], $cell_h, mb_convert_encoding($progData['prog_coord'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C');
-        $this->cell($cell_w[2], $cell_h, mb_convert_encoding('Nº educandos', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
-        $this->cell($cell_w[3], $cell_h, mb_convert_encoding($progData['prog_child_N'], 'ISO-8859-1', 'UTF-8'), 1, 1, 'C');
+        $this->cell($cell_w[0], $cell_h, utf8_decode('Coordinador'), 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, utf8_decode($progData['prog_coord']), 1, 0, 'C');
+        $this->cell($cell_w[2], $cell_h, utf8_decode('Nº educandos'), 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, utf8_decode($progData['prog_child_N']), 1, 1, 'C');
 
-        $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2], $cell_h, 'Responsables asistentes', 1, 0, 'C', true);
-        $this->cell($cell_w[3], $cell_h, 'Logo del grupo', 1, 1, 'C', true);
+        $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2], $cell_h, utf8_decode('Responsables asistentes'), 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, utf8_decode('Logo del grupo'), 1, 1, 'C', true);
 
         $x = $this->GetX();
         $y = $this->GetY();
 
         // Celdas responsables e imagen
-        $this->cell($cell_w[0], $cell_h * $nResp, mb_convert_encoding($progData['rama_name'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+        $this->cell($cell_w[0], $cell_h * $nResp, utf8_decode($progData['rama_name']), 1, 0, 'C', true);
         // Rellenar hasta mínimo 5 líneas
         $responsablesArray = explode("\n", str_replace(["\r\n", "\r"], "\n", $rawText));
         $responsablesLimpios = array_filter(array_map('trim', $responsablesArray), fn($r) => $r !== '');
@@ -248,7 +248,7 @@ class PDF extends FPDF
 
         // Recombinar para MultiCell
         $contenidoResponsables = implode("\n", $lineas);
-        $this->MultiCell($cell_w[1] + $cell_w[2], $cell_h, mb_convert_encoding($contenidoResponsables, 'ISO-8859-1', 'UTF-8'), 1, 'L', false);
+        $this->MultiCell($cell_w[1] + $cell_w[2], $cell_h, utf8_decode($contenidoResponsables), 1, 'L', false);
 
         // Volvemos a la posición para dibujar la celda de la imagen
         $this->SetXY($x + $cell_w[0] + $cell_w[1] + $cell_w[2], $y);
