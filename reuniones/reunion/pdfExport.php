@@ -14,7 +14,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $edit_id = intval($_GET['id']);
     $db = linkDB();
     // Obtener datos de la programación, grupos y ramas
-    $stmt = $db->prepare(query: "
+    $stmt = $db->prepare("
     SELECT *
     FROM prog, rama, grps
     WHERE 
@@ -84,9 +84,9 @@ function getRamaColor($ramaId): array
 /* Calcular ronda solar */
 function getRondaSolar($progDate): string
 {
-    $date = new DateTime(datetime: $progDate);
-    $mes = (int) $date->format(format: 'n'); // Número del mes (1–12)
-    $anio = (int) $date->format(format: 'Y'); // Año con 4 dígitos
+    $date = new DateTime($progDate);
+    $mes = (int) $date->format('n'); // Número del mes (1–12)
+    $anio = (int) $date->format('Y'); // Año con 4 dígitos
 
     if ($mes >= 9) {
         // De septiembre a diciembre
@@ -132,14 +132,14 @@ class PDF extends FPDF
     {
         // Selecionamos el color de la rama
         $colorRama = getRamaColor($progData['rama_id']);
-        $this->SetFillColor(r: $colorRama[0], g: $colorRama[1], b: $colorRama[2]);
+        $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
 
         // Selecionamos la fuente
-        $this->SetFont(family: 'Arial', style: '', size: 10);
+        $this->SetFont('Arial', '', 10);
 
         // Formato del borde de la tabla
-        $this->SetDrawColor(r: 190, g: 190, b: 190);
-        $this->SetLineWidth(width: .01);
+        $this->SetDrawColor(190, 190, 190);
+        $this->SetLineWidth(.01);
 
         // Tamaño celdas
         $cell_h = 7;
@@ -196,27 +196,27 @@ class PDF extends FPDF
         $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
 
         // Fuente y formato
-        $this->SetFont(family: 'Arial', style: '', size: 10);
-        $this->SetDrawColor(r: 190, g: 190, b: 190);
-        $this->SetLineWidth(width: .01);
+        $this->SetFont('Arial', '', 10);
+        $this->SetDrawColor(190, 190, 190);
+        $this->SetLineWidth(.01);
 
         // Tamaño de las celdas
         $cell_h = 7;
         $cell_w = [40, 60, 35, 35];
 
-        $dateFormat = date(format: 'd-m-Y', timestamp: strtotime(datetime: $progData['prog_date']));
+        $dateFormat = date('d-m-Y', strtotime($progData['prog_date']));
 
         // Contar número de responsables
-        $rawText = is_resource(value: $progData['responsibles']) ? stream_get_contents(stream: $progData['responsibles']) : $progData['responsibles'];
-        $nombres = array_filter(array: explode(separator: "\n", string: str_replace(search: ["\r\n", "\r"], replace: "\n", subject: $rawText)), callback: fn($n): bool => trim(string: $n) !== '');
-        $count = count(value: $nombres);
+        $rawText = is_resource($progData['responsibles']) ? stream_get_contents($progData['responsibles']) : $progData['responsibles'];
+        $nombres = array_filter(explode("\n", str_replace(["\r\n", "\r"], "\n", $rawText)), fn($n): bool => trim($n) !== '');
+        $count = count($nombres);
         $nResp = max(5, $count); // mínimo de 5 filas
 
         // Encabezado de tabla
         $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Grupo Scout'), border: 1, ln: 0, align: 'C', fill: true);
         $this->cell(w: $cell_w[1], h: $cell_h, txt: $progData['grp_name'], border: 1, ln: 0, align: 'C');
         $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Ronda Solar'), border: 1, ln: 0, align: 'C', fill: true);
-        $this->cell(w: $cell_w[3], h: $cell_h, txt: getRondaSolar(progDate: $progData['prog_date']), border: 1, ln: 1, align: 'C');
+        $this->cell(w: $cell_w[3], h: $cell_h, txt: getRondaSolar($progData['prog_date']), border: 1, ln: 1, align: 'C');
 
         $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Lugar'), border: 1, ln: 0, align: 'C', fill: true);
         $this->cell(w: $cell_w[1], h: $cell_h, txt: $progData['prog_place'], border: 1, ln: 0, align: 'C');
@@ -242,7 +242,7 @@ class PDF extends FPDF
         $lineas = $responsablesLimpios;
 
         // Añadir líneas vacías si hay menos de 5
-        while (count(value: $lineas) < 5) {
+        while (count($lineas) < 5) {
             $lineas[] = ' ';
         }
 
@@ -258,7 +258,7 @@ class PDF extends FPDF
         // Insertar imagen centrada
         $imagePath = '../../.res/img/logos-grupos/' . $progData['grp_id'] . '.png';
 
-        if (file_exists(filename: $imagePath)) {
+        if (file_exists($imagePath)) {
             // Obtener dimensiones reales de la imagen
             [$imgWidth, $imgHeight] = getimagesize($imagePath);
 
@@ -293,9 +293,9 @@ class PDF extends FPDF
         $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
 
         // Fuente y formato
-        $this->SetFont(family: 'Arial', style: '', size: 10);
-        $this->SetDrawColor(r: 190, g: 190, b: 190);
-        $this->SetLineWidth(width: .01);
+        $this->SetFont('Arial', '', 10);
+        $this->SetDrawColor(190, 190, 190);
+        $this->SetLineWidth(.01);
 
         // Tamaño de las celdas
         $cell_h = 7;
@@ -334,9 +334,9 @@ class PDF extends FPDF
         $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
 
         // Fuente y formato
-        $this->SetFont(family: 'Arial', style: '', size: 10);
-        $this->SetDrawColor(r: 190, g: 190, b: 190);
-        $this->SetLineWidth(width: .01);
+        $this->SetFont('Arial', '', 10);
+        $this->SetDrawColor(190, 190, 190);
+        $this->SetLineWidth(.01);
 
         // Tamaño de las celdas
         $cell_h = 7;
@@ -365,9 +365,9 @@ class PDF extends FPDF
         $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
 
         // Fuente y formato
-        $this->SetFont(family: 'Arial', style: '', size: 10);
-        $this->SetDrawColor(r: 190, g: 190, b: 190);
-        $this->SetLineWidth(width: .01);
+        $this->SetFont('Arial', '', 10);
+        $this->SetDrawColor(190, 190, 190);
+        $this->SetLineWidth(.01);
 
         // Tamaño de las celdas
         $cell_h = 7;
@@ -388,8 +388,8 @@ class PDF extends FPDF
 
         foreach ($progactData as $act) {
             // Hora formateada
-            $horaFormateada = $horaActual->format(format: 'H:i');
-            $duraciónFormateada = (DateTime::createFromFormat(format: 'H:i:s', datetime: $act['act_durat']))->format(format: 'H:i');
+            $horaFormateada = $horaActual->format('H:i');
+            $duraciónFormateada = (DateTime::createFromFormat(format: 'H:i:s', datetime: $act['act_durat']))->format('H:i');
 
             // Convertir duración hh:mm:ss a DateInterval y sumar
             $interval = new DateInterval(
@@ -456,7 +456,7 @@ class PDF extends FPDF
 
         foreach ($progactData as $act) {
             // Hora formateada
-            $horaFormateada = $horaActual->format(format: 'H:i');
+            $horaFormateada = $horaActual->format('H:i');
 
             // Convertir duración hh:mm:ss a DateInterval y sumar
             $interval = new DateInterval(
@@ -514,28 +514,25 @@ class PDF extends FPDF
 }
 
 // Creación del objeto de la clase heredada
-$pdf = new PDF(orientation: 'P', unit: 'mm', size: 'A4');
-$pdf->SetMargins(left: 20, top: 15, right: 20);
+$pdf = new PDF('P', 'mm', 'A4');
+$pdf->SetMargins(20, 15, 20);
 $pdf->AliasNbPages();
 $pdf->AddPage();
-$pdf->SetFont(family: 'Times', style: '', size: 12);
+$pdf->SetFont('Times', '', 12);
 // Llamar a la función para agregar la tabla al PDF
-$pdf->TablePedag(progData: $progData);
-$pdf->TableGroup(progData: $progData);
-$pdf->TableObjetives(progData: $progData);
-
-$pdf->TableMats(progData: $progData, matsData: $matsData);
-
-$pdf->TableActs(progData: $progData, progactData: $progactData);
+$pdf->TablePedag($progData);
+$pdf->TableGroup($progData);
+$pdf->TableObjetives($progData);
+$pdf->TableMats($progData, $matsData);
+$pdf->TableActs($progData, $progactData);
 
 if (isset($_GET['format']) && $_GET['format'] == 1) {
-    $pdf->tableActFormat1(progData: $progData, progactData: $progactData);
+    $pdf->tableActFormat1($progData, $progactData);
 } else {
-    $pdf->tableActFormat0(progData: $progData, progactData: $progactData);
+    $pdf->tableActFormat0($progData, $progactData);
 }
 
-// Formación del nombre del pdf
 $pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
-$pdf->Output(name: $pdfName);
+$pdf->Output($pdfName);
 
 ?>
