@@ -1,0 +1,1 @@
+En esta carpeta se guardarán las imagenes de los logos en formato png
