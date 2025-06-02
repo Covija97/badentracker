@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-        header(header: "Location: " . $_SERVER['REQUEST_URI']);
+        header("Location: " . $_SERVER['REQUEST_URI']);
         exit;
     } else {
         // Insertar reunión principal en prog
@@ -143,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-        header(header: "Location: " . $_SERVER['REQUEST_URI']);
+        header("Location: " . $_SERVER['REQUEST_URI']);
         exit;
     }
 }
