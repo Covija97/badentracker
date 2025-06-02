@@ -335,6 +335,7 @@ $pdf->SetFont('Times', '', 12);
 // Llamar a la función para agregar la tabla al PDF
 $pdf->TablePedag($progData);
 $pdf->TableGroup($progData);
+$pdf->TableObjetives($progData);
 
 $pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
 $pdf->Output('I', $pdfName);
