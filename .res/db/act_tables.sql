@@ -2,8 +2,8 @@
 /* ----------------------------- Tablas CRUD Actividades ----------------------------- */
 
 /* Crear usuario y asignar permisos */
-CREATE USER 'bt'@'localhost' IDENTIFIED by 'BadenTracker2025*';
-GRANT ALL PRIVILEGES ON badentracker.* TO 'bt'@'localhost';
+CREATE USER 'bt'@'badentracker' IDENTIFIED by 'BadenTracker2025*';
+GRANT ALL PRIVILEGES ON badentracker.* TO 'bt'@'badentracker';
 FLUSH PRIVILEGES;
 
 /* Eliminar tablas */

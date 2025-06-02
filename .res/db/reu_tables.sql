@@ -9,12 +9,13 @@ DROP TABLE IF EXISTS grps;
 
 DROP TABLE IF EXISTS rama;
 
-SELECT *
-FROM prog, rama, grps
-WHERE
-    prog.rama_id = rama.rama_id AND
-    prog.grp_id = grps.grp_id AND
-    prog.prog_id = 7;
+INSERT INTO rama (rama_name) VALUES 
+('Grupo'),
+('Castores'),
+('Lobatos'),
+('Rangers'),
+('Pioneros'),
+('Rutas');
 
 CREATE TABLE IF NOT EXISTS rama (
     rama_id int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
