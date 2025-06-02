@@ -64,6 +64,46 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 ?>
 
 <?php
+/* -- Funciones --------------------------------------------------------- */
+/* Obtener color de la rama */
+function getRamaColor($ramaId): array
+{
+    switch ($ramaId) {
+        case '2':
+            return [252, 229, 205]; // Castores
+        case '3':
+            return [255, 241, 204]; // Lobatos
+        case '4':
+            return [201, 218, 248]; // Rangers
+        case '5':
+            return [244, 204, 204]; // Pioneros
+        case '6':
+            return [217, 234, 211]; // Rutas
+        default:
+            return [255, 255, 255]; // Default color
+    }
+}
+
+/* Calcular ronda solar */
+function getRondaSolar($progDate): string
+{
+    $date = new DateTime($progDate);
+    $mes = (int) $date->format('n'); // Número del mes (1–12)
+    $anio = (int) $date->format('Y'); // Año con 4 dígitos
+
+    if ($mes >= 9) {
+        // De septiembre a diciembre
+        $ronda = $anio . '/' . sprintf('%02d', ($anio + 1) % 100);
+    } else {
+        // De enero a agosto
+        $ronda = ($anio - 1) . '/' . sprintf('%02d', $anio % 100);
+    }
+    return $ronda;
+}
+
+?>
+
+<?php
 class PDF extends FPDF
 {
 
