@@ -520,11 +520,10 @@ FE:
 $pdf = new PDF('P', 'mm', 'A4');
 $pdf->SetMargins(20, 15, 20);
 $pdf->AliasNbPages();
-$pdf->AddPage();
 $pdf->SetFont('Times', '', 12);
 // Llamar a la función para agregar la tabla al PDF
-$pdf->TablePedag($progData);
-/* $pdf->TableGroup($progData);
+/*$pdf->TablePedag($progData);
+$pdf->TableGroup($progData);
 $pdf->TableObjetives($progData);
 $pdf->TableMats($progData, $matsData);
 $pdf->TableActs($progData, $progactData);
