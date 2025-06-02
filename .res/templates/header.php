@@ -9,16 +9,16 @@
              - <?php echo $title; ?>
         <?php endif; ?>
     </title>
-    <link rel="stylesheet" href="/badentracker/.res/css/styles.css?v=2">
-    <link rel="icon" href="/badentracker/.res/icon/bt-icon.svg">
+    <link rel="stylesheet" href="/.res/css/styles.css?v=2">
+    <link rel="icon" href="/.res/icon/bt-icon.svg">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     
 </head>
 
 <body>
     <header>
-        <a href="/badentracker" class="logo" title="Inicio">
-            <img src="/badentracker/.res/icon/bt-logo.svg" height="50px">
+        <a href="" class="logo" title="Inicio">
+            <img src="/.res/icon/bt-logo.svg" height="50px">
             <h1>BadenTracker</h1>
         </a>
         <h1 class="titlePage">
@@ -27,7 +27,7 @@
             <?php endif; ?>
         </h1>
         <div class="hright">
-            <a href="/badentracker/actividades/" title="Ir a actividades"
+            <a href="/actividades/" title="Ir a actividades"
                 <?php
                 if ($page == "act")
                     echo 'class = "act"';
@@ -35,7 +35,7 @@
                     echo '';
                 ?>
             >Actividades</a>
-            <a href="/badentracker/reuniones/" title="Ir a reuniones"
+            <a href="/reuniones/" title="Ir a reuniones"
             <?php
                 if ($page == "reu")
                     echo 'class = "act"';
@@ -43,7 +43,7 @@
                     echo '';
                 ?>
             >Reuniones</a>
-            <a href="/badentracker/calendario/" title="Ir a calendario"
+            <a href="/calendario/" title="Ir a calendario"
             <?php
                 if ($page == "cald")
                     echo 'class = "act"';
