@@ -17,7 +17,7 @@
 
 <body>
     <header>
-        <a href="" class="logo" title="Inicio">
+        <a href="/" class="logo" title="Inicio">
             <img src="/.res/icon/bt-logo.svg" height="50px">
             <h1>BadenTracker</h1>
         </a>
