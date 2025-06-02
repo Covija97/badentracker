@@ -1,5 +1,5 @@
 <!-- Estilo común para los Select2 -->
-<link rel="stylesheet" href="/badentracker/.res/css/select2.css?v=2">
+<link rel="stylesheet" href="/.res/css/select2.css?v=2">
 <!-- Variables, require e include -->
 <?php
 $title = "Nueva Actividad";
