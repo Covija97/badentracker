@@ -9,9 +9,9 @@ require "../../.res/funct/funct.php";
 $editMode = false;
 $progData = [];
 $progactData = [];
-if (isset($_GET['id']) && is_numeric(value: $_GET['id'])) {
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $editMode = true;
-    $edit_id = intval(value: $_GET['id']);
+    $edit_id = intval($_GET['id']);
     $db = linkDB();
     // Obtener datos de la programación, grupos y ramas
     $stmt = $db->prepare(query: "
@@ -381,7 +381,7 @@ class PDF extends FPDF
         $this->cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Actividad'), border: 1, ln: 0, align: 'C', fill: true);
         $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Encargado'), border: 1, ln: 1, align: 'C', fill: true);
 
-        // Contendido
+        // Contenido
         $horaActual = DateTime::createFromFormat(format: 'H:i:s', datetime: $progData['prog_time']); // ej. '09:00:00'
 
         $fill = false; // 🔧 Alternancia de color
