@@ -85,7 +85,7 @@ class PDF extends FPDF
         // Arial italic 8
         $this->SetFont('Arial', '', 10);
         // Número de página
-        $this->Cell(0, 10, 'Página ' . $this->PageNo() . '/{nb}', 0, 0, 'R');
+        $this->Cell(0, 10, utf8_decode('Página ' . $this->PageNo() . '/{nb}'), 0, 0, 'R');
     }
 }
 ?>
