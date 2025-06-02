@@ -375,9 +375,9 @@ FE:
         $this->AddPage();
 
         // Encabezado
-        $this->cell($cell_w[0], $cell_h, mb_convert_encoding('Hora', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
-        $this->cell($cell_w[1], $cell_h, mb_convert_encoding('Actividad', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
-        $this->cell($cell_w[2], $cell_h, mb_convert_encoding('Encargado', 'ISO-8859-1', 'UTF-8'), 1, 1, 'C', true);
+        $this->cell($cell_w[0], $cell_h, utf8_decode('Hora'), 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, utf8_decode('Actividad'), 1, 0, 'C', true);
+        $this->cell($cell_w[2], $cell_h, utf8_decode('Encargado'), 1, 1, 'C', true);
 
         // Contenido
         $horaActual = DateTime::createFromFormat('H:i:s', $progData['prog_time']); // ej. '09:00:00'
@@ -399,7 +399,7 @@ FE:
 
             // Celdas con alternancia de fondo
             $this->cell($cell_w[0], $cell_h * 2, $horaFormateada, 1, 0, 'C', $fill);
-            $this->cell($cell_w[1], $cell_h * 2, mb_convert_encoding($act['act_name'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', $fill);
+            $this->cell($cell_w[1], $cell_h * 2, utf8_decode($act['act_name']), 1, 0, 'L', $fill);
             $this->cell($cell_w[2], $cell_h * 2, $duraciónFormateada, 1, 1, 'C', $fill);
 
             $horaActual->add($interval);
