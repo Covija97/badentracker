@@ -524,11 +524,11 @@ $pdf->AddPage();
 $pdf->SetFont('Times', '', 12);
 // Llamar a la función para agregar la tabla al PDF
 $pdf->TablePedag($progData);
-$pdf->TableGroup($progData);
+/* $pdf->TableGroup($progData);
 $pdf->TableObjetives($progData);
 $pdf->TableMats($progData, $matsData);
 $pdf->TableActs($progData, $progactData);
-/* 
+ *//* 
 if (isset($_GET['format']) && $_GET['format'] == 1) {
     $pdf->tableActFormat1($progData, $progactData);
 } else {
