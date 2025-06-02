@@ -322,6 +322,36 @@ FE:
             false
         );
     }
+
+    function TableMats($progData, $matsData)
+    {
+        // Selecionamos el color de la rama
+        $colorRama = getRamaColor($progData['rama_id']);
+        $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
+
+        // Fuente y formato
+        $this->SetFont('Arial', '', 10);
+        $this->SetDrawColor(190, 190, 190);
+        $this->SetLineWidth(.01);
+
+        // Tamaño de las celdas
+        $cell_h = 7;
+        $cell_w = 170; //170
+
+        // Realizamos un salto de página
+        $this->AddPage();
+
+        $this->cell($cell_w, $cell_h, mb_convert_encoding('Materiales para la realización de actividades', 'ISO-8859-1', 'UTF-8'), 1, 1, 'C', true);
+
+        // Listar los materiales
+        $materiales = "";
+        foreach ($matsData as $mat) {
+            // Añadir cada material a la cadena
+            $materiales .= mb_convert_encoding($mat['mat_name'], 'ISO-8859-1', 'UTF-8') . "\n";
+        }
+        $this->MultiCell($cell_w, $cell_h, $materiales, 1, 'L', false);
+
+    }
 }
 ?>
 
@@ -336,6 +366,7 @@ $pdf->SetFont('Times', '', 12);
 $pdf->TablePedag($progData);
 $pdf->TableGroup($progData);
 $pdf->TableObjetives($progData);
+$pdf->TableMats($progData, $matsData);
 
 $pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
 $pdf->Output('I', $pdfName);
