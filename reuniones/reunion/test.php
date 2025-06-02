@@ -283,6 +283,45 @@ class PDF extends FPDF
         $this->Ln(5);
 
     }
+
+    function TableObjetives($progData)
+    {
+        // Selecionamos el color de la rama
+        $colorRama = getRamaColor($progData['rama_id']);
+        $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
+
+        // Fuente y formato
+        $this->SetFont('Arial', '', 10);
+        $this->SetDrawColor(190, 190, 190);
+        $this->SetLineWidth(.01);
+
+        // Tamaño de las celdas
+        $cell_h = 7;
+        $cell_w = [40, 60, 35, 35];
+
+        $this->cell($cell_w[0], $cell_h, utf8_decode('LEMA'), 1, 0, 'C', true);
+        $this->cell($cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, utf8_decode(' En la manada, todos somos parte del mismo camino'), 1, 1, 'L', false);
+
+        $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, utf8_decode('OBJETIVOS GENERALES Y CONTENIDOS PEDAGÓGICOS'), 1, 1, 'C', true);
+
+        $this->MultiCell(
+            $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3],
+            $cell_h,
+            utf8_decode(' RESPONSABILIDAD:
+- Fomentar la autonomía y el desarrollo personal a través de los territorios.
+- Desarrollar la confianza de los nuevos educandos conforme al desarrollo positivo de sus habilidades sociales
+
+PAÍS:
+- Reforzar la participación social con el compromiso de la manada conforme al entorno que le rodea.
+Trabajar en comunidad para así mejorar la cohesión y unión de la manada.
+
+FE:
+- Promover el aprendizaje de la oración del lobato y la reflexión sobre la misma.'),
+            1,
+            'L',
+            false
+        );
+    }
 }
 ?>
 
