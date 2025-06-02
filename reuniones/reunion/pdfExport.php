@@ -150,43 +150,43 @@ class PDF extends FPDF
         $cell_w = [40, 40, 40, 50]; // 170
 
         // Encabezados
-        $this->Cell($cell_w[0], $cell_h, 'Ámbito', 1, 0, 'C', false);
-        $this->Cell($cell_w[1], $cell_h, 'Área', 1, 0, 'C', false);
-        $this->Cell($cell_w[2], $cell_h, 'Línea pedagógica', 1, 0, 'C', false);
-        $this->Cell($cell_w[3], $cell_h, 'Contenidos', 1, 1, 'C', false);
+        $this->Cell($cell_w[0], $cell_h, mb_convert_encoding('Ámbito', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', false);
+        $this->Cell($cell_w[1], $cell_h, mb_convert_encoding('Área', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', false);
+        $this->Cell($cell_w[2], $cell_h, mb_convert_encoding('Línea pedagógica', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', false);
+        $this->Cell($cell_w[3], $cell_h, mb_convert_encoding('Contenidos', 'ISO-8859-1', 'UTF-8'), 1, 1, 'C', false);
 
         // RESPONSABILIDAD
-        $this->Cell($cell_w[0], $cell_h * 2, 'Responsabilidad', 1, 0, 'L', true);
-        $this->Cell($cell_w[1], $cell_h, 'Personalidad', 1, 0, 'L', true);
-        $this->Cell($cell_w[2], $cell_h, 'Autonomía', 1, 0, 'L', true);
-        $this->Cell($cell_w[3], $cell_h, 'Progreso personal', 1, 1, 'L', true);
+        $this->Cell($cell_w[0], $cell_h * 2, mb_convert_encoding('Responsabilidad', 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', true);
+        $this->Cell($cell_w[1], $cell_h, mb_convert_encoding('Personalidad', 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', true);
+        $this->Cell($cell_w[2], $cell_h, mb_convert_encoding('Autonomía', 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', true);
+        $this->Cell($cell_w[3], $cell_h, mb_convert_encoding('Progreso personal', 'ISO-8859-1', 'UTF-8'), 1, 1, 'L', true);
 
         $this->Cell($cell_w[0], $cell_h, '', 0, 0);
-        $this->Cell($cell_w[1], $cell_h, 'Social', 1);
-        $this->Cell($cell_w[2], $cell_h, 'Habilidades sociales', 1);
-        $this->Cell($cell_w[3], $cell_h, 'Confianza', 1, 1);
+        $this->Cell($cell_w[1], $cell_h, mb_convert_encoding('Social', 'ISO-8859-1', 'UTF-8'), 1);
+        $this->Cell($cell_w[2], $cell_h, mb_convert_encoding('Habilidades sociales', 'ISO-8859-1', 'UTF-8'), 1);
+        $this->Cell($cell_w[3], $cell_h, mb_convert_encoding('Confianza', 'ISO-8859-1', 'UTF-8'), 1, 1);
 
         // PAÍS
-        $this->Cell($cell_w[0], $cell_h * 3, 'País', 1, 0, 'L', true);
-        $this->Cell($cell_w[1], $cell_h, 'Personalidad', 1, 0, 'L', true);
-        $this->Cell($cell_w[2], $cell_h, 'Compromiso', 1, 0, 'L', true);
-        $this->Cell($cell_w[3], $cell_h, 'Participación social', 1, 1, 'L', true);
+        $this->Cell($cell_w[0], $cell_h * 3, mb_convert_encoding('País', 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', true);
+        $this->Cell($cell_w[1], $cell_h, mb_convert_encoding('Personalidad', 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', true);
+        $this->Cell($cell_w[2], $cell_h, mb_convert_encoding('Compromiso', 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', true);
+        $this->Cell($cell_w[3], $cell_h, mb_convert_encoding('Participación social', 'ISO-8859-1', 'UTF-8'), 1, 1, 'L', true);
 
         $this->Cell($cell_w[0], $cell_h * 2, '', 0, 0);
-        $this->Cell($cell_w[1], $cell_h * 2, 'Emocional', 1);
-        $this->Cell($cell_w[2], $cell_h * 2, 'Comunidad', 1);
-        $this->MultiCell($cell_w[3], $cell_h, 'Relación con la rama y el grupo scouts', 1, 1);
+        $this->Cell($cell_w[1], $cell_h * 2, mb_convert_encoding('Emocional', 'ISO-8859-1', 'UTF-8'), 1);
+        $this->Cell($cell_w[2], $cell_h * 2, mb_convert_encoding('Comunidad', 'ISO-8859-1', 'UTF-8'), 1);
+        $this->MultiCell($cell_w[3], $cell_h, mb_convert_encoding('Relación con la rama y el grupo scouts', 'ISO-8859-1', 'UTF-8'), 1, 1);
 
         // FE
-        $this->Cell($cell_w[0], $cell_h * 2, 'Fe', 1, 0, 'L', true);
-        $this->Cell($cell_w[1], $cell_h, 'Espiritual', 1, 0, 'L', true);
-        $this->Cell($cell_w[2], $cell_h, 'Oración', 1, 0, 'L', true);
-        $this->Cell($cell_w[3], $cell_h, 'Oración y reflexión', 1, 1, 'L', true);
+        $this->Cell($cell_w[0], $cell_h * 2, mb_convert_encoding('Fe', 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', true);
+        $this->Cell($cell_w[1], $cell_h, mb_convert_encoding('Espiritual', 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', true);
+        $this->Cell($cell_w[2], $cell_h, mb_convert_encoding('Oración', 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', true);
+        $this->Cell($cell_w[3], $cell_h, mb_convert_encoding('Oración y reflexión', 'ISO-8859-1', 'UTF-8'), 1, 1, 'L', true);
 
         $this->Cell($cell_w[0], $cell_h, '', 0, 0);
-        $this->Cell($cell_w[1], $cell_h, 'Físico', 1);
-        $this->Cell($cell_w[2], $cell_h, 'Corporeidad', 1);
-        $this->Cell($cell_w[3], $cell_h, 'Protección de la naturaleza', 1, 1);
+        $this->Cell($cell_w[1], $cell_h, mb_convert_encoding('Físico', 'ISO-8859-1', 'UTF-8'), 1);
+        $this->Cell($cell_w[2], $cell_h, mb_convert_encoding('Corporeidad', 'ISO-8859-1', 'UTF-8'), 1);
+        $this->Cell($cell_w[3], $cell_h, mb_convert_encoding('Protección de la naturaleza', 'ISO-8859-1', 'UTF-8'), 1, 1);
 
         // Espaciado
         $this->Ln(5);
@@ -217,20 +217,20 @@ class PDF extends FPDF
         $nResp = max(5, $count); // mínimo de 5 filas
 
         // Encabezado de tabla
-        $this->cell($cell_w[0], $cell_h, 'Grupo Scout', 1, 0, 'C', true);
-        $this->cell($cell_w[1], $cell_h, $progData['grp_name'], 1, 0, 'C');
-        $this->cell($cell_w[2], $cell_h, 'Ronda Solar', 1, 0, 'C', true);
-        $this->cell($cell_w[3], $cell_h, getRondaSolar($progData['prog_date']), 1, 1, 'C');
+        $this->cell($cell_w[0], $cell_h, mb_convert_encoding('Grupo Scout', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, mb_convert_encoding($progData['grp_name'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C');
+        $this->cell($cell_w[2], $cell_h, mb_convert_encoding('Ronda Solar', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, mb_convert_encoding(getRondaSolar($progData['prog_date']), 'ISO-8859-1', 'UTF-8'), 1, 1, 'C');
 
         $this->cell($cell_w[0], $cell_h, 'Lugar', 1, 0, 'C', true);
-        $this->cell($cell_w[1], $cell_h, $progData['prog_place'], 1, 0, 'C');
+        $this->cell($cell_w[1], $cell_h, mb_convert_encoding($progData['prog_place'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C');
         $this->cell($cell_w[2], $cell_h, 'Fecha', 1, 0, 'C', true);
         $this->cell($cell_w[3], $cell_h, $dateFormat, 1, 1, 'C');
 
         $this->cell($cell_w[0], $cell_h, 'Coordinador', 1, 0, 'C', true);
-        $this->cell($cell_w[1], $cell_h, $progData['prog_coord'], 1, 0, 'C');
-        $this->cell($cell_w[2], $cell_h, 'Nº educandos', 1, 0, 'C', true);
-        $this->cell($cell_w[3], $cell_h, $progData['prog_child_N'], 1, 1, 'C');
+        $this->cell($cell_w[1], $cell_h, mb_convert_encoding($progData['prog_coord'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C');
+        $this->cell($cell_w[2], $cell_h, mb_convert_encoding('Nº educandos', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, mb_convert_encoding($progData['prog_child_N'], 'ISO-8859-1', 'UTF-8'), 1, 1, 'C');
 
         $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2], $cell_h, 'Responsables asistentes', 1, 0, 'C', true);
         $this->cell($cell_w[3], $cell_h, 'Logo del grupo', 1, 1, 'C', true);
@@ -239,7 +239,7 @@ class PDF extends FPDF
         $y = $this->GetY();
 
         // Celdas responsables e imagen
-        $this->cell($cell_w[0], $cell_h * $nResp, $progData['rama_name'], 1, 0, 'C', true);
+        $this->cell($cell_w[0], $cell_h * $nResp, mb_convert_encoding($progData['rama_name'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
         // Rellenar hasta mínimo 5 líneas
         $responsablesArray = explode("\n", str_replace(["\r\n", "\r"], "\n", $rawText));
         $responsablesLimpios = array_filter(array_map('trim', $responsablesArray), fn($r) => $r !== '');
@@ -252,8 +252,7 @@ class PDF extends FPDF
 
         // Recombinar para MultiCell
         $contenidoResponsables = implode("\n", $lineas);
-
-        $this->MultiCell($cell_w[1] + $cell_w[2], $cell_h, $contenidoResponsables, 1, 'L', false);
+        $this->MultiCell($cell_w[1] + $cell_w[2], $cell_h, mb_convert_encoding($contenidoResponsables, 'ISO-8859-1', 'UTF-8'), 1, 'L', false);
 
         // Volvemos a la posición para dibujar la celda de la imagen
         $this->SetXY($x + $cell_w[0] + $cell_w[1] + $cell_w[2], $y);
@@ -305,15 +304,15 @@ class PDF extends FPDF
         $cell_h = 7;
         $cell_w = [40, 60, 35, 35];
 
-        $this->cell($cell_w[0], $cell_h, 'LEMA', 1, 0, 'C', true);
-        $this->cell($cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, ' En la manada, todos somos parte del mismo camino', 1, 1, 'L', false);
+        $this->cell($cell_w[0], $cell_h, mb_convert_encoding('LEMA', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+        $this->cell($cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, mb_convert_encoding(' En la manada, todos somos parte del mismo camino', 'ISO-8859-1', 'UTF-8'), 1, 1, 'L', false);
 
-        $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, 'OBJETIVOS GENERALES Y CONTENIDOS PEDAGÓGICOS', 1, 1, 'C', true);
+        $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, mb_convert_encoding('OBJETIVOS GENERALES Y CONTENIDOS PEDAGÓGICOS', 'ISO-8859-1', 'UTF-8'), 1, 1, 'C', true);
 
         $this->MultiCell(
             $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3],
             $cell_h,
-            ' RESPONSABILIDAD:
+            mb_convert_encoding(' RESPONSABILIDAD:
 - Fomentar la autonomía y el desarrollo personal a través de los territorios.
 - Desarrollar la confianza de los nuevos educandos conforme al desarrollo positivo de sus habilidades sociales
 
@@ -322,7 +321,7 @@ PAÍS:
 Trabajar en comunidad para así mejorar la cohesión y unión de la manada.
 
 FE:
-- Promover el aprendizaje de la oración del lobato y la reflexión sobre la misma.',
+- Promover el aprendizaje de la oración del lobato y la reflexión sobre la misma.', 'ISO-8859-1', 'UTF-8'),
             1,
             'L',
             false
@@ -348,13 +347,13 @@ FE:
         // Realizamos un salto de página
         $this->AddPage();
 
-        $this->cell($cell_w, $cell_h, 'Materiales para la realización de actividades', 1, 1, 'C', true);
-        
+        $this->cell($cell_w, $cell_h, mb_convert_encoding('Materiales para la realización de actividades', 'ISO-8859-1', 'UTF-8'), 1, 1, 'C', true);
+
         // Listar los materiales
         $materiales = "";
         foreach ($matsData as $mat) {
             // Añadir cada material a la cadena
-            $materiales .= $mat['mat_name'] . "\n";
+            $materiales .= mb_convert_encoding($mat['mat_name'], 'ISO-8859-1', 'UTF-8') . "\n";
         }
         $this->MultiCell($cell_w, $cell_h, $materiales, 1, 'L', false);
 
@@ -380,9 +379,9 @@ FE:
         $this->AddPage();
 
         // Encabezado
-        $this->cell($cell_w[0], $cell_h, 'Hora', 1, 0, 'C', true);
-        $this->cell($cell_w[1], $cell_h, 'Actividad', 1, 0, 'C', true);
-        $this->cell($cell_w[2], $cell_h, 'Encargado', 1, 1, 'C', true);
+        $this->cell($cell_w[0], $cell_h, mb_convert_encoding('Hora', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, mb_convert_encoding('Actividad', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+        $this->cell($cell_w[2], $cell_h, mb_convert_encoding('Encargado', 'ISO-8859-1', 'UTF-8'), 1, 1, 'C', true);
 
         // Contenido
         $horaActual = DateTime::createFromFormat('H:i:s', $progData['prog_time']); // ej. '09:00:00'
@@ -404,7 +403,7 @@ FE:
 
             // Celdas con alternancia de fondo
             $this->cell($cell_w[0], $cell_h * 2, $horaFormateada, 1, 0, 'C', $fill);
-            $this->cell($cell_w[1], $cell_h * 2, $act['act_name'], 1, 0, 'L', $fill);
+            $this->cell($cell_w[1], $cell_h * 2, mb_convert_encoding($act['act_name'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', $fill);
             $this->cell($cell_w[2], $cell_h * 2, $duraciónFormateada, 1, 1, 'C', $fill);
 
             $horaActual->add($interval);
@@ -434,11 +433,11 @@ FE:
             );
 
             // Celdas con alternancia de fondo
-            $this->cell($cell_w[0], $cell_h, 'Nombre', 1, 0, 'C', true);
-            $this->cell($cell_w[1], $cell_h, $act['act_name'], 1, 1, 'L', false);
+            $this->cell($cell_w[0], $cell_h, mb_convert_encoding('Nombre', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+            $this->cell($cell_w[1], $cell_h, mb_convert_encoding($act['act_name'], 'ISO-8859-1', 'UTF-8'), 1, 1, 'L', false);
 
-            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, 'Desarrollo', 1, 'C', true);
-            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, $act['act_desc'], 1, 'L', false);
+            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, mb_convert_encoding('Desarrollo', 'ISO-8859-1', 'UTF-8'), 1, 'C', true);
+            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, mb_convert_encoding($act['act_desc'], 'ISO-8859-1', 'UTF-8'), 1, 'L', false);
 
             $this->Ln(5);
 
@@ -485,8 +484,8 @@ FE:
 
 
             // Celdas con alternancia de fondo
-            $this->cell($cell_w[0], $cell_h, 'Nombre', 1, 0, 'C', true);
-            $this->cell($cell_w[1], $cell_h, $act['act_name'], 1, 0, 'L', false);
+            $this->cell($cell_w[0], $cell_h, mb_convert_encoding('Nombre', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+            $this->cell($cell_w[1], $cell_h, mb_convert_encoding($act['act_name'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', false);
             $this->cell($cell_w[2], $cell_h, $act['act_respon'], 1, 0, 'C', false);
             $this->cell($cell_w[3], $cell_h, $horaFormateada, 1, 1, 'C', false);
 
@@ -534,8 +533,8 @@ if (isset($_GET['format']) && $_GET['format'] == 1) {
     $pdf->tableActFormat0($progData, $progactData);
 }
 
-$pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
-$pdf->Output($pdfName);
+$pdfName = mb_convert_encoding($progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf', 'ISO-8859-1', 'UTF-8');
+$pdf->Output('I', $pdfName);
 
 if (empty($progData)) {
     die('No se encontraron datos para la programación solicitada.');
