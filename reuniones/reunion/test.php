@@ -284,6 +284,7 @@ class PDF extends FPDF
 
     }
 
+    // Tabla de objetivos
     function TableObjetives($progData)
     {
         // Selecionamos el color de la rama
@@ -323,6 +324,7 @@ FE:
         );
     }
 
+    // Tabla de materiales
     function TableMats($progData, $matsData)
     {
         // Selecionamos el color de la rama
@@ -352,6 +354,60 @@ FE:
         $this->MultiCell($cell_w, $cell_h, $materiales, 1, 'L', false);
 
     }
+
+    //Tabla de actividades general
+    function TableActs($progData, $progactData)
+    {
+        // Selecionamos el color de la rama
+        $colorRama = getRamaColor($progData['rama_id']);
+        $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
+
+        // Fuente y formato
+        $this->SetFont('Arial', '', 10);
+        $this->SetDrawColor(190, 190, 190);
+        $this->SetLineWidth(.01);
+
+        // Tamaño de las celdas
+        $cell_h = 7;
+        $cell_w = [20, 120, 30]; //170
+
+        // Realizamos un salto de página
+        $this->AddPage();
+
+        // Encabezado
+        $this->cell($cell_w[0], $cell_h, mb_convert_encoding('Hora', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, mb_convert_encoding('Actividad', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+        $this->cell($cell_w[2], $cell_h, mb_convert_encoding('Encargado', 'ISO-8859-1', 'UTF-8'), 1, 1, 'C', true);
+
+        // Contenido
+        $horaActual = DateTime::createFromFormat('H:i:s', $progData['prog_time']); // ej. '09:00:00'
+
+        $fill = false; // 🔧 Alternancia de color
+
+        foreach ($progactData as $act) {
+            // Hora formateada
+            $horaFormateada = $horaActual->format('H:i');
+            $duraciónFormateada = (DateTime::createFromFormat('H:i:s', $act['act_durat']))->format('H:i');
+
+            // Convertir duración hh:mm:ss a DateInterval y sumar
+            $interval = new DateInterval(
+                'PT' .
+                intval(substr($act['act_durat'], 0, 2)) . 'H' .
+                intval(substr($act['act_durat'], 3, 2)) . 'M' .
+                intval(substr($act['act_durat'], 6, 2)) . 'S'
+            );
+
+            // Celdas con alternancia de fondo
+            $this->cell($cell_w[0], $cell_h * 2, $horaFormateada, 1, 0, 'C', $fill);
+            $this->cell($cell_w[1], $cell_h * 2, mb_convert_encoding($act['act_name'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', $fill);
+            $this->cell($cell_w[2], $cell_h * 2, $duraciónFormateada, 1, 1, 'C', $fill);
+
+            $horaActual->add($interval);
+
+            $fill = !$fill;
+        }
+
+    }
 }
 ?>
 
@@ -367,6 +423,7 @@ $pdf->TablePedag($progData);
 $pdf->TableGroup($progData);
 $pdf->TableObjetives($progData);
 $pdf->TableMats($progData, $matsData);
+$pdf->TableActs($progData, $progactData);
 
 $pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
 $pdf->Output('I', $pdfName);
