@@ -528,17 +528,14 @@ $pdf->TableGroup($progData);
 $pdf->TableObjetives($progData);
 $pdf->TableMats($progData, $matsData);
 $pdf->TableActs($progData, $progactData);
-
+/* 
 if (isset($_GET['format']) && $_GET['format'] == 1) {
     $pdf->tableActFormat1($progData, $progactData);
 } else {
     $pdf->tableActFormat0($progData, $progactData);
-}
+} */
 
 $pdfName = mb_convert_encoding($progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf', 'ISO-8859-1', 'UTF-8');
 $pdf->Output('I', $pdfName);
 
-if (empty($progData)) {
-    die('No se encontraron datos para la programación solicitada.');
-}
 ?>
