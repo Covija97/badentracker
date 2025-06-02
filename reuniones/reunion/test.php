@@ -422,7 +422,7 @@ FE:
 
             // Celdas con alternancia de fondo
             $this->cell($cell_w[0], $cell_h, utf8_decode('Nombre'), 1, 0, 'C', true);
-            $this->cell($cell_w[1], $cell_h, utf8_decode($act['act_name']), 1, 1, 'L', false);
+            $this->cell($cell_w[1], $cell_h, utf8_decode($act['act_name']), 1, 0, 'L', false);
 
             $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode('Desarrollo'), 1, 'C', true);
             $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode($act['act_desc']), 1, 'L', false);
@@ -450,9 +450,9 @@ FE:
             // Convertir duración hh:mm:ss a DateInterval y sumar
             $interval = new DateInterval(
                 'PT' .
-                intval(value: substr(string: $act['act_durat'], offset: 0, length: 2)) . 'H' .
-                intval(value: substr(string: $act['act_durat'], offset: 3, length: 2)) . 'M' .
-                intval(value: substr(string: $act['act_durat'], offset: 6, length: 2)) . 'S'
+                intval(value: substr($act['act_durat'], 0, 2)) . 'H' .
+                intval(value: substr($act['act_durat'], 3, 2)) . 'M' .
+                intval(value: substr($act['act_durat'], 6, 2)) . 'S'
             );
 
             // Consulta actividades a la db
@@ -476,14 +476,14 @@ FE:
             $this->cell($cell_w[2], $cell_h, $act['act_respon'], 1, 0, 'C', false);
             $this->cell($cell_w[3], $cell_h, $horaFormateada, 1, 1, 'C', false);
 
-            $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, 'Desarrollo', 1, 1, 'C', true);
+            $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, utf8_decode('Desarrollo'), 1, 1, 'C', true);
             $this->MultiCell(
                 $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3],
                 $cell_h,
-                $act['act_desc'] . "\n" .
-                $act['act_comment'] . "\n" .
-                ' - Materiales' . "\n" .
-                $materiales,
+                utf8_decode($act['act_desc'] . "\n" .
+                    $act['act_comment'] . "\n" .
+                    ' - Materiales' . "\n" .
+                    $materiales),
                 1,
                 'L',
                 false
