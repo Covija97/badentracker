@@ -110,21 +110,21 @@ class PDF extends FPDF
     function Header(): void
     {
         // Logo
-        $this->Image(file: '../../.res/fpdf/img/header.png', w: 170);
+        $this->Image('../../.res/fpdf/img/header.png', null, null, 170);
         // Arial bold 15
-        $this->SetFont(family: 'Arial', style: 'B', size: 15);
-        $this->Ln(h: 7);
+        $this->SetFont('Arial', 'B', 15);
+        $this->Ln(7);
     }
 
     // Pie de página
     function Footer(): void
     {
         // Posición: a 1,5 cm del final
-        $this->SetY(y: -15);
+        $this->SetY(-15);
         // Arial italic 8
-        $this->SetFont(family: 'Arial', style: '', size: 10);
+        $this->SetFont('Arial', '', 10);
         // Número de página
-        $this->Cell(w: 0, h: 10, txt: utf8_decode(string: 'Página ' . $this->PageNo() . '/{nb}'), border: 0, ln: 0, align: 'R');
+        $this->Cell(0, 10, utf8_decode('Página ' . $this->PageNo() . '/{nb}'), 0, 0, 'R');
     }
 
     // Tabla de contenido pedagógico
@@ -146,46 +146,46 @@ class PDF extends FPDF
         $cell_w = [40, 40, 40, 50]; // 170
 
         // Encabezados
-        $this->Cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Ámbito'), border: 1, ln: 0, align: 'C', fill: false);
-        $this->Cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Área'), border: 1, ln: 0, align: 'C', fill: false);
-        $this->Cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Línea pedagógica'), border: 1, ln: 0, align: 'C', fill: false);
-        $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Contenidos'), border: 1, ln: 1, align: 'C', fill: false);
+        $this->Cell($cell_w[0], $cell_h, utf8_decode('Ámbito'), 1, 0, 'C', false);
+        $this->Cell($cell_w[1], $cell_h, utf8_decode('Área'), 1, 0, 'C', false);
+        $this->Cell($cell_w[2], $cell_h, utf8_decode('Línea pedagógica'), 1, 0, 'C', false);
+        $this->Cell($cell_w[3], $cell_h, utf8_decode('Contenidos'), 1, 1, 'C', false);
 
         // RESPONSABILIDAD
-        $this->Cell(w: $cell_w[0], h: $cell_h * 2, txt: utf8_decode(string: 'Responsabilidad'), border: 1, ln: 0, align: 'L', fill: true);
-        $this->Cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Personalidad'), border: 1, fill: true);
-        $this->Cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Autonomía'), border: 1, fill: true);
-        $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Progreso personal'), border: 1, ln: 1, fill: true);
+        $this->Cell($cell_w[0], $cell_h * 2, utf8_decode('Responsabilidad'), 1, 0, 'L', true);
+        $this->Cell($cell_w[1], $cell_h, utf8_decode('Personalidad'), 1, 0, 'L', true);
+        $this->Cell($cell_w[2], $cell_h, utf8_decode('Autonomía'), 1, 0, 'L', true);
+        $this->Cell($cell_w[3], $cell_h, utf8_decode('Progreso personal'), 1, 1, 'L', true);
 
-        $this->Cell(w: $cell_w[0], h: $cell_h, txt: '', border: 0, ln: 0); // celda vacía
-        $this->Cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Social'), border: 1);
-        $this->Cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Habilidades sociales'), border: 1);
-        $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Confianza'), border: 1, ln: 1);
+        $this->Cell($cell_w[0], $cell_h, '', 0, 0);
+        $this->Cell($cell_w[1], $cell_h, utf8_decode('Social'), 1);
+        $this->Cell($cell_w[2], $cell_h, utf8_decode('Habilidades sociales'), 1);
+        $this->Cell($cell_w[3], $cell_h, utf8_decode('Confianza'), 1, 1);
 
         // PAÍS
-        $this->Cell(w: $cell_w[0], h: $cell_h * 3, txt: utf8_decode(string: 'País'), border: 1, ln: 0, align: 'L', fill: true);
-        $this->Cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Personalidad'), border: 1, fill: true);
-        $this->Cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Compromiso'), border: 1, fill: true);
-        $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Participación social'), border: 1, ln: 1, fill: true);
+        $this->Cell($cell_w[0], $cell_h * 3, utf8_decode('País'), 1, 0, 'L', true);
+        $this->Cell($cell_w[1], $cell_h, utf8_decode('Personalidad'), 1, 0, 'L', true);
+        $this->Cell($cell_w[2], $cell_h, utf8_decode('Compromiso'), 1, 0, 'L', true);
+        $this->Cell($cell_w[3], $cell_h, utf8_decode('Participación social'), 1, 1, 'L', true);
 
-        $this->Cell(w: $cell_w[0], h: $cell_h * 2, txt: '', border: 0, ln: 0);
-        $this->Cell(w: $cell_w[1], h: $cell_h * 2, txt: utf8_decode(string: 'Emocional'), border: 1);
-        $this->Cell(w: $cell_w[2], h: $cell_h * 2, txt: utf8_decode(string: 'Comunidad'), border: 1);
-        $this->MultiCell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Relación con la rama y el grupo scouts'), border: 1, align: 1);
+        $this->Cell($cell_w[0], $cell_h * 2, '', 0, 0);
+        $this->Cell($cell_w[1], $cell_h * 2, utf8_decode('Emocional'), 1);
+        $this->Cell($cell_w[2], $cell_h * 2, utf8_decode('Comunidad'), 1);
+        $this->MultiCell($cell_w[3], $cell_h, utf8_decode('Relación con la rama y el grupo scouts'), 1, 1);
 
         // FE
-        $this->Cell(w: $cell_w[0], h: $cell_h * 2, txt: utf8_decode(string: 'Fe'), border: 1, ln: 0, align: 'L', fill: true);
-        $this->Cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Espiritual'), border: 1, fill: true);
-        $this->Cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Oración'), border: 1, fill: true);
-        $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Oración y reflexión'), border: 1, ln: 1, fill: true);
+        $this->Cell($cell_w[0], $cell_h * 2, utf8_decode('Fe'), 1, 0, 'L', true);
+        $this->Cell($cell_w[1], $cell_h, utf8_decode('Espiritual'), 1, 0, 'L', true);
+        $this->Cell($cell_w[2], $cell_h, utf8_decode('Oración'), 1, 0, 'L', true);
+        $this->Cell($cell_w[3], $cell_h, utf8_decode('Oración y reflexión'), 1, 1, 'L', true);
 
-        $this->Cell(w: $cell_w[0], h: $cell_h, txt: '', border: 0, ln: 0);
-        $this->Cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Físico'), border: 1);
-        $this->Cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Corporeidad'), border: 1);
-        $this->Cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Protección de la naturaleza'), border: 1, ln: 1);
+        $this->Cell($cell_w[0], $cell_h, '', 0, 0);
+        $this->Cell($cell_w[1], $cell_h, utf8_decode('Físico'), 1);
+        $this->Cell($cell_w[2], $cell_h, utf8_decode('Corporeidad'), 1);
+        $this->Cell($cell_w[3], $cell_h, utf8_decode('Protección de la naturaleza'), 1, 1);
 
         // Espaciado
-        $this->Ln(h: 5);
+        $this->Ln(5);
     }
 
     // Tabla información del grupo
@@ -213,23 +213,23 @@ class PDF extends FPDF
         $nResp = max(5, $count); // mínimo de 5 filas
 
         // Encabezado de tabla
-        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Grupo Scout'), border: 1, ln: 0, align: 'C', fill: true);
-        $this->cell(w: $cell_w[1], h: $cell_h, txt: $progData['grp_name'], border: 1, ln: 0, align: 'C');
-        $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Ronda Solar'), border: 1, ln: 0, align: 'C', fill: true);
-        $this->cell(w: $cell_w[3], h: $cell_h, txt: getRondaSolar($progData['prog_date']), border: 1, ln: 1, align: 'C');
+        $this->cell($cell_w[0], $cell_h, utf8_decode('Grupo Scout'), 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, $progData['grp_name'], 1, 0, 'C');
+        $this->cell($cell_w[2], $cell_h, utf8_decode('Ronda Solar'), 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, getRondaSolar($progData['prog_date']), 1, 1, 'C');
 
-        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Lugar'), border: 1, ln: 0, align: 'C', fill: true);
-        $this->cell(w: $cell_w[1], h: $cell_h, txt: $progData['prog_place'], border: 1, ln: 0, align: 'C');
-        $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Fecha'), border: 1, ln: 0, align: 'C', fill: true);
-        $this->cell(w: $cell_w[3], h: $cell_h, txt: $dateFormat, border: 1, ln: 1, align: 'C');
+        $this->cell($cell_w[0], $cell_h, utf8_decode('Lugar'), 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, $progData['prog_place'], 1, 0, 'C');
+        $this->cell($cell_w[2], $cell_h, utf8_decode('Fecha'), 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, $dateFormat, 1, 1, 'C');
 
-        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Coordinador'), border: 1, ln: 0, align: 'C', fill: true);
-        $this->cell(w: $cell_w[1], h: $cell_h, txt: $progData['prog_coord'], border: 1, ln: 0, align: 'C');
-        $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Nº educandos'), border: 1, ln: 0, align: 'C', fill: true);
-        $this->cell(w: $cell_w[3], h: $cell_h, txt: $progData['prog_child_N'], border: 1, ln: 1, align: 'C');
+        $this->cell($cell_w[0], $cell_h, utf8_decode('Coordinador'), 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, $progData['prog_coord'], 1, 0, 'C');
+        $this->cell($cell_w[2], $cell_h, utf8_decode('Nº educandos'), 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, $progData['prog_child_N'], 1, 1, 'C');
 
-        $this->cell(w: $cell_w[0] + $cell_w[1] + $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Responsables asistentes'), border: 1, ln: 0, align: 'C', fill: true);
-        $this->cell(w: $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Logo del grupo'), border: 1, ln: 1, align: 'C', fill: true);
+        $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2], $cell_h, utf8_decode('Responsables asistentes'), 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, utf8_decode('Logo del grupo'), 1, 1, 'C', true);
 
         $x = $this->GetX();
         $y = $this->GetY();
@@ -253,7 +253,7 @@ class PDF extends FPDF
 
         // Volvemos a la posición para dibujar la celda de la imagen
         $this->SetXY($x + $cell_w[0] + $cell_w[1] + $cell_w[2], $y);
-        $this->cell(w: $cell_w[3], h: $cell_h * $nResp, txt: '', border: 1, ln: 1, align: 'C');
+        $this->cell($cell_w[3], $cell_h * $nResp, '', 1, 1, 'C');
 
         // Insertar imagen centrada
         $imagePath = '../../.res/img/logos-grupos/' . $progData['grp_id'] . '.png';
@@ -278,10 +278,10 @@ class PDF extends FPDF
             $imageY = $y + (($cell_h * $nResp) - $finalH) / 2;
 
             // Insertar imagen
-            $this->Image(file: $imagePath, x: $imageX, y: $imageY, w: $finalW, h: $finalH);
+            $this->Image($imagePath, $imageX, $imageY, $finalW, $finalH);
         }
         // Espaciado
-        $this->Ln(h: 5);
+        $this->Ln(5);
 
     }
 
@@ -289,7 +289,7 @@ class PDF extends FPDF
     function TableObjetives($progData)
     {
         // Selecionamos el color de la rama
-        $colorRama = getRamaColor(ramaId: $progData['rama_id']);
+        $colorRama = getRamaColor($progData['rama_id']);
         $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
 
         // Fuente y formato
@@ -301,15 +301,15 @@ class PDF extends FPDF
         $cell_h = 7;
         $cell_w = [40, 60, 35, 35];
 
-        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'LEMA'), border: 1, ln: 0, align: 'C', fill: true);
-        $this->cell(w: $cell_w[1] + $cell_w[2] + $cell_w[3], h: $cell_h, txt: utf8_decode(string: ' En la manada, todos somos parte del mismo camino'), border: 1, ln: 1, align: 'L', fill: false);
+        $this->cell($cell_w[0], $cell_h, utf8_decode('LEMA'), 1, 0, 'C', true);
+        $this->cell($cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, utf8_decode(' En la manada, todos somos parte del mismo camino'), 1, 1, 'L', false);
 
-        $this->cell(w: $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'OBJETIVOS GENERALES Y CONTENIDOS PEDAGÓGICOS'), border: 1, ln: 1, align: 'C', fill: true);
+        $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, utf8_decode('OBJETIVOS GENERALES Y CONTENIDOS PEDAGÓGICOS'), 1, 1, 'C', true);
 
         $this->MultiCell(
-            w: $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3],
-            h: $cell_h,
-            txt: utf8_decode(string:
+            $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3],
+            $cell_h,
+            utf8_decode(
                 ' RESPONSABILIDAD:
     - Fomentar la autonomía y el desarrollo personal a través de los territorios.
     - Desarrollar la confianza de los nuevos educandos conforme al desarrollo positivo de sus habilidades sociales
@@ -319,10 +319,11 @@ class PDF extends FPDF
     Trabajar en comunidad para así mejorar la cohesión y unión de la manada.
 
  FE:
-    - Promover el aprendizaje de la oración del lobato y la reflexión sobre la misma.'),
-            border: 1,
-            align: 'L',
-            fill: false
+    - Promover el aprendizaje de la oración del lobato y la reflexión sobre la misma.'
+            ),
+            1,
+            'L',
+            false
         );
     }
 
@@ -330,7 +331,7 @@ class PDF extends FPDF
     function TableMats($progData, $matsData)
     {
         // Selecionamos el color de la rama
-        $colorRama = getRamaColor(ramaId: $progData['rama_id']);
+        $colorRama = getRamaColor($progData['rama_id']);
         $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
 
         // Fuente y formato
@@ -345,15 +346,15 @@ class PDF extends FPDF
         // Realizamos un salto de página
         $this->AddPage();
 
-        $this->cell(w: $cell_w, h: $cell_h, txt: utf8_decode(string: 'Materiales para la realización de actividades'), border: 1, ln: 1, align: 'C', fill: true);
+        $this->cell($cell_w, $cell_h, utf8_decode('Materiales para la realización de actividades'), 1, 1, 'C', true);
         
         // Listar los materiales
         $materiales = "";
         foreach ($matsData as $mat) {
             // Añadir cada material a la cadena
-            $materiales .= utf8_decode(string: $mat['mat_name']) . "\n";
+            $materiales .= utf8_decode($mat['mat_name']) . "\n";
         }
-        $this->MultiCell(w: $cell_w, h: $cell_h, txt: $materiales, border: 1, align: 'L', fill: false);
+        $this->MultiCell($cell_w, $cell_h, $materiales, 1, 'L', false);
 
     }
 
@@ -361,7 +362,7 @@ class PDF extends FPDF
     function TableActs($progData, $progactData)
     {
         // Selecionamos el color de la rama
-        $colorRama = getRamaColor(ramaId: $progData['rama_id']);
+        $colorRama = getRamaColor($progData['rama_id']);
         $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
 
         // Fuente y formato
@@ -377,19 +378,19 @@ class PDF extends FPDF
         $this->AddPage();
 
         // Encabezado
-        $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Hora'), border: 1, ln: 0, align: 'C', fill: true);
-        $this->cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Actividad'), border: 1, ln: 0, align: 'C', fill: true);
-        $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: 'Encargado'), border: 1, ln: 1, align: 'C', fill: true);
+        $this->cell($cell_w[0], $cell_h, utf8_decode('Hora'), 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, utf8_decode('Actividad'), 1, 0, 'C', true);
+        $this->cell($cell_w[2], $cell_h, utf8_decode('Encargado'), 1, 1, 'C', true);
 
         // Contenido
-        $horaActual = DateTime::createFromFormat(format: 'H:i:s', datetime: $progData['prog_time']); // ej. '09:00:00'
+        $horaActual = DateTime::createFromFormat('H:i:s', $progData['prog_time']); // ej. '09:00:00'
 
         $fill = false; // 🔧 Alternancia de color
 
         foreach ($progactData as $act) {
             // Hora formateada
             $horaFormateada = $horaActual->format('H:i');
-            $duraciónFormateada = (DateTime::createFromFormat(format: 'H:i:s', datetime: $act['act_durat']))->format('H:i');
+            $duraciónFormateada = (DateTime::createFromFormat('H:i:s', $act['act_durat']))->format('H:i');
 
             // Convertir duración hh:mm:ss a DateInterval y sumar
             $interval = new DateInterval(
@@ -400,11 +401,11 @@ class PDF extends FPDF
             );
 
             // Celdas con alternancia de fondo
-            $this->cell(w: $cell_w[0], h: $cell_h * 2, txt: $horaFormateada, border: 1, ln: 0, align: 'C', fill: $fill);
-            $this->cell(w: $cell_w[1], h: $cell_h * 2, txt: utf8_decode($act['act_name']), border: 1, ln: 0, align: 'L', fill: $fill);
-            $this->cell(w: $cell_w[2], h: $cell_h * 2, txt: $duraciónFormateada, border: 1, ln: 1, align: 'C', fill: $fill);
+            $this->cell($cell_w[0], $cell_h * 2, $horaFormateada, 1, 0, 'C', $fill);
+            $this->cell($cell_w[1], $cell_h * 2, utf8_decode($act['act_name']), 1, 0, 'L', $fill);
+            $this->cell($cell_w[2], $cell_h * 2, $duraciónFormateada, 1, 1, 'C', $fill);
 
-            $horaActual->add(interval: $interval);
+            $horaActual->add($interval);
 
             $fill = !$fill;
         }
@@ -431,13 +432,13 @@ class PDF extends FPDF
             );
 
             // Celdas con alternancia de fondo
-            $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Nombre'), border: 1, ln: 0, align: 'C', fill: true);
-            $this->cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: $act['act_name']), border: 1, ln: 1, align: 'L', fill: false);
+            $this->cell($cell_w[0], $cell_h, utf8_decode('Nombre'), 1, 0, 'C', true);
+            $this->cell($cell_w[1], $cell_h, utf8_decode($act['act_name']), 1, 1, 'L', false);
 
-            $this->MultiCell(w: $cell_w[0] + $cell_w[1], h: $cell_h, txt: utf8_decode(string: 'Desarrollo'), border: 1, align: 'C', fill: true);
-            $this->MultiCell(w: $cell_w[0] + $cell_w[1], h: $cell_h, txt: utf8_decode(string: $act['act_desc']), border: 1, align: 'L', fill: false);
+            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode('Desarrollo'), 1, 'C', true);
+            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode($act['act_desc']), 1, 'L', false);
 
-            $this->Ln(h: 5);
+            $this->Ln(5);
 
         }
     }
@@ -452,7 +453,7 @@ class PDF extends FPDF
         $cell_h = 7;
         $cell_w = [30, 90, 30, 20]; //170
 
-        $horaActual = DateTime::createFromFormat(format: 'H:i:s', datetime: $progData['prog_time']); // ej. '09:00:00'
+        $horaActual = DateTime::createFromFormat('H:i:s', $progData['prog_time']); // ej. '09:00:00'
 
         foreach ($progactData as $act) {
             // Hora formateada
@@ -482,28 +483,29 @@ class PDF extends FPDF
 
 
             // Celdas con alternancia de fondo
-            $this->cell(w: $cell_w[0], h: $cell_h, txt: utf8_decode(string: 'Nombre'), border: 1, ln: 0, align: 'C', fill: true);
-            $this->cell(w: $cell_w[1], h: $cell_h, txt: utf8_decode(string: $act['act_name']), border: 1, ln: 0, align: 'L', fill: false);
-            $this->cell(w: $cell_w[2], h: $cell_h, txt: utf8_decode(string: $act['act_respon']), border: 1, ln: 0, align: 'C', fill: false);
-            $this->cell(w: $cell_w[3], h: $cell_h, txt: $horaFormateada, border: 1, ln: 1, align: 'C', fill: false);
+            $this->cell($cell_w[0], $cell_h, utf8_decode('Nombre'), 1, 0, 'C', true);
+            $this->cell($cell_w[1], $cell_h, utf8_decode($act['act_name']), 1, 0, 'L', false);
+            $this->cell($cell_w[2], $cell_h, utf8_decode($act['act_respon']), 1, 0, 'C', false);
+            $this->cell($cell_w[3], $cell_h, $horaFormateada, 1, 1, 'C', false);
 
-            $this->cell(w: $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], h: $cell_h, txt: utf8_decode(string: 'Desarrollo'), border: 1, ln: 1, align: 'C', fill: true);
+            $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, utf8_decode('Desarrollo'), 1, 1, 'C', true);
             $this->MultiCell(
-                w: $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3],
-                h: $cell_h,
-                txt: utf8_decode(string:
+                $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3],
+                $cell_h,
+                utf8_decode(
                     $act['act_desc'] . "\n" .
                     $act['act_comment'] . "\n" .
                     ' - Materiales' . "\n" .
-                    $materiales),
-                border: 1,
-                align: 'L',
-                fill: false
+                    $materiales
+                ),
+                1,
+                'L',
+                false
             );
 
-            $this->Ln(h: 5);
+            $this->Ln(5);
 
-            $horaActual->add(interval: $interval);
+            $horaActual->add($interval);
         }
         $stmt->close();
 
