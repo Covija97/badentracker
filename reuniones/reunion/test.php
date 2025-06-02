@@ -448,7 +448,11 @@ $pdf->TableObjetives($progData);
 $pdf->TableMats($progData, $matsData);
 $pdf->TableActs($progData, $progactData);
 
-$pdf->tableActFormat0($progData, $progactData);
+if (isset($_GET['format']) && $_GET['format'] == 1) {
+    $pdf->tableActFormat0($progData, $progactData);
+} else {
+    $pdf->tableActFormat0($progData, $progactData);
+}
 
 
 $pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
