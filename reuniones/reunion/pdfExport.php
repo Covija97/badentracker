@@ -128,7 +128,7 @@ class PDF extends FPDF
         // Arial italic 8
         $this->SetFont('Arial', '', 10);
         // Número de página
-        $this->Cell(0, 10, utf8_decode('Página ' . $this->PageNo() . '/{nb}'), 0, 0, 'R');
+        $this->Cell(0, 10, 'Página ' . $this->PageNo() . '/{nb}', 0, 0, 'R');
     }
 
     // Tabla de contenido pedagógico
@@ -150,43 +150,43 @@ class PDF extends FPDF
         $cell_w = [40, 40, 40, 50]; // 170
 
         // Encabezados
-        $this->Cell($cell_w[0], $cell_h, utf8_decode('Ámbito'), 1, 0, 'C', false);
-        $this->Cell($cell_w[1], $cell_h, utf8_decode('Área'), 1, 0, 'C', false);
-        $this->Cell($cell_w[2], $cell_h, utf8_decode('Línea pedagógica'), 1, 0, 'C', false);
-        $this->Cell($cell_w[3], $cell_h, utf8_decode('Contenidos'), 1, 1, 'C', false);
+        $this->Cell($cell_w[0], $cell_h, 'Ámbito', 1, 0, 'C', false);
+        $this->Cell($cell_w[1], $cell_h, 'Área', 1, 0, 'C', false);
+        $this->Cell($cell_w[2], $cell_h, 'Línea pedagógica', 1, 0, 'C', false);
+        $this->Cell($cell_w[3], $cell_h, 'Contenidos', 1, 1, 'C', false);
 
         // RESPONSABILIDAD
-        $this->Cell($cell_w[0], $cell_h * 2, utf8_decode('Responsabilidad'), 1, 0, 'L', true);
-        $this->Cell($cell_w[1], $cell_h, utf8_decode('Personalidad'), 1, 0, 'L', true);
-        $this->Cell($cell_w[2], $cell_h, utf8_decode('Autonomía'), 1, 0, 'L', true);
-        $this->Cell($cell_w[3], $cell_h, utf8_decode('Progreso personal'), 1, 1, 'L', true);
+        $this->Cell($cell_w[0], $cell_h * 2, 'Responsabilidad', 1, 0, 'L', true);
+        $this->Cell($cell_w[1], $cell_h, 'Personalidad', 1, 0, 'L', true);
+        $this->Cell($cell_w[2], $cell_h, 'Autonomía', 1, 0, 'L', true);
+        $this->Cell($cell_w[3], $cell_h, 'Progreso personal', 1, 1, 'L', true);
 
         $this->Cell($cell_w[0], $cell_h, '', 0, 0);
-        $this->Cell($cell_w[1], $cell_h, utf8_decode('Social'), 1);
-        $this->Cell($cell_w[2], $cell_h, utf8_decode('Habilidades sociales'), 1);
-        $this->Cell($cell_w[3], $cell_h, utf8_decode('Confianza'), 1, 1);
+        $this->Cell($cell_w[1], $cell_h, 'Social', 1);
+        $this->Cell($cell_w[2], $cell_h, 'Habilidades sociales', 1);
+        $this->Cell($cell_w[3], $cell_h, 'Confianza', 1, 1);
 
         // PAÍS
-        $this->Cell($cell_w[0], $cell_h * 3, utf8_decode('País'), 1, 0, 'L', true);
-        $this->Cell($cell_w[1], $cell_h, utf8_decode('Personalidad'), 1, 0, 'L', true);
-        $this->Cell($cell_w[2], $cell_h, utf8_decode('Compromiso'), 1, 0, 'L', true);
-        $this->Cell($cell_w[3], $cell_h, utf8_decode('Participación social'), 1, 1, 'L', true);
+        $this->Cell($cell_w[0], $cell_h * 3, 'País', 1, 0, 'L', true);
+        $this->Cell($cell_w[1], $cell_h, 'Personalidad', 1, 0, 'L', true);
+        $this->Cell($cell_w[2], $cell_h, 'Compromiso', 1, 0, 'L', true);
+        $this->Cell($cell_w[3], $cell_h, 'Participación social', 1, 1, 'L', true);
 
         $this->Cell($cell_w[0], $cell_h * 2, '', 0, 0);
-        $this->Cell($cell_w[1], $cell_h * 2, utf8_decode('Emocional'), 1);
-        $this->Cell($cell_w[2], $cell_h * 2, utf8_decode('Comunidad'), 1);
-        $this->MultiCell($cell_w[3], $cell_h, utf8_decode('Relación con la rama y el grupo scouts'), 1, 1);
+        $this->Cell($cell_w[1], $cell_h * 2, 'Emocional', 1);
+        $this->Cell($cell_w[2], $cell_h * 2, 'Comunidad', 1);
+        $this->MultiCell($cell_w[3], $cell_h, 'Relación con la rama y el grupo scouts', 1, 1);
 
         // FE
-        $this->Cell($cell_w[0], $cell_h * 2, utf8_decode('Fe'), 1, 0, 'L', true);
-        $this->Cell($cell_w[1], $cell_h, utf8_decode('Espiritual'), 1, 0, 'L', true);
-        $this->Cell($cell_w[2], $cell_h, utf8_decode('Oración'), 1, 0, 'L', true);
-        $this->Cell($cell_w[3], $cell_h, utf8_decode('Oración y reflexión'), 1, 1, 'L', true);
+        $this->Cell($cell_w[0], $cell_h * 2, 'Fe', 1, 0, 'L', true);
+        $this->Cell($cell_w[1], $cell_h, 'Espiritual', 1, 0, 'L', true);
+        $this->Cell($cell_w[2], $cell_h, 'Oración', 1, 0, 'L', true);
+        $this->Cell($cell_w[3], $cell_h, 'Oración y reflexión', 1, 1, 'L', true);
 
         $this->Cell($cell_w[0], $cell_h, '', 0, 0);
-        $this->Cell($cell_w[1], $cell_h, utf8_decode('Físico'), 1);
-        $this->Cell($cell_w[2], $cell_h, utf8_decode('Corporeidad'), 1);
-        $this->Cell($cell_w[3], $cell_h, utf8_decode('Protección de la naturaleza'), 1, 1);
+        $this->Cell($cell_w[1], $cell_h, 'Físico', 1);
+        $this->Cell($cell_w[2], $cell_h, 'Corporeidad', 1);
+        $this->Cell($cell_w[3], $cell_h, 'Protección de la naturaleza', 1, 1);
 
         // Espaciado
         $this->Ln(5);
@@ -217,23 +217,23 @@ class PDF extends FPDF
         $nResp = max(5, $count); // mínimo de 5 filas
 
         // Encabezado de tabla
-        $this->cell($cell_w[0], $cell_h, utf8_decode('Grupo Scout'), 1, 0, 'C', true);
+        $this->cell($cell_w[0], $cell_h, 'Grupo Scout', 1, 0, 'C', true);
         $this->cell($cell_w[1], $cell_h, $progData['grp_name'], 1, 0, 'C');
-        $this->cell($cell_w[2], $cell_h, utf8_decode('Ronda Solar'), 1, 0, 'C', true);
+        $this->cell($cell_w[2], $cell_h, 'Ronda Solar', 1, 0, 'C', true);
         $this->cell($cell_w[3], $cell_h, getRondaSolar($progData['prog_date']), 1, 1, 'C');
 
-        $this->cell($cell_w[0], $cell_h, utf8_decode('Lugar'), 1, 0, 'C', true);
+        $this->cell($cell_w[0], $cell_h, 'Lugar', 1, 0, 'C', true);
         $this->cell($cell_w[1], $cell_h, $progData['prog_place'], 1, 0, 'C');
-        $this->cell($cell_w[2], $cell_h, utf8_decode('Fecha'), 1, 0, 'C', true);
+        $this->cell($cell_w[2], $cell_h, 'Fecha', 1, 0, 'C', true);
         $this->cell($cell_w[3], $cell_h, $dateFormat, 1, 1, 'C');
 
-        $this->cell($cell_w[0], $cell_h, utf8_decode('Coordinador'), 1, 0, 'C', true);
+        $this->cell($cell_w[0], $cell_h, 'Coordinador', 1, 0, 'C', true);
         $this->cell($cell_w[1], $cell_h, $progData['prog_coord'], 1, 0, 'C');
-        $this->cell($cell_w[2], $cell_h, utf8_decode('Nº educandos'), 1, 0, 'C', true);
+        $this->cell($cell_w[2], $cell_h, 'Nº educandos', 1, 0, 'C', true);
         $this->cell($cell_w[3], $cell_h, $progData['prog_child_N'], 1, 1, 'C');
 
-        $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2], $cell_h, utf8_decode('Responsables asistentes'), 1, 0, 'C', true);
-        $this->cell($cell_w[3], $cell_h, utf8_decode('Logo del grupo'), 1, 1, 'C', true);
+        $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2], $cell_h, 'Responsables asistentes', 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, 'Logo del grupo', 1, 1, 'C', true);
 
         $x = $this->GetX();
         $y = $this->GetY();
@@ -305,26 +305,24 @@ class PDF extends FPDF
         $cell_h = 7;
         $cell_w = [40, 60, 35, 35];
 
-        $this->cell($cell_w[0], $cell_h, utf8_decode('LEMA'), 1, 0, 'C', true);
-        $this->cell($cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, utf8_decode(' En la manada, todos somos parte del mismo camino'), 1, 1, 'L', false);
+        $this->cell($cell_w[0], $cell_h, 'LEMA', 1, 0, 'C', true);
+        $this->cell($cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, ' En la manada, todos somos parte del mismo camino', 1, 1, 'L', false);
 
-        $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, utf8_decode('OBJETIVOS GENERALES Y CONTENIDOS PEDAGÓGICOS'), 1, 1, 'C', true);
+        $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, 'OBJETIVOS GENERALES Y CONTENIDOS PEDAGÓGICOS', 1, 1, 'C', true);
 
         $this->MultiCell(
             $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3],
             $cell_h,
-            utf8_decode(
-                ' RESPONSABILIDAD:
-    - Fomentar la autonomía y el desarrollo personal a través de los territorios.
-    - Desarrollar la confianza de los nuevos educandos conforme al desarrollo positivo de sus habilidades sociales
+            ' RESPONSABILIDAD:
+- Fomentar la autonomía y el desarrollo personal a través de los territorios.
+- Desarrollar la confianza de los nuevos educandos conforme al desarrollo positivo de sus habilidades sociales
 
- PAÍS:
-    - Reforzar la participación social con el compromiso de la manada conforme al entorno que le rodea.
-    Trabajar en comunidad para así mejorar la cohesión y unión de la manada.
+PAÍS:
+- Reforzar la participación social con el compromiso de la manada conforme al entorno que le rodea.
+Trabajar en comunidad para así mejorar la cohesión y unión de la manada.
 
- FE:
-    - Promover el aprendizaje de la oración del lobato y la reflexión sobre la misma.'
-            ),
+FE:
+- Promover el aprendizaje de la oración del lobato y la reflexión sobre la misma.',
             1,
             'L',
             false
@@ -350,13 +348,13 @@ class PDF extends FPDF
         // Realizamos un salto de página
         $this->AddPage();
 
-        $this->cell($cell_w, $cell_h, utf8_decode('Materiales para la realización de actividades'), 1, 1, 'C', true);
+        $this->cell($cell_w, $cell_h, 'Materiales para la realización de actividades', 1, 1, 'C', true);
         
         // Listar los materiales
         $materiales = "";
         foreach ($matsData as $mat) {
             // Añadir cada material a la cadena
-            $materiales .= utf8_decode($mat['mat_name']) . "\n";
+            $materiales .= $mat['mat_name'] . "\n";
         }
         $this->MultiCell($cell_w, $cell_h, $materiales, 1, 'L', false);
 
@@ -382,9 +380,9 @@ class PDF extends FPDF
         $this->AddPage();
 
         // Encabezado
-        $this->cell($cell_w[0], $cell_h, utf8_decode('Hora'), 1, 0, 'C', true);
-        $this->cell($cell_w[1], $cell_h, utf8_decode('Actividad'), 1, 0, 'C', true);
-        $this->cell($cell_w[2], $cell_h, utf8_decode('Encargado'), 1, 1, 'C', true);
+        $this->cell($cell_w[0], $cell_h, 'Hora', 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, 'Actividad', 1, 0, 'C', true);
+        $this->cell($cell_w[2], $cell_h, 'Encargado', 1, 1, 'C', true);
 
         // Contenido
         $horaActual = DateTime::createFromFormat('H:i:s', $progData['prog_time']); // ej. '09:00:00'
@@ -406,7 +404,7 @@ class PDF extends FPDF
 
             // Celdas con alternancia de fondo
             $this->cell($cell_w[0], $cell_h * 2, $horaFormateada, 1, 0, 'C', $fill);
-            $this->cell($cell_w[1], $cell_h * 2, utf8_decode($act['act_name']), 1, 0, 'L', $fill);
+            $this->cell($cell_w[1], $cell_h * 2, $act['act_name'], 1, 0, 'L', $fill);
             $this->cell($cell_w[2], $cell_h * 2, $duraciónFormateada, 1, 1, 'C', $fill);
 
             $horaActual->add($interval);
@@ -436,11 +434,11 @@ class PDF extends FPDF
             );
 
             // Celdas con alternancia de fondo
-            $this->cell($cell_w[0], $cell_h, utf8_decode('Nombre'), 1, 0, 'C', true);
-            $this->cell($cell_w[1], $cell_h, utf8_decode($act['act_name']), 1, 1, 'L', false);
+            $this->cell($cell_w[0], $cell_h, 'Nombre', 1, 0, 'C', true);
+            $this->cell($cell_w[1], $cell_h, $act['act_name'], 1, 1, 'L', false);
 
-            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode('Desarrollo'), 1, 'C', true);
-            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode($act['act_desc']), 1, 'L', false);
+            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, 'Desarrollo', 1, 'C', true);
+            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, $act['act_desc'], 1, 'L', false);
 
             $this->Ln(5);
 
@@ -487,21 +485,19 @@ class PDF extends FPDF
 
 
             // Celdas con alternancia de fondo
-            $this->cell($cell_w[0], $cell_h, utf8_decode('Nombre'), 1, 0, 'C', true);
-            $this->cell($cell_w[1], $cell_h, utf8_decode($act['act_name']), 1, 0, 'L', false);
-            $this->cell($cell_w[2], $cell_h, utf8_decode($act['act_respon']), 1, 0, 'C', false);
+            $this->cell($cell_w[0], $cell_h, 'Nombre', 1, 0, 'C', true);
+            $this->cell($cell_w[1], $cell_h, $act['act_name'], 1, 0, 'L', false);
+            $this->cell($cell_w[2], $cell_h, $act['act_respon'], 1, 0, 'C', false);
             $this->cell($cell_w[3], $cell_h, $horaFormateada, 1, 1, 'C', false);
 
-            $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, utf8_decode('Desarrollo'), 1, 1, 'C', true);
+            $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, 'Desarrollo', 1, 1, 'C', true);
             $this->MultiCell(
                 $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3],
                 $cell_h,
-                utf8_decode(
-                    $act['act_desc'] . "\n" .
-                    $act['act_comment'] . "\n" .
-                    ' - Materiales' . "\n" .
-                    $materiales
-                ),
+                $act['act_desc'] . "\n" .
+                $act['act_comment'] . "\n" .
+                ' - Materiales' . "\n" .
+                $materiales,
                 1,
                 'L',
                 false
