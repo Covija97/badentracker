@@ -421,11 +421,11 @@ FE:
         foreach ($progactData as $act) {
 
             // Celdas con alternancia de fondo
-            $this->cell($cell_w[0], $cell_h, mb_convert_encoding('Nombre', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
-            $this->cell($cell_w[1], $cell_h, mb_convert_encoding($act['act_name'], 'ISO-8859-1', 'UTF-8'), 1, 1, 'L', false);
+            $this->cell($cell_w[0], $cell_h, utf8_decode('Nombre'), 1, 0, 'C', true);
+            $this->cell($cell_w[1], $cell_h, utf8_decode($act['act_name']), 1, 1, 'L', false);
 
-            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, mb_convert_encoding('Desarrollo', 'ISO-8859-1', 'UTF-8'), 1, 'C', true);
-            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, mb_convert_encoding($act['act_desc'], 'ISO-8859-1', 'UTF-8'), 1, 'L', false);
+            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode('Desarrollo'), 1, 'C', true);
+            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode($act['act_desc']), 1, 'L', false);
 
             $this->Ln(5);
         }
