@@ -41,7 +41,7 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Times', '', 12);
 
-$pdfName = mb_convert_encoding($progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf', 'ISO-8859-1', 'UTF-8');
+$pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
 $pdf->Output('I', $pdfName);
 
 ?>
