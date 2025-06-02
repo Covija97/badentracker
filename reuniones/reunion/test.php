@@ -419,13 +419,6 @@ FE:
         $cell_w = [30, 140]; //170
 
         foreach ($progactData as $act) {
-            // Convertir duración hh:mm:ss a DateInterval y sumar
-            $interval = new DateInterval(
-                'PT' .
-                intval(value: substr(string: $act['act_durat'], offset: 0, length: 2)) . 'H' .
-                intval(value: substr(string: $act['act_durat'], offset: 3, length: 2)) . 'M' .
-                intval(value: substr(string: $act['act_durat'], offset: 6, length: 2)) . 'S'
-            );
 
             // Celdas con alternancia de fondo
             $this->cell($cell_w[0], $cell_h, mb_convert_encoding('Nombre', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
@@ -435,7 +428,6 @@ FE:
             $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, mb_convert_encoding($act['act_desc'], 'ISO-8859-1', 'UTF-8'), 1, 'L', false);
 
             $this->Ln(5);
-
         }
     }
 
