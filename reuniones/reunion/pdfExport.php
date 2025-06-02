@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 /* -- Requires ---------------------------------------------------------- */
 require('../../.res/fpdf/fpdf.php');
 require "../../.res/funct/funct.php";
@@ -9,6 +12,7 @@ require "../../.res/funct/funct.php";
 $editMode = false;
 $progData = [];
 $progactData = [];
+$matsData = []; // <-- Añade esta línea
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $editMode = true;
     $edit_id = intval($_GET['id']);
@@ -537,4 +541,7 @@ if (isset($_GET['format']) && $_GET['format'] == 1) {
 $pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
 $pdf->Output($pdfName);
 
+if (empty($progData)) {
+    die('No se encontraron datos para la programación solicitada.');
+}
 ?>
