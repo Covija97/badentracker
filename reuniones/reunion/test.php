@@ -471,9 +471,9 @@ FE:
 
 
             // Celdas con alternancia de fondo
-            $this->cell($cell_w[0], $cell_h, mb_convert_encoding('Nombre', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
-            $this->cell($cell_w[1], $cell_h, mb_convert_encoding($act['act_name'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', false);
-            $this->cell($cell_w[2], $cell_h, $act['act_respon'], 1, 0, 'C', false);
+            $this->cell($cell_w[0], $cell_h, utf8_decode('Nombre'), 1, 0, 'C', true);
+            $this->cell($cell_w[1], $cell_h, utf8_decode($act['act_name']), 1, 0, 'L', false);
+            $this->cell($cell_w[2], $cell_h, utf8_decode($act['act_respon']), 1, 0, 'C', false);
             $this->cell($cell_w[3], $cell_h, $horaFormateada, 1, 1, 'C', false);
 
             $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, utf8_decode('Desarrollo'), 1, 1, 'C', true);
