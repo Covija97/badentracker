@@ -450,9 +450,9 @@ FE:
             // Convertir duración hh:mm:ss a DateInterval y sumar
             $interval = new DateInterval(
                 'PT' .
-                intval(value: substr($act['act_durat'], 0, 2)) . 'H' .
-                intval(value: substr($act['act_durat'], 3, 2)) . 'M' .
-                intval(value: substr($act['act_durat'], 6, 2)) . 'S'
+                intval(substr($act['act_durat'], 0, 2)) . 'H' .
+                intval(substr($act['act_durat'], 3, 2)) . 'M' .
+                intval(substr($act['act_durat'], 6, 2)) . 'S'
             );
 
             // Consulta actividades a la db
