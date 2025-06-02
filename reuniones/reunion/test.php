@@ -431,6 +431,72 @@ FE:
         }
     }
 
+    // Tabla de actividades específica (formato badentracker)
+    function tableActFormat1($progData, $progactData)
+    {
+        // Añadimos un salto de página y actividad por actividad 
+        $this->AddPage();
+
+        // Tamaño de las celdas
+        $cell_h = 7;
+        $cell_w = [30, 90, 30, 20]; //170
+
+        $horaActual = DateTime::createFromFormat('H:i:s', $progData['prog_time']); // ej. '09:00:00'
+
+        foreach ($progactData as $act) {
+            // Hora formateada
+            $horaFormateada = $horaActual->format('H:i');
+
+            // Convertir duración hh:mm:ss a DateInterval y sumar
+            $interval = new DateInterval(
+                'PT' .
+                intval(value: substr(string: $act['act_durat'], offset: 0, length: 2)) . 'H' .
+                intval(value: substr(string: $act['act_durat'], offset: 3, length: 2)) . 'M' .
+                intval(value: substr(string: $act['act_durat'], offset: 6, length: 2)) . 'S'
+            );
+
+            // Consulta actividades a la db
+            $db = linkDB();
+
+            $stmt = $db->prepare("
+            SELECT GROUP_CONCAT(mat.mat_name SEPARATOR ', ') AS materiales 
+            FROM act_mat
+            JOIN mat ON act_mat.mat_id = mat.mat_id
+            WHERE act_mat.act_id = ?");
+            $stmt->bind_param('i', $act['act_id']);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $row = $resultado->fetch_assoc();
+            $materiales = $row['materiales'] ?? 'Sin materiales';
+
+
+            // Celdas con alternancia de fondo
+            $this->cell($cell_w[0], $cell_h, mb_convert_encoding('Nombre', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+            $this->cell($cell_w[1], $cell_h, mb_convert_encoding($act['act_name'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'L', false);
+            $this->cell($cell_w[2], $cell_h, $act['act_respon'], 1, 0, 'C', false);
+            $this->cell($cell_w[3], $cell_h, $horaFormateada, 1, 1, 'C', false);
+
+            $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3], $cell_h, 'Desarrollo', 1, 1, 'C', true);
+            $this->MultiCell(
+                $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3],
+                $cell_h,
+                $act['act_desc'] . "\n" .
+                $act['act_comment'] . "\n" .
+                ' - Materiales' . "\n" .
+                $materiales,
+                1,
+                'L',
+                false
+            );
+
+            $this->Ln(5);
+
+            $horaActual->add($interval);
+        }
+        $stmt->close();
+
+    }
+
 }
 ?>
 
@@ -449,7 +515,7 @@ $pdf->TableMats($progData, $matsData);
 $pdf->TableActs($progData, $progactData);
 
 if (isset($_GET['format']) && $_GET['format'] == 1) {
-    $pdf->tableActFormat0($progData, $progactData);
+    $pdf->tableActFormat1($progData, $progactData);
 } else {
     $pdf->tableActFormat0($progData, $progactData);
 }
