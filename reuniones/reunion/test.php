@@ -187,6 +187,102 @@ class PDF extends FPDF
         // Espaciado
         $this->Ln(5);
     }
+
+    // Tabla información del grupo
+    function TableGroup($progData): void
+    {
+        // Selecionamos el color de la rama
+        $colorRama = getRamaColor($progData['rama_id']);
+        $this->SetFillColor($colorRama[0], $colorRama[1], $colorRama[2]);
+
+        // Fuente y formato
+        $this->SetFont('Arial', '', 10);
+        $this->SetDrawColor(190, 190, 190);
+        $this->SetLineWidth(.01);
+
+        // Tamaño de las celdas
+        $cell_h = 7;
+        $cell_w = [40, 60, 35, 35];
+
+        $dateFormat = date('d-m-Y', strtotime($progData['prog_date']));
+
+        // Contar número de responsables
+        $rawText = is_resource($progData['responsibles']) ? stream_get_contents($progData['responsibles']) : $progData['responsibles'];
+        $nombres = array_filter(explode("\n", str_replace(["\r\n", "\r"], "\n", $rawText)), fn($n): bool => trim($n) !== '');
+        $count = count($nombres);
+        $nResp = max(5, $count); // mínimo de 5 filas
+
+        // Encabezado de tabla
+        $this->cell($cell_w[0], $cell_h, mb_convert_encoding('Grupo Scout', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, mb_convert_encoding($progData['grp_name'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C');
+        $this->cell($cell_w[2], $cell_h, mb_convert_encoding('Ronda Solar', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, mb_convert_encoding(getRondaSolar($progData['prog_date']), 'ISO-8859-1', 'UTF-8'), 1, 1, 'C');
+
+        $this->cell($cell_w[0], $cell_h, 'Lugar', 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, mb_convert_encoding($progData['prog_place'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C');
+        $this->cell($cell_w[2], $cell_h, 'Fecha', 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, $dateFormat, 1, 1, 'C');
+
+        $this->cell($cell_w[0], $cell_h, 'Coordinador', 1, 0, 'C', true);
+        $this->cell($cell_w[1], $cell_h, mb_convert_encoding($progData['prog_coord'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C');
+        $this->cell($cell_w[2], $cell_h, mb_convert_encoding('Nº educandos', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, mb_convert_encoding($progData['prog_child_N'], 'ISO-8859-1', 'UTF-8'), 1, 1, 'C');
+
+        $this->cell($cell_w[0] + $cell_w[1] + $cell_w[2], $cell_h, 'Responsables asistentes', 1, 0, 'C', true);
+        $this->cell($cell_w[3], $cell_h, 'Logo del grupo', 1, 1, 'C', true);
+
+        $x = $this->GetX();
+        $y = $this->GetY();
+
+        // Celdas responsables e imagen
+        $this->cell($cell_w[0], $cell_h * $nResp, mb_convert_encoding($progData['rama_name'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+        // Rellenar hasta mínimo 5 líneas
+        $responsablesArray = explode("\n", str_replace(["\r\n", "\r"], "\n", $rawText));
+        $responsablesLimpios = array_filter(array_map('trim', $responsablesArray), fn($r) => $r !== '');
+        $lineas = $responsablesLimpios;
+
+        // Añadir líneas vacías si hay menos de 5
+        while (count($lineas) < 5) {
+            $lineas[] = ' ';
+        }
+
+        // Recombinar para MultiCell
+        $contenidoResponsables = implode("\n", $lineas);
+        $this->MultiCell($cell_w[1] + $cell_w[2], $cell_h, mb_convert_encoding($contenidoResponsables, 'ISO-8859-1', 'UTF-8'), 1, 'L', false);
+
+        // Volvemos a la posición para dibujar la celda de la imagen
+        $this->SetXY($x + $cell_w[0] + $cell_w[1] + $cell_w[2], $y);
+        $this->cell($cell_w[3], $cell_h * $nResp, '', 1, 1, 'C');
+
+        // Insertar imagen centrada
+        $imagePath = '../../.res/img/logos-grupos/' . $progData['grp_id'] . '.png';
+
+        if (file_exists($imagePath)) {
+            // Obtener dimensiones reales de la imagen
+            [$imgWidth, $imgHeight] = getimagesize($imagePath);
+
+            // Altura y ancho disponibles en la celda
+            $maxW = $cell_w[3] - 4; // dejando 2 mm de margen a cada lado
+            $maxH = ($cell_h * $nResp) - 4;
+
+            // Calcular escala para mantener proporción
+            $scale = min($maxW / $imgWidth, $maxH / $imgHeight);
+
+            // Tamaño final escalado
+            $finalW = $imgWidth * $scale;
+            $finalH = $imgHeight * $scale;
+
+            // Centrar dentro de la celda
+            $imageX = $x + $cell_w[0] + $cell_w[1] + $cell_w[2] + ($cell_w[3] - $finalW) / 2;
+            $imageY = $y + (($cell_h * $nResp) - $finalH) / 2;
+
+            // Insertar imagen
+            $this->Image($imagePath, $imageX, $imageY, $finalW, $finalH);
+        }
+        // Espaciado
+        $this->Ln(5);
+
+    }
 }
 ?>
 
@@ -199,6 +295,7 @@ $pdf->SetFont('Times', '', 12);
 
 // Llamar a la función para agregar la tabla al PDF
 $pdf->TablePedag($progData);
+$pdf->TableGroup($progData);
 
 $pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
 $pdf->Output('I', $pdfName);
