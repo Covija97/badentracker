@@ -406,8 +406,39 @@ FE:
 
             $fill = !$fill;
         }
-
     }
+
+    // Tabla de actividades específica (estandar)
+    function tableActFormat0($progData, $progactData)
+    {
+        // Añadimos un salto de página y actividad por actividad 
+        $this->AddPage();
+
+        // Tamaño de las celdas
+        $cell_h = 7;
+        $cell_w = [30, 140]; //170
+
+        foreach ($progactData as $act) {
+            // Convertir duración hh:mm:ss a DateInterval y sumar
+            $interval = new DateInterval(
+                'PT' .
+                intval(value: substr(string: $act['act_durat'], offset: 0, length: 2)) . 'H' .
+                intval(value: substr(string: $act['act_durat'], offset: 3, length: 2)) . 'M' .
+                intval(value: substr(string: $act['act_durat'], offset: 6, length: 2)) . 'S'
+            );
+
+            // Celdas con alternancia de fondo
+            $this->cell($cell_w[0], $cell_h, mb_convert_encoding('Nombre', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
+            $this->cell($cell_w[1], $cell_h, mb_convert_encoding($act['act_name'], 'ISO-8859-1', 'UTF-8'), 1, 1, 'L', false);
+
+            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, mb_convert_encoding('Desarrollo', 'ISO-8859-1', 'UTF-8'), 1, 'C', true);
+            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, mb_convert_encoding($act['act_desc'], 'ISO-8859-1', 'UTF-8'), 1, 'L', false);
+
+            $this->Ln(5);
+
+        }
+    }
+
 }
 ?>
 
@@ -424,6 +455,12 @@ $pdf->TableGroup($progData);
 $pdf->TableObjetives($progData);
 $pdf->TableMats($progData, $matsData);
 $pdf->TableActs($progData, $progactData);
+
+if (isset($_GET['format']) && $_GET['format'] == 1) {
+    $pdf->tableActFormat0($progData, $progactData);
+} else {
+    $pdf->tableActFormat0($progData, $progactData);
+}
 
 $pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
 $pdf->Output('I', $pdfName);
