@@ -422,9 +422,9 @@ FE:
 
             // Celdas con alternancia de fondo
             $this->cell($cell_w[0], $cell_h, utf8_decode('Nombre'), 1, 0, 'C', true);
-            $this->cell($cell_w[1], $cell_h, utf8_decode($act['act_name']), 1, 0, 'L', false);
+            $this->cell($cell_w[1], $cell_h, utf8_decode($act['act_name']), 1, 1, 'L', false);
 
-            $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode('Desarrollo'), 1, 'C', true);
+            $this->cell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode('Desarrollo'), 1, 1,'C', true);
             $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode($act['act_desc']), 1, 'L', false);
 
             $this->Ln(5);
