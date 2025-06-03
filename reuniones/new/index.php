@@ -312,7 +312,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endforeach; ?>
             selectHTML += `<option value="custom">Personalizada...</option>`;
             selectHTML += `</select>`;
-            celdaActividad.innerHTML = selectHTML + `<input type="text" name="actividades[${i}][custom_name]" id="customAct_${i}" placeholder="Nombre de la actividad" style="display:none; width:90%;">`;
+            celdaActividad.innerHTML = selectHTML;
+            celdaActividad.innerHTML += `<input type="text" name="actividades[${i}][custom_name]" id="customAct_${i}" placeholder="Nombre de la actividad" style="display:none; width:90%;">`;
 
             // Celda 3: Duración (solo hora)
             const celdaDuracion = fila.insertCell();
