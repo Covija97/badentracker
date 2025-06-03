@@ -81,13 +81,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $comentarios = $act['comentarios'] ?? '';
             $custom_name = $act['custom_name'] ?? '';
             if ($act_id) {
+                $duracion = $act['duracion'] ?? null;
                 if ($act_id === 'custom') {
                     // Guardar actividad personalizada (puedes usar act_respon para el nombre)
-                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment) VALUES (?, NULL, ?, ?, ?)");
-                    $stmt2->bind_param('iiss', $reunion_id, $order, $custom_name, $comentarios);
+                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment, act_durat) VALUES (?, NULL, ?, ?, ?, ?)");
+                    $stmt2->bind_param('iisss', $reunion_id, $order, $custom_name, $comentarios, $duracion);
                 } else {
-                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment) VALUES (?, ?, ?, ?, ?)");
-                    $stmt2->bind_param('iiiss', $reunion_id, $act_id, $order, $encargado, $comentarios);
+                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment, act_durat) VALUES (?, ?, ?, ?, ?, ?)");
+                    $stmt2->bind_param('iiisss', $reunion_id, $act_id, $order, $encargado, $comentarios, $duracion);
                 }
                 $stmt2->execute();
                 $stmt2->close();

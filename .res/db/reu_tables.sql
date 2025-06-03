@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS prog_act (
     act_order int NOT NULL COMMENT 'Order of the act',
     act_respon VARCHAR(50) NOT NULL COMMENT 'Responsible for the act',
     act_comment LONGTEXT NOT NULL COMMENT 'Comment for the act',
+    act_durat time(0) COMMENT 'Activity Duration',
     PRIMARY KEY (prog_id, act_id),
     FOREIGN KEY (prog_id) REFERENCES prog (prog_id) ON DELETE CASCADE,
     FOREIGN KEY (act_id) REFERENCES act (act_id) ON DELETE CASCADE
