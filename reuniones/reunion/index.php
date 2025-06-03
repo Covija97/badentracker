@@ -377,6 +377,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // Comentarios
                     const comentarios = document.querySelector(`[name='actividades[${i}][comentarios]']`);
                     if (comentarios) comentarios.value = actividades[i].act_comment || '';
+                    // Duración
+                    const duracion = document.querySelector(`[name='actividades[${i}][duracion]']`);
+                    if (duracion && actividades[i].act_durat) duracion.value = actividades[i].act_durat.substring(0,5);
                 }
                 // Hora de inicio
                 if (actividades.length > 0 && document.getElementById('prog_time')) {
@@ -399,18 +402,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         calculateSolarRound('prog_date', 'rondaSolar');
         // Cambiar color de celdas según rama seleccionada
         colorCells('rama');
-        // Actualizar numero de actividades al cargar la página
-        const numActInput = document.getElementById('numAct');
-        if (numActInput) {
-            const numActividades = <?php echo $editMode ? count($progActs) : 1; ?>;
-            numActInput.value = numActividades;
-            addAct(numActividades);
-        }
 
-        // Si estamos en modo edición, mostrar todas las actividades guardadas
+        // Inicializar actividades según modo
+        const numActividades = <?php echo $editMode ? count($progActs) : 1; ?>;
+        document.getElementById('numAct').value = numActividades;
+        addAct(numActividades);
+
         <?php if ($editMode): ?>
+            // Prellenar actividades si estamos en modo edición
             const actividades = <?php echo json_encode($progActs); ?>;
-            addAct(actividades.length || 1);
             for (let i = 0; i < actividades.length; i++) {
                 // Seleccionar actividad
                 const select = document.querySelector(`[name='actividades[${i}][act_id]']`);
@@ -429,13 +429,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Comentarios
                 const comentarios = document.querySelector(`[name='actividades[${i}][comentarios]']`);
                 if (comentarios) comentarios.value = actividades[i].act_comment || '';
+                // Duración
+                const duracion = document.querySelector(`[name='actividades[${i}][duracion]']`);
+                if (duracion && actividades[i].act_durat) duracion.value = actividades[i].act_durat.substring(0,5);
             }
             // Hora de inicio
             if (actividades.length > 0 && document.getElementById('prog_time')) {
                 document.getElementById('prog_time').value = '<?php echo $editMode ? htmlspecialchars($progData['prog_time'] ?? '') : ''; ?>';
             }
-        <?php else: ?>
-            addAct(1);
         <?php endif; ?>
     });
 </script>
