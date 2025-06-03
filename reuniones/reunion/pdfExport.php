@@ -37,7 +37,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     JOIN act ON prog_act.act_id = act.act_id
     JOIN act_cat ON act.act_id = act_cat.act_id
     JOIN cat ON act_cat.cat_id = cat.cat_id
-    WHERE prog_act.prog_id = ?
+    WHERE prog_act.prog_id = 2
     ORDER BY prog_act.act_order ASC;");
     $stmt2->bind_param('i', $edit_id);
     $stmt2->execute();
