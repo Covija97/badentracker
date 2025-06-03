@@ -106,9 +106,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $act_id = $act['act_id'] ?? null;
                 $encargado = $act['encargado'] ?? '';
                 $comentarios = $act['comentarios'] ?? '';
+                $duracion = $act['duracion'] ?? null; // <-- Añadido
                 if ($act_id) {
-                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment) VALUES (?, ?, ?, ?, ?)");
-                    $stmt2->bind_param('iiiss', $edit_id, $act_id, $order, $encargado, $comentarios);
+                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment, act_durat) VALUES (?, ?, ?, ?, ?, ?)");
+                    $stmt2->bind_param('iiisss', $edit_id, $act_id, $order, $encargado, $comentarios, $duracion);
                     $stmt2->execute();
                     $stmt2->close();
                     $order++;
