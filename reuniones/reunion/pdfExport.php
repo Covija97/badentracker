@@ -32,16 +32,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $stmt->close();
     // Obtener actividades asociadas
     $stmt2 = $db->prepare("
-    SELECT *
-    FROM prog_act
-    JOIN act ON prog_act.act_id = act.act_id
-    JOIN act_cat ON act.act_id = act_cat.act_id
-    JOIN cat ON act_cat.cat_id = cat.cat_id
-    WHERE prog_act.prog_id = 2
-    ORDER BY prog_act.act_order ASC;");
+SELECT *
+FROM prog_act
+JOIN act ON prog_act.act_id = act.act_id
+JOIN act_cat ON act.act_id = act_cat.act_id
+JOIN cat ON act_cat.cat_id = cat.cat_id
+WHERE prog_act.prog_id = ?
+ORDER BY prog_act.act_order ASC;");
     $stmt2->bind_param('i', $edit_id);
     $stmt2->execute();
     $result2 = $stmt2->get_result();
+    $progactData = [];
     while ($row = $result2->fetch_assoc()) {
         $progactData[] = $row;
     }
@@ -459,15 +460,16 @@ FE:
             $db = linkDB();
 
             $stmt = $db->prepare("
-            SELECT GROUP_CONCAT(mat.mat_name SEPARATOR ', ') AS materiales 
-            FROM act_mat
-            JOIN mat ON act_mat.mat_id = mat.mat_id
-            WHERE act_mat.act_id = ?");
+        SELECT GROUP_CONCAT(mat.mat_name SEPARATOR ', ') AS materiales 
+        FROM act_mat
+        JOIN mat ON act_mat.mat_id = mat.mat_id
+        WHERE act_mat.act_id = ?");
             $stmt->bind_param('i', $act['act_id']);
             $stmt->execute();
             $resultado = $stmt->get_result();
             $row = $resultado->fetch_assoc();
             $materiales = $row['materiales'] ?? 'Sin materiales';
+            $stmt->close();
 
 
             // Celdas con alternancia de fondo
@@ -507,21 +509,24 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Times', '', 12);
 
-// Llamar a la función para agregar la tabla al PDF
-$pdf->TablePedag($progData);
-$pdf->TableGroup($progData);
-$pdf->TableObjetives($progData);
-$pdf->TableMats($progData, $matsData);
-$pdf->TableActs($progData, $progactData);
+if ($progData) {
+    // Llamar a la función para agregar la tabla al PDF
+    $pdf->TablePedag($progData);
+    $pdf->TableGroup($progData);
+    $pdf->TableObjetives($progData);
+    $pdf->TableMats($progData, $matsData);
+    $pdf->TableActs($progData, $progactData);
 
-if (isset($_GET['format']) && $_GET['format'] == 1) {
-    $pdf->tableActFormat1($progData, $progactData);
+    if (isset($_GET['format']) && $_GET['format'] == 1) {
+        $pdf->tableActFormat1($progData, $progactData);
+    } else {
+        $pdf->tableActFormat0($progData, $progactData);
+    }
+
+    $pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
+    $pdf->Output('I', $pdfName);
 } else {
-    $pdf->tableActFormat0($progData, $progactData);
+    echo "No se encontraron datos para la programación seleccionada.";
 }
-
-
-$pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
-$pdf->Output('I', $pdfName);
 
 ?>
