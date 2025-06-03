@@ -326,7 +326,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const filaComentario = tabla.insertRow();
             const celdaComentario = filaComentario.insertCell();
             celdaComentario.colSpan = 4;
-            celdaComentario.innerHTML = `<textarea name="actividades[${i}][comentarios]" id="comentarios_${i}" placeholder="Comentarios sobre la actividad..."></textarea>`;
+            celdaComentario.innerHTML = `<textarea name="actividades[${i}][comentarios]" id="comentarios_${i}" placeholder="Comentarios sobre la actividad..." style="text-align:left;"></textarea>`;
         }
         $('.select2').select2();
 
