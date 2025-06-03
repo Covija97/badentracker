@@ -32,17 +32,16 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $stmt->close();
     // Obtener actividades asociadas
     $stmt2 = $db->prepare("
-SELECT *
-FROM prog_act
-JOIN act ON prog_act.act_id = act.act_id
-JOIN act_cat ON act.act_id = act_cat.act_id
-JOIN cat ON act_cat.cat_id = cat.cat_id
-WHERE prog_act.prog_id = ?
-ORDER BY prog_act.act_order ASC;");
+    SELECT *
+    FROM prog_act
+    JOIN act ON prog_act.act_id = act.act_id
+    JOIN act_cat ON act.act_id = act_cat.act_id
+    JOIN cat ON act_cat.cat_id = cat.cat_id
+    WHERE prog_act.prog_id = 2
+    ORDER BY prog_act.act_order ASC;");
     $stmt2->bind_param('i', $edit_id);
     $stmt2->execute();
     $result2 = $stmt2->get_result();
-    $progactData = [];
     while ($row = $result2->fetch_assoc()) {
         $progactData[] = $row;
     }
@@ -386,27 +385,24 @@ FE:
         $fill = false; // 🔧 Alternancia de color
 
         foreach ($progactData as $act) {
+            // Hora formateada
             $horaFormateada = $horaActual->format('H:i');
-            // Mostrar duración como hh:mm
-            $duracion = '';
-            if (!empty($act['act_durat'])) {
-                $duracion = substr($act['act_durat'], 0, 5); // hh:mm
-            }
+            $duraciónFormateada = (DateTime::createFromFormat('H:i:s', $act['act_durat']))->format('H:i');
 
+            // Convertir duración hh:mm:ss a DateInterval y sumar
+            $interval = new DateInterval(
+                'PT' .
+                intval(substr($act['act_durat'], 0, 2)) . 'H' .
+                intval(substr($act['act_durat'], 3, 2)) . 'M' .
+                intval(substr($act['act_durat'], 6, 2)) . 'S'
+            );
+
+            // Celdas con alternancia de fondo
             $this->cell($cell_w[0], $cell_h * 2, $horaFormateada, 1, 0, 'C', $fill);
             $this->cell($cell_w[1], $cell_h * 2, utf8_decode($act['act_name']), 1, 0, 'L', $fill);
-            $this->cell($cell_w[2], $cell_h * 2, $duracion, 1, 1, 'C', $fill);
+            $this->cell($cell_w[2], $cell_h * 2, $duraciónFormateada, 1, 1, 'C', $fill);
 
-            // Sumar duración a la hora actual
-            if (!empty($act['act_durat'])) {
-                $interval = new DateInterval(
-                    'PT' .
-                    intval(substr($act['act_durat'], 0, 2)) . 'H' .
-                    intval(substr($act['act_durat'], 3, 2)) . 'M' .
-                    intval(substr($act['act_durat'], 6, 2)) . 'S'
-                );
-                $horaActual->add($interval);
-            }
+            $horaActual->add($interval);
 
             $fill = !$fill;
         }
@@ -463,16 +459,15 @@ FE:
             $db = linkDB();
 
             $stmt = $db->prepare("
-        SELECT GROUP_CONCAT(mat.mat_name SEPARATOR ', ') AS materiales 
-        FROM act_mat
-        JOIN mat ON act_mat.mat_id = mat.mat_id
-        WHERE act_mat.act_id = ?");
+            SELECT GROUP_CONCAT(mat.mat_name SEPARATOR ', ') AS materiales 
+            FROM act_mat
+            JOIN mat ON act_mat.mat_id = mat.mat_id
+            WHERE act_mat.act_id = ?");
             $stmt->bind_param('i', $act['act_id']);
             $stmt->execute();
             $resultado = $stmt->get_result();
             $row = $resultado->fetch_assoc();
             $materiales = $row['materiales'] ?? 'Sin materiales';
-            $stmt->close();
 
 
             // Celdas con alternancia de fondo
@@ -498,6 +493,8 @@ FE:
 
             $horaActual->add($interval);
         }
+        $stmt->close();
+
     }
 
 }
@@ -510,24 +507,21 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Times', '', 12);
 
-if ($progData) {
-    // Llamar a la función para agregar la tabla al PDF
-    $pdf->TablePedag($progData);
-    $pdf->TableGroup($progData);
-    $pdf->TableObjetives($progData);
-    $pdf->TableMats($progData, $matsData);
-    $pdf->TableActs($progData, $progactData);
+// Llamar a la función para agregar la tabla al PDF
+$pdf->TablePedag($progData);
+$pdf->TableGroup($progData);
+$pdf->TableObjetives($progData);
+$pdf->TableMats($progData, $matsData);
+$pdf->TableActs($progData, $progactData);
 
-    if (isset($_GET['format']) && $_GET['format'] == 1) {
-        $pdf->tableActFormat1($progData, $progactData);
-    } else {
-        $pdf->tableActFormat0($progData, $progactData);
-    }
-
-    $pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
-    $pdf->Output('I', $pdfName);
+if (isset($_GET['format']) && $_GET['format'] == 1) {
+    $pdf->tableActFormat1($progData, $progactData);
 } else {
-    echo "No se encontraron datos para la programación seleccionada.";
+    $pdf->tableActFormat0($progData, $progactData);
 }
+
+
+$pdfName = $progData['prog_date'] . '-' . $progData['rama_name'] . '-' . $progData['grp_name'] . '.pdf';
+$pdf->Output('I', $pdfName);
 
 ?>

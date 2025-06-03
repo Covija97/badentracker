@@ -106,10 +106,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $act_id = $act['act_id'] ?? null;
                 $encargado = $act['encargado'] ?? '';
                 $comentarios = $act['comentarios'] ?? '';
-                $duracion = $act['duracion'] ?? null; // <-- Añadido
                 if ($act_id) {
-                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment, act_durat) VALUES (?, ?, ?, ?, ?, ?)");
-                    $stmt2->bind_param('iiisss', $edit_id, $act_id, $order, $encargado, $comentarios, $duracion);
+                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment) VALUES (?, ?, ?, ?, ?)");
+                    $stmt2->bind_param('iiiss', $edit_id, $act_id, $order, $encargado, $comentarios);
                     $stmt2->execute();
                     $stmt2->close();
                     $order++;
@@ -135,10 +134,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $act_id = $act['act_id'] ?? null;
                 $encargado = $act['encargado'] ?? '';
                 $comentarios = $act['comentarios'] ?? '';
-                $duracion = $act['duracion'] ?? null; // <-- Añadido
                 if ($act_id) {
-                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment, act_durat) VALUES (?, ?, ?, ?, ?, ?)");
-                    $stmt2->bind_param('iiisss', $prog_id, $act_id, $order, $encargado, $comentarios, $duracion);
+                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment) VALUES (?, ?, ?, ?, ?)");
+                    $stmt2->bind_param('iiiss', $prog_id, $act_id, $order, $encargado, $comentarios);
                     $stmt2->execute();
                     $stmt2->close();
                     $order++;
@@ -557,21 +555,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $(select).on('change', function () {
                     const selectedOption = this.options[this.selectedIndex];
                     let duracion = selectedOption ? selectedOption.getAttribute('data-duracion') : '';
-                    // Permitir editar duración solo si id=1
-                    if (this.value === "1") {
-                        duracionInput.readOnly = false;
-                        duracionInput.style.color = "#000";
-                    } else {
-                        duracionInput.readOnly = true;
-                        duracionInput.style.color = "#888";
-                    }
                     if (duracion && duracion.length >= 5) {
                         duracion = duracion.substring(0, 5); // Solo hh:mm
                     }
                     duracionInput.value = duracion;
                     calcularHorasActividades();
                 });
-                // Si ya hay una opción seleccionada, mostrar la duración al cargar y ajustar readonly
+                // Si ya hay una opción seleccionada, mostrar la duración al cargar
                 const selectedOption = select.options[select.selectedIndex];
                 if (selectedOption && selectedOption.getAttribute('data-duracion')) {
                     let duracion = selectedOption.getAttribute('data-duracion');
@@ -579,14 +569,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         duracion = duracion.substring(0, 5); // Solo hh:mm
                     }
                     duracionInput.value = duracion;
-                }
-                // Ajustar readonly al cargar
-                if (select.value === "1") {
-                    duracionInput.readOnly = false;
-                    duracionInput.style.color = "#000";
-                } else {
-                    duracionInput.readOnly = true;
-                    duracionInput.style.color = "#888";
                 }
                 // Listener para cambios manuales en duración (por si acaso)
                 duracionInput.addEventListener('input', calcularHorasActividades);

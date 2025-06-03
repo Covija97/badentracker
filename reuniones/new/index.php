@@ -81,14 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $comentarios = $act['comentarios'] ?? '';
             $custom_name = $act['custom_name'] ?? '';
             if ($act_id) {
-                $duracion = $act['duracion'] ?? null;
                 if ($act_id === 'custom') {
                     // Guardar actividad personalizada (puedes usar act_respon para el nombre)
-                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment, act_durat) VALUES (?, NULL, ?, ?, ?, ?)");
-                    $stmt2->bind_param('iisss', $reunion_id, $order, $custom_name, $comentarios, $duracion);
+                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment) VALUES (?, NULL, ?, ?, ?)");
+                    $stmt2->bind_param('iiss', $reunion_id, $order, $custom_name, $comentarios);
                 } else {
-                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment, act_durat) VALUES (?, ?, ?, ?, ?, ?)");
-                    $stmt2->bind_param('iiisss', $reunion_id, $act_id, $order, $encargado, $comentarios, $duracion);
+                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment) VALUES (?, ?, ?, ?, ?)");
+                    $stmt2->bind_param('iiiss', $reunion_id, $act_id, $order, $encargado, $comentarios);
                 }
                 $stmt2->execute();
                 $stmt2->close();
@@ -327,7 +326,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const filaComentario = tabla.insertRow();
             const celdaComentario = filaComentario.insertCell();
             celdaComentario.colSpan = 4;
-            celdaComentario.innerHTML = `<textarea name="actividades[${i}][comentarios]" id="comentarios_${i}" placeholder="Comentarios sobre la actividad..." style="text-align:left;"></textarea>`;
+            celdaComentario.innerHTML = `<textarea name="actividades[${i}][comentarios]" id="comentarios_${i}" placeholder="Comentarios sobre la actividad..."></textarea>`;
         }
         $('.select2').select2();
 
@@ -371,21 +370,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $(select).on('change', function () {
                     const selectedOption = this.options[this.selectedIndex];
                     let duracion = selectedOption ? selectedOption.getAttribute('data-duracion') : '';
-                    // Permitir editar duración solo si id=1
-                    if (this.value === "1") {
-                        duracionInput.readOnly = false;
-                        duracionInput.style.color = "#000";
-                    } else {
-                        duracionInput.readOnly = true;
-                        duracionInput.style.color = "#888";
-                    }
                     if (duracion && duracion.length >= 5) {
                         duracion = duracion.substring(0, 5); // Solo hh:mm
                     }
                     duracionInput.value = duracion;
                     calcularHorasActividades();
                 });
-                // Si ya hay una opción seleccionada, mostrar la duración al cargar y ajustar readonly
+                // Si ya hay una opción seleccionada, mostrar la duración al cargar
                 const selectedOption = select.options[select.selectedIndex];
                 if (selectedOption && selectedOption.getAttribute('data-duracion')) {
                     let duracion = selectedOption.getAttribute('data-duracion');
@@ -393,14 +384,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         duracion = duracion.substring(0, 5); // Solo hh:mm
                     }
                     duracionInput.value = duracion;
-                }
-                // Ajustar readonly al cargar
-                if (select.value === "1") {
-                    duracionInput.readOnly = false;
-                    duracionInput.style.color = "#000";
-                } else {
-                    duracionInput.readOnly = true;
-                    duracionInput.style.color = "#888";
                 }
                 // Listener para cambios manuales en duración (por si acaso)
                 duracionInput.addEventListener('input', calcularHorasActividades);
