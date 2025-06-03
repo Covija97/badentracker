@@ -495,8 +495,6 @@ FE:
 
             $horaActual->add($interval);
         }
-        $stmt->close();
-
     }
 
 }
