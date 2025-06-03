@@ -202,9 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </select>
                 </td>
                 <td colspan="2">
-                    <textarea id="responsables" name="responsables" rows="2"
-                        placeholder="Añada el nombre de un responsable por cada línea..."
-                        style="text-align: left;padding: 10px;" required></textarea>
+                    <textarea id="responsables" name="responsables" rows="2" placeholder="Añada el nombre de un responsable por cada línea..." style="text-align: left;padding: 10px;" required></textarea>
                 </td>
                 <td class="logoCell" style="color:#888;">
                     <img id="logoGrupo" src="" alt="Seleccione un grupo">
@@ -222,24 +220,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </th>
                 <th width='50%'>
                     Actividad
-                    <input hidden type="number" min="1" value="1" id="numAct" style="width: 50px; margin-left: 10px;"
-                        onchange="addAct(this.value)" />
+                    <input hidden type="number" min="1" value="1" id="numAct" style="width: 50px; margin-left: 10px;" onchange="addAct(this.value)" />
                 </th>
                 <th width='10%'>
-                    <a class="but align-left" onclick="actNumber('numAct', -1)" title="Añadir una actividad"
-                        style="width: 10px;">
+                    <a class="but align-left" onclick="actNumber('numAct', -1)" title="Añadir una actividad" style="width: 10px;">
                         <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                                id="path1" />
+                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" id="path1" />
                         </svg>
                     </a>
-                    <a class="but align-right" onclick="actNumber('numAct',1)" title="Eliminar una actividad"
-                        style="width: 10px;">
+                    <a class="but align-right" onclick="actNumber('numAct',1)" title="Eliminar una actividad" style="width: 10px;">
                         <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                                id="path1" />
-                            <path d="M 6,10 V 2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                                id="path2" />
+                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" id="path1" />
+                            <path d="M 6,10 V 2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" id="path2" />
                         </svg>
                     </a>
                 </th>
@@ -324,10 +316,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Celda 3: Duración (solo hora)
             const celdaDuracion = fila.insertCell();
-            celdaDuracion.innerHTML = `
-    <input type="text" style="color:#888;" name="actividades[${i}][duracion]" id="duracion_${i}" readonly>
-    <input type="time" style="display:none;width:90%;" name="actividades[${i}][duracion_custom]" id="duracionCustom_${i}" step="60">
-`;
+            celdaDuracion.innerHTML = `<input type="text" style="color:#888;" name="actividades[${i}][duracion]" id="duracion_${i}" readonly>`;
 
             // Celda 4: Encargado
             const celdaEncargado = fila.insertCell();
@@ -426,15 +415,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             // Sumar duración de esta actividad
             const duracionInput = document.querySelector(`[name='actividades[${i}][duracion]']`);
-            let duracion = '';
-            const select = document.querySelector(`[name='actividades[${i}][act_id]']`);
-            if (select && select.value === 'custom') {
-                const duracionCustomInput = document.getElementById(`duracionCustom_${i}`);
-                duracion = duracionCustomInput?.value || '';
-            } else {
-                const duracionInput = document.querySelector(`[name='actividades[${i}][duracion]']`);
-                duracion = duracionInput?.value || '';
-            }
+            let duracion = duracionInput?.value || '';
             if (duracion && duracion.length >= 5) {
                 let [dh, dm] = duracion.split(":").map(Number);
                 minutosAcumulados += (dh * 60 + dm);
@@ -467,22 +448,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     function toggleCustomAct(idx, select) {
         const customInput = document.getElementById(`customAct_${idx}`);
-        const duracionInput = document.getElementById(`duracion_${idx}`);
-        const duracionCustomInput = document.getElementById(`duracionCustom_${idx}`);
         if (select.value === "custom") {
             customInput.style.display = "inline-block";
             customInput.required = true;
-            duracionInput.style.display = "none";
-            duracionCustomInput.style.display = "inline-block";
-            duracionCustomInput.required = true;
-            duracionInput.required = false;
         } else {
             customInput.style.display = "none";
             customInput.required = false;
-            duracionInput.style.display = "inline-block";
-            duracionCustomInput.style.display = "none";
-            duracionCustomInput.required = false;
-            duracionInput.required = true;
         }
     }
 </script>
