@@ -555,23 +555,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $(select).on('change', function () {
                     const selectedOption = this.options[this.selectedIndex];
                     let duracion = selectedOption ? selectedOption.getAttribute('data-duracion') : '';
-                    const duracionInput = document.getElementById(`duracion_${i}`);
-                    // Si la actividad es id=1, permitir editar duración
-                    if (this.value == "1") {
+                    // Permitir editar duración solo si id=1
+                    if (this.value === "1") {
                         duracionInput.readOnly = false;
                         duracionInput.style.color = "#000";
-                        duracionInput.value = duracion; // Puedes dejar el valor por defecto, o dejarlo vacío
                     } else {
                         duracionInput.readOnly = true;
                         duracionInput.style.color = "#888";
-                        if (duracion && duracion.length >= 5) {
-                            duracion = duracion.substring(0, 5); // Solo hh:mm
-                        }
-                        duracionInput.value = duracion;
                     }
+                    if (duracion && duracion.length >= 5) {
+                        duracion = duracion.substring(0, 5); // Solo hh:mm
+                    }
+                    duracionInput.value = duracion;
                     calcularHorasActividades();
                 });
-                // Si ya hay una opción seleccionada, mostrar la duración al cargar
+                // Si ya hay una opción seleccionada, mostrar la duración al cargar y ajustar readonly
                 const selectedOption = select.options[select.selectedIndex];
                 if (selectedOption && selectedOption.getAttribute('data-duracion')) {
                     let duracion = selectedOption.getAttribute('data-duracion');
@@ -579,6 +577,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         duracion = duracion.substring(0, 5); // Solo hh:mm
                     }
                     duracionInput.value = duracion;
+                }
+                // Ajustar readonly al cargar
+                if (select.value === "1") {
+                    duracionInput.readOnly = false;
+                    duracionInput.style.color = "#000";
+                } else {
+                    duracionInput.readOnly = true;
+                    duracionInput.style.color = "#888";
                 }
                 // Listener para cambios manuales en duración (por si acaso)
                 duracionInput.addEventListener('input', calcularHorasActividades);
