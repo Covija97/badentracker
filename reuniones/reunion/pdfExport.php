@@ -386,24 +386,27 @@ FE:
         $fill = false; // 🔧 Alternancia de color
 
         foreach ($progactData as $act) {
-            // Hora formateada
             $horaFormateada = $horaActual->format('H:i');
-            $duraciónFormateada = (DateTime::createFromFormat('H:i:s', $act['act_durat']))->format('H:i');
+            // Mostrar duración como hh:mm
+            $duracion = '';
+            if (!empty($act['act_durat'])) {
+                $duracion = substr($act['act_durat'], 0, 5); // hh:mm
+            }
 
-            // Convertir duración hh:mm:ss a DateInterval y sumar
-            $interval = new DateInterval(
-                'PT' .
-                intval(substr($act['act_durat'], 0, 2)) . 'H' .
-                intval(substr($act['act_durat'], 3, 2)) . 'M' .
-                intval(substr($act['act_durat'], 6, 2)) . 'S'
-            );
-
-            // Celdas con alternancia de fondo
             $this->cell($cell_w[0], $cell_h * 2, $horaFormateada, 1, 0, 'C', $fill);
             $this->cell($cell_w[1], $cell_h * 2, utf8_decode($act['act_name']), 1, 0, 'L', $fill);
-            $this->cell($cell_w[2], $cell_h * 2, $duraciónFormateada, 1, 1, 'C', $fill);
+            $this->cell($cell_w[2], $cell_h * 2, $duracion, 1, 1, 'C', $fill);
 
-            $horaActual->add($interval);
+            // Sumar duración a la hora actual
+            if (!empty($act['act_durat'])) {
+                $interval = new DateInterval(
+                    'PT' .
+                    intval(substr($act['act_durat'], 0, 2)) . 'H' .
+                    intval(substr($act['act_durat'], 3, 2)) . 'M' .
+                    intval(substr($act['act_durat'], 6, 2)) . 'S'
+                );
+                $horaActual->add($interval);
+            }
 
             $fill = !$fill;
         }
