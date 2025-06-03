@@ -79,16 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $act_id = $act['act_id'] ?? null;
             $encargado = $act['encargado'] ?? '';
             $comentarios = $act['comentarios'] ?? '';
-            $custom_name = $act['custom_name'] ?? '';
             if ($act_id) {
-                if ($act_id === 'custom') {
-                    // Guardar actividad personalizada (puedes usar act_respon para el nombre)
-                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment) VALUES (?, NULL, ?, ?, ?)");
-                    $stmt2->bind_param('iiss', $reunion_id, $order, $custom_name, $comentarios);
-                } else {
-                    $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment) VALUES (?, ?, ?, ?, ?)");
-                    $stmt2->bind_param('iiiss', $reunion_id, $act_id, $order, $encargado, $comentarios);
-                }
+                $stmt2 = $db->prepare("INSERT INTO prog_act (prog_id, act_id, act_order, act_respon, act_comment) VALUES (?, ?, ?, ?, ?)");
+                $stmt2->bind_param('iiiss', $reunion_id, $act_id, $order, $encargado, $comentarios);
                 $stmt2->execute();
                 $stmt2->close();
                 $order++;
@@ -305,14 +298,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Celda 2: Actividad (select)
             const celdaActividad = fila.insertCell();
             celdaActividad.width = '50%';
-            let selectHTML = `<select name="actividades[${i}][act_id]" class="select2" onchange="toggleCustomAct(${i}, this)">`;
+            let selectHTML = `<select name="actividades[${i}][act_id]" class="select2">`;
             selectHTML += `<option value="" disabled${!(datosPrevios[i] && datosPrevios[i].act_id) ? ' selected' : ''}>Selecciona una actividad</option>`;
             <?php foreach ($allActs as $act): ?>
                 selectHTML += `<option value="<?= $act['act_id'] ?>" data-duracion="<?= $act['act_durat'] ?>"><?= $act['act_name'] ?></option>`;
             <?php endforeach; ?>
-            selectHTML += `<option value="custom">Personalizada...</option>`;
             selectHTML += `</select>`;
-            celdaActividad.innerHTML = selectHTML + `<input type="text" name="actividades[${i}][custom_name]" id="customAct_${i}" placeholder="Nombre de la actividad" style="display:none; width:90%;">`;
+            celdaActividad.innerHTML = selectHTML;
 
             // Celda 3: Duración (solo hora)
             const celdaDuracion = fila.insertCell();
@@ -445,17 +437,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         responsablesTextarea.addEventListener('input', actualizarEncargados);
     }
     actualizarEncargados();
-
-    function toggleCustomAct(idx, select) {
-        const customInput = document.getElementById(`customAct_${idx}`);
-        if (select.value === "custom") {
-            customInput.style.display = "inline-block";
-            customInput.required = true;
-        } else {
-            customInput.style.display = "none";
-            customInput.required = false;
-        }
-    }
 </script>
 <!-------------------- Errores a solucionar -------------------->
 <?php include "../../.res/templates/footer.php"; ?>
