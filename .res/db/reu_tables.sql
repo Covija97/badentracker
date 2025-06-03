@@ -1,5 +1,6 @@
 -- Active: 1745596725282@@127.0.0.1@3306@badentracker
 /* ----------------------------- Tablas CRUD Reunión ----------------------------- */
+USE badentracker;
 
 DROP TABLE IF EXISTS prog_act;
 
@@ -8,14 +9,6 @@ DROP TABLE IF EXISTS prog;
 DROP TABLE IF EXISTS grps;
 
 DROP TABLE IF EXISTS rama;
-
-INSERT INTO rama (rama_name) VALUES 
-('Grupo'),
-('Castores'),
-('Lobatos'),
-('Rangers'),
-('Pioneros'),
-('Rutas');
 
 CREATE TABLE IF NOT EXISTS rama (
     rama_id int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
@@ -53,3 +46,11 @@ CREATE TABLE IF NOT EXISTS prog_act (
     FOREIGN KEY (prog_id) REFERENCES prog (prog_id) ON DELETE CASCADE,
     FOREIGN KEY (act_id) REFERENCES act (act_id) ON DELETE CASCADE
 );
+
+INSERT INTO rama (rama_name) VALUES 
+('Grupo'),
+('Castores'),
+('Lobatos'),
+('Rangers'),
+('Pioneros'),
+('Rutas');

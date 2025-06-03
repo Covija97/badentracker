@@ -1,10 +1,15 @@
 -- Active: 1745596725282@@127.0.0.1@3306@badentracker
 /* ----------------------------- Tablas CRUD Actividades ----------------------------- */
 
+DROP DATABASE IF EXISTS badentracker;
+CREATE DATABASE IF NOT EXISTS badentracker;
+
 /* Crear usuario y asignar permisos */
 CREATE USER 'bt'@'badentracker' IDENTIFIED by 'BadenTracker2025*';
 GRANT ALL PRIVILEGES ON badentracker.* TO 'bt'@'badentracker';
 FLUSH PRIVILEGES;
+
+USE badentracker;
 
 /* Eliminar tablas */
 DROP TABLE IF EXISTS act_mat;
