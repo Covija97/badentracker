@@ -80,7 +80,7 @@ function getRamaColor($ramaId): array
         case '6':
             return [217, 234, 211]; // Rutas
         default:
-            return [255, 255, 255]; // Default color
+            return [239, 239, 239]; // Default color
     }
 }
 
