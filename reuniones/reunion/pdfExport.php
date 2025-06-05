@@ -377,7 +377,7 @@ FE:
         // Encabezado
         $this->cell($cell_w[0], $cell_h, utf8_decode('Hora'), 1, 0, 'C', true);
         $this->cell($cell_w[1], $cell_h, utf8_decode('Actividad'), 1, 0, 'C', true);
-        $this->cell($cell_w[2], $cell_h, utf8_decode('Duración'), 1, 1, 'C', true);
+        $this->cell($cell_w[2], $cell_h, utf8_decode('Encargado'), 1, 1, 'C', true);
 
         // Contenido
         $horaActual = DateTime::createFromFormat('H:i:s', $progData['prog_time']); // ej. '09:00:00'
@@ -387,7 +387,6 @@ FE:
         foreach ($progactData as $act) {
             // Hora formateada
             $horaFormateada = $horaActual->format('H:i');
-            $duraciónFormateada = (DateTime::createFromFormat('H:i:s', $act['act_durat']))->format('H:i');
 
             // Convertir duración hh:mm:ss a DateInterval y sumar
             $interval = new DateInterval(
@@ -400,7 +399,7 @@ FE:
             // Celdas con alternancia de fondo
             $this->cell($cell_w[0], $cell_h * 1.5, $horaFormateada, 1, 0, 'C', $fill);
             $this->cell($cell_w[1], $cell_h * 1.5, utf8_decode($act['act_name']), 1, 0, 'L', $fill);
-            $this->cell($cell_w[2], $cell_h * 1.5, $duraciónFormateada, 1, 1, 'C', $fill);
+            $this->cell($cell_w[2], $cell_h * 1.5, utf8_decode($act['act_respon']), 1, 1, 'C', $fill);
 
             $horaActual->add($interval);
 
