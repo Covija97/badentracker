@@ -72,7 +72,7 @@ if ($grpres) {
     <br><br>
     <div id="calendar"></div>
     <!-- El select se mueve fuera del flujo normal y se posiciona sobre el header del calendario -->
-    <div id="grupoFiltroContainer" style="position: absolute; z-index: 10; right: 30px; top: 110px;">
+    <div id="grupoFiltroContainer">
         <label for="grupoFiltro" style="margin-right:10px;">Grupo:</label>
         <select id="grupoFiltro" class="select2 but" style="width: 200px;">
             <option value="">Todos</option>
