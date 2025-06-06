@@ -30,8 +30,7 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow-y: auto;
-    max-height: 100vh;
+    overflow-x: hidden;
 }
 
 /* Estilo del menú de navegación */
@@ -91,7 +90,7 @@ header a.act {
 
 /* Estilo de la página principal */
 main {
-    margin: 75px auto;
+    margin: 20px auto;
     width: 70%;
     padding: 20px;
     background-color: var(--color001);
@@ -101,6 +100,9 @@ main {
     line-height: 1.5;
     text-align: center;
     box-shadow: 0 10px 10px var(--trans);
+    margin-top: 75px;
+    margin-bottom: 75px;
+    min-height: 75%;
 }
 
 main img {
