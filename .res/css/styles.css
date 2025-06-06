@@ -31,7 +31,6 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    overflow-y: hidden;
 }
 
 /* Estilo del menú de navegación */
@@ -91,7 +90,7 @@ header a.act {
 
 /* Estilo de la página principal */
 main {
-    margin: 20px auto;
+    margin: 30px auto 30px auto; /* menos margen */
     width: 70%;
     padding: 20px;
     background-color: var(--color001);
@@ -101,9 +100,7 @@ main {
     line-height: 1.5;
     text-align: center;
     box-shadow: 0 10px 10px var(--trans);
-    margin-top: 75px;
-    margin-bottom: 75px;
-    min-height: 75%;
+    min-height: unset; /* o usa min-height: calc(100vh - 120px); si quieres ocupar toda la pantalla menos los márgenes */
 }
 
 main img {
