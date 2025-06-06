@@ -653,6 +653,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         window.open(url, '_blank');
         closePdfOptions();
     }
+    function openPdfOptions() {
+    document.getElementById('pdfModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Evita scroll cuando el modal está abierto
+}
+
+function closePdfOptions() {
+    document.getElementById('pdfModal').style.display = 'none';
+    document.body.style.overflow = ''; // Restaura el scroll
+}
 
 </script>
 <?php include "../../.res/templates/footer.php"; ?>
