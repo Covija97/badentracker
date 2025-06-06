@@ -432,7 +432,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // En addAct, reemplaza el input de encargado por un select que se llenará dinámicamente
     // Función que actualiza los selectores de encargado según el contenido del textarea de responsables
     function actualizarEncargados() {
         // Obtiene los responsables del textarea, uno por línea, ignorando líneas vacías y espacios

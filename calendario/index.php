@@ -1,6 +1,4 @@
 <?php
-// filepath: c:\xampp\htdocs\badentracker\calendario\calendar.php
-
 session_start();
 $title = "Calendario";
 $page = "cald";
