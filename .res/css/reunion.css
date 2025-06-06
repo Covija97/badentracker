@@ -74,3 +74,13 @@ input {
     object-fit: contain;
     /* Esto evitará que la imagen se deforme */
 }
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table-responsive table {
+    width: 100%;
+    min-width: 600px; /* o el mínimo que necesites */
+}
