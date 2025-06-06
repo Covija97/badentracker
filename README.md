@@ -118,11 +118,12 @@ badentracker/
 
 ## 📌 Próximas mejoras
 
-- Soporte multiusuario por unidades o ramas.
+- Soporte y login por multiusuario por unidades o ramas.
 - Seguimiento de progreso personal de cada educando.
 - Exportación a Google Calendar.
 - Búsqueda avanzada con múltiples filtros.
 - Interfaz responsive para móviles.
+- Actividades con duración variable.
 
 ## 🧑‍💻 Contribución
 

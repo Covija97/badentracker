@@ -38,7 +38,7 @@ gantt
     Configurar relaciones       :done, 01-10, 1d
 ```
 
-## 🎯 CRUD de Actividades (4h)<a href="3.act.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
+## 🎯 Modelo de Actividades (4h)<a href="3.act.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
 - Modelos actualizados para `Actividad`, `Objetivos`, `Categorias` y `Materiales`  
 - Formularios implementados y testeados  
 - Listado y filtrado operativos
@@ -54,7 +54,7 @@ gantt
     Listado y filtros           :done, 01-14, 1d
 ```
 
-## 📅 CRUD de Reuniones (4h)<a href="4.reu.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
+## 📅 Modelo de Reuniones (4h)<a href="4.reu.md"><img src="https://raw.githubusercontent.com/jcorvid509/.resGen/dbf0397a38c3e0828d9bd164f719d77f3d977cda/_arrow.svg" height="30" align="right"></a>
 - Modelo `Programacion` y `ActividadProgramada` implementado  
 - Formularios y listados en funcionamiento
 
