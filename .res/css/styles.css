@@ -90,7 +90,7 @@ header a.act {
 
 /* Estilo de la página principal */
 main {
-    margin: 30px auto 30px auto; /* menos margen */
+    margin: 75px auto;
     width: 70%;
     padding: 20px;
     background-color: var(--color001);
@@ -100,7 +100,7 @@ main {
     line-height: 1.5;
     text-align: center;
     box-shadow: 0 10px 10px var(--trans);
-    min-height: unset; /* o usa min-height: calc(100vh - 120px); si quieres ocupar toda la pantalla menos los márgenes */
+    min-height: calc(100vh - 150px); /* 75px arriba + 75px abajo */
 }
 
 main img {
