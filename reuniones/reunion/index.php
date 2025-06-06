@@ -316,42 +316,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tr>
         </table>
         <!-- Tabla de actividades -->
-        <table id="actTable">
-            <tr class='branchCell'>
-                <th width='5%'>
-                    Nº
-                </th>
-                <th width='10%'>
-                    Hora
-                </th>
-                <th width='50%'>
-                    Actividad
-                    <input hidden type="number" min="1" value="1" id="numAct" style="width: 50px; margin-left: 10px;"
-                        onchange="addAct(this.value)" />
-                </th>
-                <th width='10%'>
-                    <a class="but align-left" onclick="actNumber('numAct', -1)" title="Añadir una actividad"
-                        style="width: 10px;">
-                        <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                                id="path1" />
-                        </svg>
-                    </a>
-                    <a class="but align-right" onclick="actNumber('numAct',1)" title="Eliminar una actividad"
-                        style="width: 10px;">
-                        <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                                id="path1" />
-                            <path d="M 6,10 V 2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                                id="path2" />
-                        </svg>
-                    </a>
-                </th>
-                <th width='25%'>
-                    Encargado
-                </th>
-            </tr>
-        </table>
+        <div class="table-responsive">
+            <table id="actTable">
+                <tr class='branchCell'>
+                    <th width='5%'>
+                        Nº
+                    </th>
+                    <th width='10%'>
+                        Hora
+                    </th>
+                    <th width='50%'>
+                        Actividad
+                        <input hidden type="number" min="1" value="1" id="numAct" style="width: 50px; margin-left: 10px;"
+                            onchange="addAct(this.value)" />
+                    </th>
+                    <th width='10%'>
+                        <a class="but align-left" onclick="actNumber('numAct', -1)" title="Añadir una actividad"
+                            style="width: 10px;">
+                            <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                    id="path1" />
+                            </svg>
+                        </a>
+                        <a class="but align-right" onclick="actNumber('numAct',1)" title="Eliminar una actividad"
+                            style="width: 10px;">
+                            <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                    id="path1" />
+                                <path d="M 6,10 V 2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                    id="path2" />
+                            </svg>
+                        </a>
+                    </th>
+                    <th width='25%'>
+                        Encargado
+                    </th>
+                </tr>
+            </table>
+        </div>
     </form>
     <script>
         <?php if ($editMode): ?>
