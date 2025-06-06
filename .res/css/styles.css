@@ -115,13 +115,7 @@ main img {
 }
 
 /* Estilo del footer */
-footer {
-    background-color: var(--color001);
-    color: var(--color002);
-    text-align: center;
-    padding: 10px 0;
-    font-weight: bold;
-}
+
 
 /* Estilo encabezado contenido */
 .mainhead {
