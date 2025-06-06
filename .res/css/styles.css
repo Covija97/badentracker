@@ -89,19 +89,7 @@ header a.act {
 }
 
 /* Estilo de la página principal */
-main {
-    margin: 75px auto;
-    width: 70%;
-    padding: 20px;
-    background-color: var(--color001);
-    border-radius: 15px;
-    color: var(--color002);
-    font-size: 20px;
-    line-height: 1.5;
-    text-align: center;
-    box-shadow: 0 10px 10px var(--trans);
-    min-height: calc(100vh - 150px); /* 75px arriba + 75px abajo */
-}
+
 
 main img {
     display: flex;
