@@ -202,7 +202,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </select>
                 </td>
                 <td colspan="2">
-                    <textarea id="responsables" name="responsables" rows="2" placeholder="Añada el nombre de un responsable por cada línea..." style="text-align: left;padding: 10px;" required></textarea>
+                    <textarea id="responsables" name="responsables" rows="2"
+                        placeholder="Añada el nombre de un responsable por cada línea..."
+                        style="text-align: left;padding: 10px;" required></textarea>
                 </td>
                 <td class="logoCell" style="color:#888;">
                     <img id="logoGrupo" src="" alt="Seleccione un grupo">
@@ -220,18 +222,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </th>
                 <th width='50%'>
                     Actividad
-                    <input hidden type="number" min="1" value="1" id="numAct" style="width: 50px; margin-left: 10px;" onchange="addAct(this.value)" />
+                    <input hidden type="number" min="1" value="1" id="numAct" style="width: 50px; margin-left: 10px;"
+                        onchange="addAct(this.value)" />
                 </th>
                 <th width='10%'>
-                    <a class="but align-left" onclick="actNumber('numAct', -1)" title="Añadir una actividad" style="width: 10px;">
+                    <a class="but align-left" onclick="actNumber('numAct', -1)" title="Añadir una actividad"
+                        style="width: 10px;">
                         <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" id="path1" />
+                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                id="path1" />
                         </svg>
                     </a>
-                    <a class="but align-right" onclick="actNumber('numAct',1)" title="Eliminar una actividad" style="width: 10px;">
+                    <a class="but align-right" onclick="actNumber('numAct',1)" title="Eliminar una actividad"
+                        style="width: 10px;">
                         <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" id="path1" />
-                            <path d="M 6,10 V 2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" id="path2" />
+                            <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                id="path1" />
+                            <path d="M 6,10 V 2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                id="path2" />
                         </svg>
                     </a>
                 </th>
@@ -425,14 +433,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // En addAct, reemplaza el input de encargado por un select que se llenará dinámicamente
+    // Función que actualiza los selectores de encargado según el contenido del textarea de responsables
     function actualizarEncargados() {
-        // Obtener responsables del textarea (uno por línea, sin vacíos)
-        const responsables = (document.getElementById('responsables')?.value || '').split('\n').map(r => r.trim()).filter(r => r);
-        // Actualizar cada select de encargado
+        // Obtiene los responsables del textarea, uno por línea, ignorando líneas vacías y espacios
+        const responsables = (document.getElementById('responsables')?.value || '')
+            .split('\n')
+            .map(r => r.trim())
+            .filter(r => r.length > 0);
+
+        // Actualiza cada <select> de encargado en la página
         document.querySelectorAll('.select-encargado').forEach(select => {
-            const valorPrevio = select.value;
-            select.innerHTML = '<option value="">Selecciona responsable</option>' + responsables.map(r => `<option value="${r}">${r}</option>`).join('');
-            // Restaurar valor si sigue siendo válido
+            const valorPrevio = select.value; // Guarda el valor seleccionado previamente
+
+            // Construye las opciones: opción por defecto + una opción por responsable
+            select.innerHTML = '<option value="">Selecciona responsable</option>' +
+                responsables.map(r => `<option value="${r}">${r}</option>`).join('');
+
+            // Si el valor anterior todavía es válido, lo restaura; si no, deja la opción vacía
             if (responsables.includes(valorPrevio)) {
                 select.value = valorPrevio;
             } else {
@@ -440,11 +457,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         });
     }
-    // Listener para cambios en textarea de responsables
+
+    // Añade un listener para actualizar la lista de encargados cuando cambie el textarea
     const responsablesTextarea = document.getElementById('responsables');
     if (responsablesTextarea) {
         responsablesTextarea.addEventListener('input', actualizarEncargados);
     }
+
+    // Llama a la función una vez al cargar la página para inicializar los selects
     actualizarEncargados();
 
     function toggleCustomAct(idx, select) {
