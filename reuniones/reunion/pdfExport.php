@@ -125,7 +125,7 @@ class PDF extends FPDF
         // Arial italic 8
         $this->SetFont('Arial', '', 10);
         // Hecho con el logo de la web
-        $this->Cell(0, 10, utf8_decode('Hecho con BadenTracker'), 0, 0, 'L');
+        $this->Image('../../.res/fpdf/img/logo-pdf.png', null, null, 10);
         // Número de página
         $this->Cell(0, 10, utf8_decode('Página ' . $this->PageNo() . '/{nb}'), 0, 0, 'R');
     }
