@@ -124,9 +124,11 @@ class PDF extends FPDF
         $this->SetY(-15);
         // Arial italic 8
         $this->SetFont('Arial', '', 10);
-        // Hecho con el logo de la web
-        $this->Image('../../.res/fpdf/img/logo-pdf.png', null, null, 50);
-        // Número de página
+        // Hecho con BadenTracker (https://www.badentracker.com)
+        $this->Write(10, utf8_decode('Hecho con '));
+        $this->SetTextColor(0, 0, 255); // Azul para el enlace
+        $this->Write(10, 'BadenTracker', 'https://badentracker.es/');
+        // // Número de página
         $this->Cell(0, 10, utf8_decode('Página ' . $this->PageNo() . '/{nb}'), 0, 0, 'R');
     }
 
@@ -425,7 +427,7 @@ FE:
             $this->cell($cell_w[0], $cell_h, utf8_decode('Nombre'), 1, 0, 'C', true);
             $this->cell($cell_w[1], $cell_h, utf8_decode($act['act_name']), 1, 1, 'L', false);
 
-            $this->cell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode('Desarrollo'), 1, 1,'C', true);
+            $this->cell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode('Desarrollo'), 1, 1, 'C', true);
             $this->MultiCell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode($act['act_desc']), 1, 'L', false);
 
             $this->Ln(5);
