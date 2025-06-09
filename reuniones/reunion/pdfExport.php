@@ -125,7 +125,6 @@ class PDF extends FPDF
         // Arial italic 8
         $this->SetFont('Arial', '', 10);
         // Hecho con el logo de la web
-        $this->Image('../../.res/fpdf/img/logo-pdf.png', 10, -15, 20);
         $webLink = 'BadenTracker';
         $this->Link($webLink, 'https://www.badentracker.click');
         $this->Cell(0, 10, utf8_decode('Hecho con ' . $webLink), 0, 0, 'L');
