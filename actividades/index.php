@@ -55,15 +55,15 @@ $query = linkDB() -> query($sql);
     
     <table class="table-main">
         <tr>
-            <th data-sortable="true" width="">Actividad</th>
-            <th data-sortable="true">Duración</th>
-            <th data-sortable="true">
+            <th data-sortable="true" width="20%">Actividad</th>
+            <th data-sortable="true" width="20%">Duración</th>
+            <th data-sortable="true" width="20%">
                 <a class="but2 align-left" href="objetivos" title="Ir a objetivos"> Objetivos </a>
             </th>
-            <th data-sortable="true">
+            <th data-sortable="true" width="20%">
                 <a class="but2 align-left" href="categorias" title="Ir a categorias"> Categorias </a>
             </th>
-            <th data-sortable="true">
+            <th data-sortable="true" width="20%">
                 <a class="but2 align-left" href="materiales" title="Ir a materiales"> Materiales </a>
             </th>
         </tr>
