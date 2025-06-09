@@ -56,9 +56,6 @@ $query = linkDB() -> query($sql);
     <table class="table-main">
         <tr>
             <th data-sortable="true">Actividad</th>
-            <th data-sortable="true">
-                Descripción
-            </th>
             <th data-sortable="true">Duración</th>
             <th data-sortable="true">
                 <a class="but2 align-left" href="objetivos" title="Ir a objetivos"> Objetivos </a>
@@ -80,7 +77,7 @@ $query = linkDB() -> query($sql);
                             $row["act_name"] ."
                         </a>
                     </td>";
-                echo "<td>" . $row["act_desc"] . "</td>";                echo "<td>" . $row["act_durat"] . "</td>";
+                echo "<td>" . $row["act_durat"] . "</td>";
                 echo "<td>" . $row["act_objs"] . "</td>";
                 echo "<td>" . $row["act_cats"] . "</td>";
                 echo "<td>" . $row["act_mats"] . "</td>";
