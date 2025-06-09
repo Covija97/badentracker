@@ -124,6 +124,8 @@ class PDF extends FPDF
         $this->SetY(-15);
         // Arial italic 8
         $this->SetFont('Arial', '', 10);
+        // Hecho con el logo de la web
+        $this->Cell(0, 10, utf8_decode('Hecho con ' . utf8_decode('Badentracker') . ' - http://badentracker.click'), 0, 0, 'L');
         // Número de página
         $this->Cell(0, 10, utf8_decode('Página ' . $this->PageNo() . '/{nb}'), 0, 0, 'R');
     }
