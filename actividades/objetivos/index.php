@@ -12,6 +12,7 @@ SELECT
     obj.obj_name,
     obj.obj_desc
 FROM obj
+ORDER BY obj.obj_name
 ";
 
 $query = linkDB() -> query($sql);

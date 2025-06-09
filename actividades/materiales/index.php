@@ -12,6 +12,7 @@ SELECT
     mat.mat_name,
     mat.mat_desc
 FROM mat
+ORDER BY mat.mat_name
 ";
 
 $query = linkDB() -> query($sql);

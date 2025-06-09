@@ -12,6 +12,7 @@ SELECT
     cat.cat_name,
     cat.cat_desc
 FROM cat
+ORDER BY cat.cat_name
 ";
 
 $query = linkDB() -> query($sql);
