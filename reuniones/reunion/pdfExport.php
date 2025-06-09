@@ -431,7 +431,7 @@ FE:
 
             $this->cell($cell_w[0] + $cell_w[1], $cell_h, utf8_decode('Desarrollo'), 1, 1, 'C', true);
             $this->MultiCell(
-                $cell_w[0] + $cell_w[1] + $cell_w[2] + $cell_w[3],
+                $cell_w[0] + $cell_w[1],
                 $cell_h,
                 utf8_decode($act['act_desc'] . "\n" .
                     $act['act_comment']),
