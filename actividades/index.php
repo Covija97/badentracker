@@ -25,7 +25,8 @@ LEFT JOIN cat ON act_cat.cat_id = cat.cat_id
 LEFT JOIN act_mat ON act.act_id = act_mat.act_id
 LEFT JOIN mat ON act_mat.mat_id = mat.mat_id
 
-GROUP BY act.act_id, act.act_name, act.act_desc, act.act_durat;
+GROUP BY act.act_id, act.act_name, act.act_desc, act.act_durat
+ORDER BY act.act_name;
 ";
 
 $query = linkDB() -> query($sql);
