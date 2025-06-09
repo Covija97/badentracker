@@ -127,11 +127,9 @@ class PDF extends FPDF
         $this->Write(10, utf8_decode('Hecho con '));
         // Cambiar a negrita y azul para el enlace
         $this->SetFont('Arial', 'B', 10);
-        $this->SetTextColor(0, 0, 255);
-        $this->Write(10, 'BadenTracker', 'https://badentracker.es/');
+        $this->Write(10, 'BadenTracker', 'https://www.badentracker.click/');
         // Restaurar fuente y color
         $this->SetFont('Arial', '', 10);
-        $this->SetTextColor(0, 0, 0);
         // Número de página
         $this->Cell(0, 10, utf8_decode('Página ' . $this->PageNo() . '/{nb}'), 0, 0, 'R');
     }
