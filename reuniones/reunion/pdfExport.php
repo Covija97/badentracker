@@ -35,6 +35,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     SELECT *
     FROM prog_act
     JOIN act ON prog_act.act_id = act.act_id
+    JOIN act_cat ON act.act_id = act_cat.act_id
+    JOIN cat ON act_cat.cat_id = cat.cat_id
     WHERE prog_act.prog_id = ?
     ORDER BY prog_act.act_order ASC;");
     $stmt2->bind_param('i', $edit_id);
@@ -44,7 +46,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $progactData[] = $row;
     }
     $stmt2->close();
-
     // Obtenemos todos los materiales de todas las actividades agrupados
     $stmt3 = $db->prepare("
     SELECT DISTINCT m.mat_name
