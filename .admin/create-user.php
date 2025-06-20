@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php if ($mensaje): ?>
             <p class="mensaje"><?php echo $mensaje; ?></p>
         <?php endif; ?>
-        <form action="crear_usuario.php" method="post">
+        <form action="create-user.php" method="post">
             <input type="text" name="username" placeholder="Nuevo usuario" required>
             <input type="password" name="password" placeholder="Contraseña" required>
             <button type="submit">Crear usuario</button>
