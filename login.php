@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $hash)) {
             $_SESSION['user_id'] = $id;
             $_SESSION['username'] = $username;
-            header("Location: dashboard.php");
+            header("Location: /");
             exit;
         } else {
             $error = "Contraseña incorrecta.";
