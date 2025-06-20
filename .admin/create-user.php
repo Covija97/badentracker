@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="password" name="password" placeholder="Contraseña" required>
             <button type="submit">Crear usuario</button>
         </form>
-        <a href="/..">Volver al panel</a>
+        <a href="/.">Back to admin panel</a>
     </div>
 </body>
 

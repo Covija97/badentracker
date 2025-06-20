@@ -49,7 +49,7 @@ $result = $conn->query("SELECT id, username FROM users ORDER BY username ASC");
             </tr>
             <?php endwhile; ?>
         </table>
-        <a href="index.php">Back to admin panel</a>
+        <a href="/.">Back to admin panel</a>
     </div>
 </body>
 </html>
