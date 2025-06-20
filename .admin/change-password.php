@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="password" name="password" placeholder="New password" required>
             <button type="submit">Change password</button>
         </form>
-        <a href="/.">Back to admin panel</a>
+        <a href="./">Back to admin panel</a>
     </div>
 </body>
 </html>
