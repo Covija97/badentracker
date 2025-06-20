@@ -367,3 +367,74 @@ input {
     color: var(--color005);
     border: 2px solid var(--color005);
 }
+
+/* --- Responsive: General --- */
+@media (max-width: 900px) {
+    body, main {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+    }
+    header, footer {
+        font-size: 16px;
+        padding: 10px 0;
+    }
+    .mainhead {
+        font-size: 1.5em;
+        padding: 10px 0;
+    }
+    table, th, td {
+        font-size: 15px;
+        padding: 6px;
+    }
+    .btn-submit, .but, .but2 {
+        font-size: 15px;
+        padding: 8px 12px;
+    }
+    .form-row, .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    input, select, textarea {
+        width: 100% !important;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    body, main {
+        width: 100%;
+        padding: 5px;
+        font-size: 14px;
+    }
+    header, footer {
+        font-size: 14px;
+        padding: 5px 0;
+    }
+    .mainhead {
+        font-size: 1.1em;
+        padding: 5px 0;
+    }
+    table, th, td {
+        font-size: 13px;
+        padding: 3px;
+    }
+    .btn-submit, .but, .but2 {
+        font-size: 13px;
+        padding: 6px 8px;
+    }
+    .form-row, .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    input, select, textarea {
+        width: 100% !important;
+        font-size: 13px;
+    }
+}
+
+.table-main, .table-responsive table {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+}
