@@ -166,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     Categorias
                 </a>
             </label>
-            <select name="cat[]" id="cat" multiple required>
+            <select name="cat[]" id="cat" class="select2" required>
                 <?php
                 foreach ($allCats as $cat) {
                     $selected = "";
