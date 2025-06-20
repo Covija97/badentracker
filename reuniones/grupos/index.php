@@ -64,12 +64,14 @@ $query = linkDB()->query($sql);
         stroke-linejoin="round" />
     </svg>
   </a>
-  <a class="but align-left" href="new" title="Nuevo Grupo">
-    <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-      <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-      <path d="M 6,10 V 2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
-  </a>
+  <?php if (!empty($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+    <a class="but align-left" href="new" title="Nuevo Grupo">
+      <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+        <path d="m 2,6 h 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 6,10 V 2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </a>
+  <?php endif; ?>
   <input type="text" id="searchInput" placeholder="Buscar grupo..." class="search-input">
   <br><br>
   <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: flex-start;">
