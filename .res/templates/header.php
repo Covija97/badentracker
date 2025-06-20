@@ -32,12 +32,13 @@ if (!isset($_SESSION['user_id'])) {
                 <?php echo $title; ?>
             <?php endif; ?>
         </h1>
-        <?php if (isset($_SESSION['username']) && $_SESSION['username'] === 'admin'): ?>
-            <a href="/.admin" title="Panel de administración">
-                Admin
-            </a>
-        <?php endif; ?>
+
         <div class="hright">
+            <?php if (isset($_SESSION['username']) && $_SESSION['username'] === 'admin'): ?>
+                <a href="/.admin" title="Panel de administración">
+                    Admin
+                </a>
+            <?php endif; ?>
             <a href="/actividades/" title="Ir a actividades" <?php
             if ($page == "act")
                 echo 'class = "act"';
