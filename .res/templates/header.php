@@ -32,7 +32,7 @@ if (!isset($_SESSION['user_id'])) {
                 <?php echo $title; ?>
             <?php endif; ?>
         </h1>
-        <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+        <?php if (!isset($_SESSION['username']) || $_SESSION['username'] !== 'admin'): ?>
             <a href="/.admin" title="Panel de administración" class="but">
                 Admin
             </a>
