@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-// Solo permite acceso al usuario admin
+/* // Solo permite acceso al usuario admin
 if (!isset($_SESSION['username']) || $_SESSION['username'] !== 'admin') {
     header("Location: /login.php");
     exit;
-}
+} */
 
 // Configuración de la base de datos
 $host = "localhost";
@@ -54,17 +54,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Crear usuario - BadenTracker</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f4f4f4; }
-        .login-box { background: #fff; padding: 30px; margin: 100px auto; width: 350px; border-radius: 8px; box-shadow: 0 0 10px #ccc; }
-        input { width: 100%; padding: 10px; margin: 10px 0; }
-        button { width: 100%; padding: 10px; background: #28a745; color: #fff; border: none; border-radius: 4px; }
-        .mensaje { color: #d9534f; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        .login-box {
+            background: #fff;
+            padding: 30px;
+            margin: 100px auto;
+            width: 350px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .mensaje {
+            color: #d9534f;
+        }
     </style>
 </head>
+
 <body>
     <div class="login-box">
         <h2>Crear nuevo usuario</h2>
@@ -79,4 +108,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="dashboard.php">Volver al panel</a>
     </div>
 </body>
+
 </html>
