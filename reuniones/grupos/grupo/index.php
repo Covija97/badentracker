@@ -121,6 +121,17 @@ if ($is_admin && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['grp_id']
         </div>
     </form>
     <?php else: ?>
+        <div class="form-row">
+            <label for="grp_address">Dirección:</label>
+            <input type="text" id="grp_address" name="grp_address"
+                value="<?php echo htmlspecialchars($grp["grp_address"] ?? ''); ?>"
+                style="width:100%;margin-bottom:0.5rem;">
+        </div>
+        <div class="form-row textarea-row">
+            <label for="grp_info">Información adicional:</label>
+            <textarea class="but2" id="grp_info" name="grp_info"
+                rows="4"><?php echo htmlspecialchars($grp["grp_info"] ?? ""); ?></textarea>
+        </div>
         <div style="color:#d9534f; text-align:center; margin-top:2rem;">
             Only the admin can edit or delete this group.
         </div>
