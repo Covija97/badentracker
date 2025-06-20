@@ -7,6 +7,9 @@ $title = "Grupo Scout";
 require_once "../../../.res/funct/funct.php";
 include_once "../../../.res/templates/header.php";
 
+session_start();
+$is_admin = (isset($_SESSION['username']) && $_SESSION['username'] === 'admin');
+
 // Usar una sola conexión para todo el script
 $db = linkDB();
 
@@ -18,7 +21,7 @@ $grp = $query->fetch_assoc();
 
 <!-- POST -->
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['grp_id'])) {
+if ($is_admin && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['grp_id'])) {
     $grp_id = intval($_POST['grp_id']);
     $grp_name = trim($_POST['grp_name']);
     $grp_address = trim($_POST['grp_address']);
@@ -57,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['grp_id'])) {
                 stroke-linejoin="round" />
         </svg>
     </a>
+    <?php if ($is_admin): ?>
     <a class="but align-left" href="delete.php?id=<?php echo $grp["grp_id"]; ?> " title="Borrar grupo"
         onclick="return confirm('¿Estás seguro de que deseas borrar este grupo?');">
         <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -72,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['grp_id'])) {
             <path d="M9.5 12.5H14.5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
     </a>
+    <?php endif; ?>
 
     <table style="text-align: center; padding: 0 10% 0 10%;">
         <tr>
@@ -88,6 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['grp_id'])) {
 
     </table>
 
+    <?php if ($is_admin): ?>
     <form method="POST" class="form-grid" enctype="multipart/form-data">
         <div class="form-row">
             <label for="grp_name">Nombre del Grupo:</label>
@@ -114,6 +120,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['grp_id'])) {
             <button type="submit" class="btn-submit">Guardar Cambios</button>
         </div>
     </form>
+    <?php else: ?>
+        <div style="color:#d9534f; text-align:center; margin-top:2rem;">
+            Only the admin can edit or delete this group.
+        </div>
+    <?php endif; ?>
 </main>
 <?php
 include_once "../../../.res/templates/footer.php";
