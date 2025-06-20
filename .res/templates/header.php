@@ -89,4 +89,9 @@ if (!isset($_SESSION['user_id'])) {
                 </a>
             <?php endif; ?>
         </div>
+        <?php if (!empty($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+            <a href="/.admin" title="Panel de administración" class="but align-right" style="margin-left:1rem;">
+                Admin
+            </a>
+        <?php endif; ?>
     </header>
