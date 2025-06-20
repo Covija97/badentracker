@@ -62,9 +62,9 @@ if (!isset($_SESSION['username']) || $_SESSION['username'] !== 'admin') {
         <h2>Panel de Administración</h2>
         <ul>
             <li><a href="create-user.php">Crear nuevo usuario</a></li>
-            <li><a href="listar-usuarios.php">Listar usuarios</a></li>
-            <li><a href="cambiar-password.php">Cambiar contraseña de usuario</a></li>
-            <li><a href="/dashboard.php">Ir al dashboard</a></li>
+            <li><a href="list-users.php">Listar usuarios</a></li>
+            <li><a href="change-password.php">Cambiar contraseña de usuario</a></li>
+            <li><a href="/">Ir al dashboard</a></li>
             <li><a class="logout" href="/logout.php">Cerrar sesión</a></li>
         </ul>
     </div>
