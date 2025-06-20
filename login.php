@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php if ($error): ?>
             <p class="error"><?php echo $error; ?></p>
         <?php endif; ?>
-        <form action="login.php" method="post">
+        <form action="/login.php" method="post">
             <input type="text" name="username" placeholder="Usuario" required>
             <input type="password" name="password" placeholder="Contraseña" required>
             <button type="submit">Entrar</button>
