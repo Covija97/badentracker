@@ -3,7 +3,7 @@ session_start();
 
 // Solo permite acceso al usuario admin
 if (!isset($_SESSION['username']) || $_SESSION['username'] !== 'admin') {
-    header("Location: login.php");
+    header("Location: /login.php");
     exit;
 }
 
