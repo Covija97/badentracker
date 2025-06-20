@@ -1,6 +1,12 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
-    
 <head>
     <meta charset="UTF-8">
     <title>
@@ -12,7 +18,6 @@
     <link rel="stylesheet" href="/.res/css/styles.css?v=2">
     <link rel="icon" href="/.res/icon/bt-icon.svg">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    
 </head>
 
 <body>
@@ -56,11 +61,3 @@
             <?php endif; ?>
         </div>
     </header>
-
-<?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: /login.php");
-    exit;
-}
-?>
