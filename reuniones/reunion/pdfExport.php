@@ -34,7 +34,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $stmt2 = $db->prepare("
 SELECT 
     act.*,
-    GROUP_CONCAT(DISTINCT cat.cat_name ORDER BY cat.cat_name SEPARATOR ', ') AS categorias
+    prog_act.*,
+    GROUP_CONCAT(DISTINCT cat.cat_name ORDER BY cat.cat_name SEPARATOR ', ') AS categorias,
+    GROUP_CONCAT(DISTINCT act_cat.objetivo ORDER BY act_cat.objetivo SEPARATOR ', ') AS objetivos
 FROM prog_act
 JOIN act ON prog_act.act_id = act.act_id
 LEFT JOIN act_cat ON act.act_id = act_cat.act_id
