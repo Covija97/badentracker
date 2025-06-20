@@ -57,7 +57,7 @@ if (!isset($_SESSION['user_id'])) {
             ?>
             >Calendario</a>
             <?php if (isset($_SESSION['user_id'])): ?>
-                <a href="/logout.php" title="Cerrar sesión" style="color:#d9534f;font-weight:bold;margin-left:20px;height:40px;">
+                <a href="/logout.php" title="Cerrar sesión" class="but align-right">
                     <svg
    width="400"
    height="400"
