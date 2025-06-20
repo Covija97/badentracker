@@ -88,9 +88,16 @@ if ($is_admin && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['grp_id']
                 <h1 style="margin: 0; font-size: 2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                     <?php echo "Grupo Scout " . htmlspecialchars($grp["grp_name"] ?? ""); ?>
                 </h1>
+                <div>
+                    <strong>Dirección:</strong>
+                    <?php echo htmlspecialchars($grp["grp_address"] ?? ""); ?>
+                </div>
+                <div>
+                    <strong>Información adicional:</strong>
+                    <?php echo nl2br(htmlspecialchars($grp["grp_info"] ?? "")); ?>
+                </div>
             </th>
         </tr>
-
     </table>
 
     <?php if ($is_admin): ?>
@@ -120,6 +127,11 @@ if ($is_admin && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['grp_id']
             <button type="submit" class="btn-submit">Guardar Cambios</button>
         </div>
     </form>
+    <a class="but align-left" href="delete.php?id=<?php echo $grp["grp_id"]; ?> " title="Borrar grupo"
+        onclick="return confirm('¿Estás seguro de que deseas borrar este grupo?');">
+        <!-- SVG delete icon here -->
+        Delete group
+    </a>
     <?php else: ?>
         <div style="color:#d9534f; text-align:center; margin-top:2rem;">
             Only the admin can edit or delete this group.
