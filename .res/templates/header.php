@@ -66,7 +66,6 @@ if (!isset($_SESSION['user_id'])) {
    xmlns="http://www.w3.org/2000/svg">
   <path
      d="M 4.3746182,3.6667944 C 4.537156,1.7792594 5.5071288,1.0085159 7.6306057,1.0085159 h 0.068161 c 2.3436893,0 3.2822143,0.9385244 3.2822143,3.2822138 v 3.4185409 c 0,2.3436894 -0.938525,3.2822134 -3.2822143,3.2822134 h -0.068161 c -2.1077475,0 -3.0777203,-0.760257 -3.2507443,-2.616333"
-     stroke="#292d32"
      stroke-width="0.832521"
      stroke-linecap="round"
      stroke-linejoin="round"
@@ -74,7 +73,6 @@ if (!isset($_SESSION['user_id'])) {
      style="stroke-width:1.41703;stroke-dasharray:none" />
   <path
      d="M 7.572931,5.9947596 H 1.6062229"
-     stroke="#292d32"
      stroke-width="0.832521"
      stroke-linecap="round"
      stroke-linejoin="round"
@@ -82,7 +80,6 @@ if (!isset($_SESSION['user_id'])) {
      style="stroke-width:1.41703;stroke-dasharray:none" />
   <path
      d="M 2.7754461,4.2382509 1.0189898,5.9947071 2.7754461,7.7511635"
-     stroke="#292d32"
      stroke-width="0.832521"
      stroke-linecap="round"
      stroke-linejoin="round"
