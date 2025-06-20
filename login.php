@@ -3,7 +3,7 @@ session_start();
 
 // Configuración de la base de datos
 $host = "localhost";
-$user = "root";
+$user = "";
 $pass = "";
 $dbname = "badentracker";
 
