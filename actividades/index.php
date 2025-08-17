@@ -32,9 +32,9 @@ ORDER BY act.act_name;
 $query = linkDB() -> query($sql);
 
 ?>
+<h1>hola</h1>
 <main>
     
-<h1>hola</h1>
     <a class="but align-left" href="new" with="50px" aling="left" title="Nueva Actividad">
         <svg width="400" height="400" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
         <path
