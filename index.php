@@ -1,4 +1,5 @@
 <?php
+$title = "BadenTracker";
 
 include ".res/templates/header.php";
 
