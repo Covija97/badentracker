@@ -4,7 +4,7 @@ session_start();
 // Configuración de la base de datos
 $host = "localhost";
 $user = "bt"; // Cambia por tu usuario de MySQL
-$pass = "BadenTracker2025*";     // Cambia por tu contraseña de MySQL
+$pass = "badentracker*";     // Cambia por tu contraseña de MySQL
 $dbname = "badentracker";
 
 // Conexión a la base de datos

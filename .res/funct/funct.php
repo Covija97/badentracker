@@ -4,7 +4,7 @@ function linkDB ():mysqli  {
     $servername = "localhost";
     $database = "badentracker";
     $username = "bt";
-    $password = "BadenTracker2025*";
+    $password = "badentracker*";
     
     return new mysqli($servername, $username, $password, $database);
 }
