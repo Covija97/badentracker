@@ -1,7 +1,7 @@
 <?php
 
 $page = "reu";
-$title = "Actividades";
+$title = "Reuniones";
 
 require "../.res/funct/funct.php";
 include "../.res/templates/header.php";
