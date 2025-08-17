@@ -6,6 +6,8 @@ $title = "Actividades";
 require "../.res/funct/funct.php";
 include "../.res/templates/header.php";
 
+hola
+
 $sql = "
 SELECT
     act.act_id,
