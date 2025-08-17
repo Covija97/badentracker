@@ -6,7 +6,7 @@ $title = "Actividades";
 require "../.res/funct/funct.php";
 include "../.res/templates/header.php";
 
-/* $sql = "
+$sql = "
 SELECT
     act.act_id,
     act.act_name,
@@ -29,7 +29,7 @@ GROUP BY act.act_id, act.act_name, act.act_desc, act.act_durat
 ORDER BY act.act_name;
 ";
 
-$query = linkDB() -> query($sql); */
+$query = linkDB() -> query($sql);
 
 ?>
 <h1>hola</h1>
