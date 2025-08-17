@@ -23,7 +23,7 @@ if (!isset($_SESSION['user_id'])) {
 
 <body>
     <header>
-        <a href="/" class="logo" title="Inicio">
+        <a href="/badentracker" class="logo" title="Inicio">
             <img src="/badentracker/.res/icon/bt-logo.svg" height="50px">
             <h1>BadenTracker</h1>
         </a>
@@ -39,19 +39,19 @@ if (!isset($_SESSION['user_id'])) {
                     Admin
                 </a>
             <?php endif; ?>
-            <a href="/actividades/" title="Ir a actividades" <?php
+            <a href="/badentracker/actividades/" title="Ir a actividades" <?php
             if ($page == "act")
                 echo 'class = "act"';
             else
                 echo '';
             ?>>Actividades</a>
-            <a href="/reuniones/" title="Ir a reuniones" <?php
+            <a href="/badentracker/reuniones/" title="Ir a reuniones" <?php
             if ($page == "reu")
                 echo 'class = "act"';
             else
                 echo '';
             ?>>Reuniones</a>
-            <a href="/calendario/" title="Ir a calendario" <?php
+            <a href="/badentracker/calendario/" title="Ir a calendario" <?php
             if ($page == "cald")
                 echo 'class = "act"';
             else
