@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header("Location: /login.php");
+    header("Location: /badentracker/login.php");
     exit;
 }
 ?>
@@ -16,15 +16,15 @@ if (!isset($_SESSION['user_id'])) {
             - <?php echo $title; ?>
         <?php endif; ?>
     </title>
-    <link rel="stylesheet" href="/.res/css/styles.css?v=2">
-    <link rel="icon" href="/.res/icon/bt-icon.svg">
+    <link rel="stylesheet" href="/badentracker/.res/css/styles.css?v=2">
+    <link rel="icon" href="/badentracker/.res/icon/bt-icon.svg">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body>
     <header>
         <a href="/" class="logo" title="Inicio">
-            <img src="/.res/icon/bt-logo.svg" height="50px">
+            <img src="/badentracker/.res/icon/bt-logo.svg" height="50px">
             <h1>BadenTracker</h1>
         </a>
         <h1 class="titlePage">
