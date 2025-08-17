@@ -1,9 +1,9 @@
 <?php
-session_start();
+/* session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: /badentracker/login.php");
     exit;
-}
+} */
 ?>
 <!DOCTYPE html>
 <html lang="es">
